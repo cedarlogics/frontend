@@ -36,12 +36,16 @@ export default function WhyCedarLogics() {
   return (
     <section id="about" className="py-28 relative overflow-hidden">
       {/* Background */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background: 'radial-gradient(ellipse 80% 60% at 50% 50%, rgba(255,184,224,0.08) 0%, transparent 70%)',
-        }}
-      />
+      {/* Spotlights */}
+      <div className="absolute inset-0 pointer-events-none" style={{
+        background: 'radial-gradient(ellipse 50% 45% at 60% 35%, rgba(236,127,169,0.2) 0%, rgba(236,127,169,0.06) 40%, transparent 65%)',
+      }} />
+      <div className="absolute inset-0 pointer-events-none" style={{
+        background: 'radial-gradient(ellipse 30% 30% at 25% 60%, rgba(255,184,224,0.12) 0%, transparent 50%)',
+      }} />
+      <div className="absolute inset-0 pointer-events-none" style={{
+        background: 'radial-gradient(ellipse 25% 25% at 75% 70%, rgba(236,127,169,0.08) 0%, transparent 50%)',
+      }} />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Two-column intro */}
@@ -57,7 +61,7 @@ export default function WhyCedarLogics() {
               <div className="w-4 h-px bg-cedar-red" />
               Why CedarLogics
             </div>
-            <h2 className="section-heading text-4xl sm:text-5xl text-cedar-frost mb-6 leading-tight">
+            <h2 className="section-heading font-orbitron text-4xl sm:text-5xl text-cedar-frost mb-6 leading-tight">
               The Intersection of
               <br />
               <span className="text-gradient-red">Strength & Intelligence</span>
@@ -138,8 +142,8 @@ export default function WhyCedarLogics() {
           </div>
         </motion.div>
 
-        {/* Pillars */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Pillars - circles with icons */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 text-center">
           {pillars.map((pillar, i) => {
             const Icon = pillar.icon;
             return (
@@ -149,17 +153,20 @@ export default function WhyCedarLogics() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-50px' }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="glass-card rounded-2xl p-6 group hover:border-cedar-red/20 transition-all duration-300"
-                whileHover={{ y: -4 }}
+                className="flex flex-col items-center"
               >
-                <div
-                  className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
-                  style={{ background: `${pillar.accent}15` }}
+                <motion.div
+                  whileHover={{ scale: 1.1 }}
+                  className="w-16 h-16 rounded-full flex items-center justify-center mb-5"
+                  style={{
+                    background: `linear-gradient(135deg, ${pillar.accent}25, ${pillar.accent}10)`,
+                    border: `2px solid ${pillar.accent}40`,
+                  }}
                 >
                   <Icon size={22} style={{ color: pillar.accent }} />
-                </div>
+                </motion.div>
                 <h3 className="font-display font-semibold text-cedar-frost mb-2">{pillar.title}</h3>
-                <p className="text-sm text-cedar-frost/50 leading-relaxed">{pillar.body}</p>
+                <p className="text-sm text-cedar-frost/50 leading-relaxed max-w-xs">{pillar.body}</p>
               </motion.div>
             );
           })}

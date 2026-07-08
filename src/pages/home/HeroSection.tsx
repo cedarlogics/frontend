@@ -1,7 +1,7 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ArrowUpRight, Cog } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Cog, Github } from 'lucide-react';
 
 // Featured case studies — the fanned card arc. Order encodes the index shown
 // beside the quote (e.g. "02/04"), so treat this array as a real sequence.
@@ -9,22 +9,22 @@ const stories = [
   {
     client: 'Atlas Robotics',
     project: 'Fleet Automation',
-    quote: '"Cut fleet downtime by 42% in one quarter."',
+    quote: '"We had 42% of our fleet sitting idle due to routing inefficiencies. CedarLogics built an AI dispatch system that rebalanced our entire fleet in real-time — cutting downtime by 42% in a single quarter and saving us over $2.3M annually."',
   },
   {
     client: 'Meridian Bank',
     project: 'Fraud Detection AI',
-    quote: '"Caught fraud patterns our old rules missed."',
+    quote: '"Our legacy rules engine missed sophisticated fraud patterns that were costing millions. The CedarLogics team deployed a graph-based AI that detects anomalies our old system never caught — stopping 94% of fraudulent transactions before they settled."',
   },
   {
     client: 'NovaHealth',
     project: 'Clinical Copilot',
-    quote: '"Gave clinicians back four hours a day."',
+    quote: '"Clinicians were drowning in administrative work, spending hours on documentation every shift. CedarLogics built an AI copilot that integrates directly with our EHR — giving our providers back four hours a day to focus on patient care."',
   },
   {
     client: 'Vantage Logistics',
     project: 'Route Intelligence',
-    quote: '"Rebuilt routing logic without a single outage."',
+    quote: '"Rebuilding our routing engine without interrupting live operations seemed impossible. CedarLogics executed a seamless migration to their intelligent routing platform — zero downtime, 23% faster delivery times, and our customers noticed immediately."',
   },
 ];
 
@@ -35,6 +35,34 @@ const fanTransforms = [
   { rotate: 6, x: 30, y: 6, scale: 0.94, z: 1 },
   { rotate: 15, x: 90, y: 20, scale: 0.88, z: 0 },
 ];
+
+function GearShape({ cx, cy, r, teeth = 8, color = '#EC7FA9' }: { cx: number; cy: number; r: number; teeth?: number; color?: string }) {
+  const innerR = r * 0.65;
+  const toothH = r * 0.35;
+  const toothW = (Math.PI * 2 * r) / teeth * 0.4;
+  const points: string[] = [];
+  for (let i = 0; i < teeth; i++) {
+    const a1 = (i / teeth) * Math.PI * 2;
+    const a2 = ((i + 0.5) / teeth) * Math.PI * 2;
+    const a3 = ((i + 0.5) / teeth) * Math.PI * 2;
+    const a4 = ((i + 1) / teeth) * Math.PI * 2;
+    points.push(`${cx + Math.cos(a1) * r},${cy + Math.sin(a1) * r}`);
+    points.push(`${cx + Math.cos(a2) * (r + toothH)},${cy + Math.sin(a2) * (r + toothH)}`);
+    points.push(`${cx + Math.cos(a3) * (r + toothH)},${cy + Math.sin(a3) * (r + toothH)}`);
+    points.push(`${cx + Math.cos(a4) * r},${cy + Math.sin(a4) * r}`);
+  }
+  return (
+    <motion.g
+      style={{ transformOrigin: `${cx}px ${cy}px` }}
+      animate={{ rotate: 360 }}
+      transition={{ duration: 60 + Math.random() * 30, repeat: Infinity, ease: 'linear' }}
+    >
+      <polygon points={points.join(' ')} fill={color} fillOpacity="0.15" stroke={color} strokeOpacity="0.3" strokeWidth="1" />
+      <circle cx={cx} cy={cy} r={innerR} fill={color} fillOpacity="0.08" stroke={color} strokeOpacity="0.2" strokeWidth="0.8" />
+      <circle cx={cx} cy={cy} r={r * 0.2} fill={color} fillOpacity="0.3" />
+    </motion.g>
+  );
+}
 
 function EngineeringDial() {
   return (
@@ -91,12 +119,56 @@ export default function HeroSection() {
   const [active, setActive] = useState(1);
   const featured = stories[active];
 
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActive((prev) => (prev + 1) % stories.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <section
       ref={containerRef}
       className="relative min-h-screen flex flex-col overflow-hidden pt-28 pb-16"
     >
       <div className="absolute inset-0 grid-dot-bg opacity-40" />
+
+      {/* Gradient background */}
+      <div className="absolute inset-0" style={{
+        background: 'linear-gradient(160deg, #FFF0F5 0%, #FFE4EF 20%, #FFD6E8 40%, #FFFFFF 70%, #F5F0FF 100%)',
+      }} />
+
+      {/* Social media icons - left edge column */}
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8, delay: 1 }}
+        className="absolute left-4 sm:left-6 top-1/2 -translate-y-1/2 z-20 flex flex-col items-center gap-5"
+      >
+        <a href="https://github.com" target="_blank" rel="noopener noreferrer"
+          className="w-9 h-9 rounded-full glass-card flex items-center justify-center text-cedar-frost/40 hover:text-cedar-red transition-colors">
+          <Github size={16} />
+        </a>
+        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer"
+          className="w-9 h-9 rounded-full glass-card flex items-center justify-center text-cedar-frost/40 hover:text-cedar-red transition-colors">
+          <svg viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+          </svg>
+        </a>
+        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"
+          className="w-9 h-9 rounded-full glass-card flex items-center justify-center text-cedar-frost/40 hover:text-cedar-red transition-colors">
+          <svg viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5">
+            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+          </svg>
+        </a>
+        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"
+          className="w-9 h-9 rounded-full glass-card flex items-center justify-center text-cedar-frost/40 hover:text-cedar-red transition-colors">
+          <svg viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5">
+            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+          </svg>
+        </a>
+        <div className="w-px h-12 bg-cedar-red/20" />
+      </motion.div>
 
       {/* Large engineering dial, cropped at the bottom like a horizon */}
       <div
@@ -115,7 +187,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4 }}
-              className="italic text-cedar-frost/50 text-sm sm:text-base max-w-xs mb-8"
+              className="relative pl-5 border-l-2 border-cedar-red/40 italic text-cedar-frost/70 text-sm sm:text-base max-w-md mb-8 leading-relaxed"
             >
               {featured.quote}
             </motion.p>
@@ -140,21 +212,21 @@ export default function HeroSection() {
                     style={{ zIndex: isActive ? 10 : t.z, transformOrigin: 'bottom center' }}
                     className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-40 sm:w-48 aspect-[3/4] rounded-2xl glass-card p-4 flex flex-col justify-between text-left transition-shadow ${
                       isActive ? 'border-cedar-red/30 shadow-xl' : 'border-transparent'
-                    }`}
+                    }                    `}
                   >
                     <div
                       className="w-full h-2/3 rounded-xl"
                       style={{
                         background: isActive
-                          ? 'linear-gradient(135deg, rgba(236,127,169,0.35), rgba(255,184,224,0.35))'
-                          : 'linear-gradient(135deg, rgba(236,127,169,0.12), rgba(255,184,224,0.12))',
+                          ? 'linear-gradient(135deg, rgba(236,127,169,0.4), rgba(255,184,224,0.4))'
+                          : 'linear-gradient(135deg, rgba(236,127,169,0.15), rgba(255,184,224,0.15))',
                       }}
                     />
                     <div>
                       <div className="font-display font-bold text-sm text-cedar-frost leading-tight">
                         {story.client}
                       </div>
-                      <div className="text-xs text-cedar-frost/40">{story.project}</div>
+                      <div className="text-xs text-cedar-frost/50 font-medium">{story.project}</div>
                     </div>
                   </motion.button>
                 );
@@ -162,11 +234,11 @@ export default function HeroSection() {
             </div>
 
             <div className="flex items-center gap-3 mt-8">
-              <span className="font-display text-sm text-cedar-frost/60">
+              <span className="font-display text-sm font-bold text-cedar-red/80">
                 {String(active + 1).padStart(2, '0')}
               </span>
-              <div className="w-10 h-px bg-cedar-red/30" />
-              <span className="font-display text-sm text-cedar-frost/30">
+              <div className="w-10 h-px bg-cedar-red/40" />
+              <span className="font-display text-sm text-cedar-frost/40 font-medium">
                 {String(stories.length).padStart(2, '0')}
               </span>
               <div className="flex gap-1.5 ml-2">
@@ -175,8 +247,8 @@ export default function HeroSection() {
                     key={i}
                     onClick={() => setActive(i)}
                     aria-label={`Show case study ${i + 1}`}
-                    className={`w-1.5 h-1.5 rounded-full transition-colors ${
-                      i === active ? 'bg-cedar-red' : 'bg-cedar-frost/20'
+                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                      i === active ? 'bg-cedar-red scale-125' : 'bg-cedar-frost/20 hover:bg-cedar-frost/40'
                     }`}
                   />
                 ))}
@@ -193,7 +265,7 @@ export default function HeroSection() {
               className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full glass border border-cedar-red/20 mb-8"
             >
               <div className="w-1.5 h-1.5 rounded-full bg-cedar-red animate-pulse" />
-              <span className="text-xs font-semibold uppercase tracking-widest text-cedar-frost/70">
+              <span className="text-xs font-semibold uppercase tracking-widest text-cedar-red/80">
                 AI Engineering Studio
               </span>
             </motion.div>
@@ -202,7 +274,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
-              className="section-heading text-5xl sm:text-6xl lg:text-7xl leading-[0.95] mb-6"
+              className="section-heading font-orbitron text-5xl sm:text-6xl lg:text-7xl leading-[0.95] mb-6"
             >
               <span className="text-cedar-frost block">INTELLIGENT</span>
               <span className="text-gradient-red block">SOFTWARE.</span>
@@ -214,7 +286,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-cedar-frost/50 text-sm sm:text-base max-w-sm mx-auto lg:mx-0 lg:ml-auto mb-10"
+              className="text-cedar-frost/60 text-sm sm:text-base max-w-sm mx-auto lg:mx-0 lg:ml-auto mb-10 leading-relaxed"
             >
               We engineer platforms, automation, and cloud-native systems built to endure — every client, a story worth telling.
             </motion.p>
@@ -225,17 +297,22 @@ export default function HeroSection() {
               transition={{ duration: 0.6, delay: 0.45 }}
               className="flex flex-col sm:flex-row items-center lg:justify-end justify-center gap-4"
             >
-              <Link to="/console" className="btn-primary text-base px-8 py-4 rounded-2xl">
-                <Cog size={18} />
+              <Link to="/console" className="relative inline-flex items-center gap-3 px-6 py-3 rounded-full font-semibold text-sm transition-all duration-300 hover:translate-y-[-1px] border border-cedar-red/30 hover:border-cedar-red/60 bg-white/50 hover:bg-white/80 backdrop-blur-sm group" style={{ color: '#EC7FA9' }}>
                 Explore Console
-                <ArrowRight size={16} />
+                <span className="w-7 h-7 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #EC7FA9, #FFB8E0)' }}>
+                  <ArrowRight size={14} className="text-white" />
+                </span>
               </Link>
               <a
                 href="#services"
                 onClick={(e) => { e.preventDefault(); document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' }); }}
-                className="btn-secondary text-base px-8 py-4 rounded-2xl"
+                className="relative inline-flex items-center gap-3 px-6 py-3 rounded-full font-semibold text-sm text-white transition-all duration-300 hover:translate-y-[-1px] hover:shadow-xl border border-cedar-red/30"
+                style={{ background: 'linear-gradient(135deg, #EC7FA9, #FFB8E0)', boxShadow: '0 4px 24px rgba(236, 127, 169, 0.3)' }}
               >
                 View Services
+                <span className="w-7 h-7 rounded-full flex items-center justify-center bg-white/20">
+                  <ArrowRight size={14} className="text-white" />
+                </span>
               </a>
             </motion.div>
           </div>

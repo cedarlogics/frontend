@@ -61,7 +61,7 @@ export default function BlogPreview() {
               <div className="w-4 h-px bg-cedar-red" />
               Latest Insights
             </div>
-            <h2 className="section-heading text-4xl sm:text-5xl text-cedar-frost">
+            <h2 className="section-heading font-orbitron text-4xl sm:text-5xl text-cedar-frost">
               Engineering <span className="text-gradient-red">Intelligence</span>
             </h2>
           </div>

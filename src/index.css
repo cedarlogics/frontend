@@ -1,3 +1,6 @@
+@import '@fontsource/plus-jakarta-sans';
+@import '@fontsource/orbitron';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

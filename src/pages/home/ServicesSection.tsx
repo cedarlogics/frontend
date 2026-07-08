@@ -93,7 +93,7 @@ export default function ServicesSection() {
             Services
             <div className="w-4 h-px bg-cedar-red" />
           </div>
-          <h2 className="section-heading text-4xl sm:text-5xl lg:text-6xl text-cedar-frost mb-5">
+          <h2 className="section-heading font-orbitron text-4xl sm:text-5xl lg:text-6xl text-cedar-frost mb-5">
             Full-Spectrum
             <br />
             <span className="text-gradient-red">Engineering Services</span>

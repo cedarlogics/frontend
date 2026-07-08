@@ -84,7 +84,7 @@ export default function FeaturesSection() {
             Core Capabilities
             <div className="w-4 h-px bg-cedar-red" />
           </div>
-          <h2 className="section-heading text-4xl sm:text-5xl lg:text-6xl text-cedar-frost mb-5">
+          <h2 className="section-heading font-orbitron text-4xl sm:text-5xl lg:text-6xl text-cedar-frost mb-5">
             Engineering Capabilities
             <br />
             <span className="text-gradient-violet">That Scale Infinitely</span>

@@ -98,7 +98,7 @@ export default function TestimonialsSection() {
             Testimonials
             <div className="w-4 h-px bg-cedar-red" />
           </div>
-          <h2 className="section-heading text-4xl sm:text-5xl text-cedar-frost mb-4">
+          <h2 className="section-heading font-orbitron text-4xl sm:text-5xl text-cedar-frost mb-4">
             What Our Clients <span className="text-gradient-red">Say</span>
           </h2>
         </motion.div>

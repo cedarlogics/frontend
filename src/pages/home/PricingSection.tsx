@@ -79,7 +79,7 @@ export default function PricingSection() {
             Pricing
             <div className="w-4 h-px bg-cedar-red" />
           </div>
-          <h2 className="section-heading text-4xl sm:text-5xl text-cedar-frost mb-4">
+          <h2 className="section-heading font-orbitron text-4xl sm:text-5xl text-cedar-frost mb-4">
             Transparent <span className="text-gradient-red">Pricing</span>
           </h2>
           <p className="text-cedar-frost/50 max-w-xl mx-auto">

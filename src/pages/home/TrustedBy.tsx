@@ -8,39 +8,31 @@ const companies = [
 
 export default function TrustedBy() {
   return (
-    <section id="trusted" className="py-20 border-y border-cedar-red/10 overflow-hidden">
+    <section id="trusted" className="py-20 overflow-hidden" style={{ background: '#000000' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
-        <p className="text-center text-sm text-cedar-frost/30 uppercase tracking-widest font-semibold">
+        <p className="text-center text-sm uppercase tracking-widest font-semibold font-orbitron" style={{ color: '#EC7FA9' }}>
           Trusted by engineering teams worldwide
         </p>
       </div>
 
       <div className="relative">
-        {/* Gradient masks */}
+        {/* Gradient masks for black bg */}
         <div className="absolute left-0 top-0 bottom-0 w-32 z-10 pointer-events-none"
-          style={{ background: 'linear-gradient(to right, #FFFFFF, transparent)' }} />
+          style={{ background: 'linear-gradient(to right, #000000, transparent)' }} />
         <div className="absolute right-0 top-0 bottom-0 w-32 z-10 pointer-events-none"
-          style={{ background: 'linear-gradient(to left, #FFFFFF, transparent)' }} />
+          style={{ background: 'linear-gradient(to left, #000000, transparent)' }} />
 
-        {/* Marquee row 1 */}
-        <div className="flex animate-marquee whitespace-nowrap mb-4">
+        {/* Single marquee row */}
+        <div className="flex animate-marquee whitespace-nowrap">
           {[...companies, ...companies].map((company, i) => (
             <div
               key={i}
-              className="inline-flex items-center mx-6 px-6 py-3 rounded-xl glass text-sm font-semibold text-cedar-frost/40 hover:text-cedar-frost/70 transition-colors whitespace-nowrap flex-shrink-0"
-            >
-              <LogoMark name={company} />
-              {company}
-            </div>
-          ))}
-        </div>
-
-        {/* Marquee row 2 reversed */}
-        <div className="flex animate-marquee-reverse whitespace-nowrap">
-          {[...companies.slice().reverse(), ...companies.slice().reverse()].map((company, i) => (
-            <div
-              key={i}
-              className="inline-flex items-center mx-6 px-6 py-3 rounded-xl glass text-sm font-semibold text-cedar-frost/30 hover:text-cedar-frost/60 transition-colors whitespace-nowrap flex-shrink-0"
+              className="inline-flex items-center mx-6 px-6 py-3 rounded-xl text-sm font-semibold whitespace-nowrap flex-shrink-0"
+              style={{
+                background: 'rgba(255,255,255,0.06)',
+                border: '1px solid rgba(236,127,169,0.12)',
+                color: 'rgba(236,127,169,0.7)',
+              }}
             >
               <LogoMark name={company} />
               {company}
@@ -64,7 +56,7 @@ function LogoMark({ name }: { name: string }) {
   return (
     <div
       className="w-5 h-5 rounded-md mr-2.5 flex-shrink-0 flex items-center justify-center text-xs font-bold"
-      style={{ background: `${colors[name]}20`, color: colors[name] || '#2D2D3A' }}
+      style={{ background: `${colors[name]}20`, color: colors[name] || '#EC7FA9' }}
     >
       {name[0]}
     </div>

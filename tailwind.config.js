@@ -6,6 +6,7 @@ export default {
       fontFamily: {
         sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
         display: ['Space Grotesk', 'system-ui', 'sans-serif'],
+        orbitron: ['Orbitron', 'system-ui', 'sans-serif'],
       },
       colors: {
         cedar: {

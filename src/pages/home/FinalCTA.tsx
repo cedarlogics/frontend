@@ -31,7 +31,7 @@ export default function FinalCTA() {
             <div className="w-4 h-px bg-cedar-red" />
           </div>
 
-          <h2 className="section-heading text-5xl sm:text-6xl lg:text-7xl text-cedar-frost mb-6 leading-tight">
+          <h2 className="section-heading font-orbitron text-5xl sm:text-6xl lg:text-7xl text-cedar-frost mb-6 leading-tight">
             Ready to Engineer
             <br />
             <span className="text-gradient-red">the Future?</span>
