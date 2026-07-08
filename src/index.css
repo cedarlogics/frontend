@@ -1,0 +1,157 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: #FFFFFF;
+    color: #000000;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: rgba(236, 127, 169, 0.2);
+    color: #FFFFFF;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #FFEDFA;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #EC7FA9;
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #EC7FA9;
+  }
+}
+
+@layer utilities {
+  .glass {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(236, 127, 169, 0.12);
+  }
+
+  .glass-dark {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(236, 127, 169, 0.08);
+  }
+
+  .glass-card {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid rgba(236, 127, 169, 0.1);
+  }
+
+  .glow-red {
+    box-shadow: 0 0 40px rgba(236, 127, 169, 0.2), 0 0 80px rgba(236, 127, 169, 0.08);
+  }
+
+  .glow-violet {
+    box-shadow: 0 0 40px rgba(255, 184, 224, 0.3), 0 0 80px rgba(255, 184, 224, 0.1);
+  }
+
+  .glow-blue {
+    box-shadow: 0 0 40px rgba(236, 127, 169, 0.2), 0 0 80px rgba(236, 127, 169, 0.08);
+  }
+
+  .text-gradient-red {
+    background: linear-gradient(135deg, #EC7FA9 0%, #FFB8E0 50%, #EC7FA9 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-white {
+    background: linear-gradient(135deg, #000000 0%, #000000 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-violet {
+    background: linear-gradient(135deg, #EC7FA9 0%, #FFB8E0 50%, #EC7FA9 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .bg-noise {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  }
+
+  .border-gradient {
+    border: 1px solid transparent;
+    background: linear-gradient(#FFFFFF, #FFFFFF) padding-box,
+                linear-gradient(135deg, rgba(236, 127, 169, 0.4), rgba(255, 184, 224, 0.4)) border-box;
+  }
+
+  .grid-dot-bg {
+    background-image: radial-gradient(rgba(236, 127, 169, 0.08) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  .grid-line-bg {
+    background-image:
+      linear-gradient(rgba(236, 127, 169, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(236, 127, 169, 0.05) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply relative inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-white overflow-hidden transition-all duration-300;
+    background: linear-gradient(135deg, #EC7FA9, #FFB8E0);
+    box-shadow: 0 4px 24px rgba(236, 127, 169, 0.3);
+  }
+
+  .btn-primary:hover {
+    box-shadow: 0 8px 40px rgba(236, 127, 169, 0.4);
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary {
+    @apply relative inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300;
+    background: rgba(236, 127, 169, 0.05);
+    border: 1px solid rgba(236, 127, 169, 0.15);
+    color: #000000;
+  }
+
+  .btn-secondary:hover {
+    background: rgba(236, 127, 169, 0.1);
+    border-color: rgba(236, 127, 169, 0.25);
+    transform: translateY(-1px);
+  }
+
+  .section-label {
+    @apply inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest;
+    color: #EC7FA9;
+  }
+
+  .section-heading {
+    @apply font-display font-bold leading-tight tracking-tight;
+  }
+}
