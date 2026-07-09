@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Github, Twitter, Linkedin, ArrowUp, Mail, MapPin, Phone } from 'lucide-react';
+import { Github, Twitter, Linkedin, ArrowUp, Mail, MapPin, Phone, Code2 } from 'lucide-react';
 
 const footerLinks = {
   Company: [
@@ -9,11 +9,18 @@ const footerLinks = {
     { label: 'Console', href: '/console' },
     { label: 'Blog', href: '/blog' },
   ],
+  Developers: [
+    { label: 'API Reference', href: '#', badge: 'Coming Soon' },
+    { label: 'REST API Docs', href: '#', badge: 'Coming Soon' },
+    { label: 'Webhooks Guide', href: '#', badge: 'Coming Soon' },
+    { label: 'SDKs & Libraries', href: '#', badge: 'Coming Soon' },
+    { label: 'Integration Hub', href: '#', badge: 'Coming Soon' },
+  ],
   Resources: [
     { label: 'Documentation', href: '#' },
-    { label: 'API Reference', href: '#' },
     { label: 'Case Studies', href: '#' },
     { label: 'Whitepapers', href: '#' },
+    { label: 'Workflow Templates', href: '#' },
     { label: 'Newsletter', href: '#' },
   ],
   Legal: [
@@ -39,7 +46,7 @@ export default function Footer() {
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-24 bg-gradient-to-b from-cedar-red/40 to-transparent" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-6 gap-12 mb-16">
           {/* Brand */}
           <div className="lg:col-span-2 space-y-6">
             <div className="flex items-center gap-3">
@@ -57,7 +64,7 @@ export default function Footer() {
             </div>
 
             <p className="text-cedar-frost/50 text-sm leading-relaxed max-w-xs">
-              Building intelligent systems on timeless foundations. We engineer AI-first software platforms, enterprise automation, and modern digital solutions.
+              The enterprise AI workflow automation platform. We orchestrate intelligent business processes across departments, systems, and AI agents — automating complex operations at scale.
             </p>
 
             <div className="space-y-3">
@@ -108,8 +115,13 @@ export default function Footer() {
                       to={link.href}
                       className="text-sm text-cedar-frost/50 hover:text-cedar-frost transition-colors duration-200 relative group"
                     >
-                      <span className="relative">
+                      <span className="relative inline-flex items-center gap-2">
                         {link.label}
+                        {'badge' in link && (
+                          <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded-full bg-cedar-red/10 text-cedar-red/60 border border-cedar-red/15">
+                            {link.badge}
+                          </span>
+                        )}
                         <span className="absolute -bottom-px left-0 right-0 h-px bg-cedar-red scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
                       </span>
                     </Link>

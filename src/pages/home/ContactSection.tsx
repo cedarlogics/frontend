@@ -1,66 +1,74 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Mail, MapPin, Phone, Send, Github, Twitter, Linkedin, ArrowRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Mail, MapPin, Phone, Send, Github, Twitter, Linkedin, Check, CheckCheck } from 'lucide-react';
+
+const DEEP = '#7A0F44';
+const HOT = '#FF2D87';
+const BRIGHT = '#FF5FA2';
+const SOFT = 'rgba(255,45,135,0.10)';
 
 export default function ContactSection() {
   const [form, setForm] = useState({ name: '', email: '', company: '', message: '' });
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'sent' | 'replied'>('idle');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setSent(true);
+    if (!form.message.trim()) return;
+    setStatus('sent');
+    setTimeout(() => setStatus('replied'), 1600);
   };
+
+  const hasDraft = form.message.trim().length > 0;
 
   return (
     <section id="contact" className="py-28 relative overflow-hidden">
       <div className="absolute inset-0 grid-line-bg opacity-15" />
       <div
         className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-64 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 80% 100% at 50% 100%, rgba(236,127,169,0.06) 0%, transparent 70%)' }}
+        style={{ background: `radial-gradient(ellipse 80% 100% at 50% 100%, ${HOT}18 0%, transparent 70%)` }}
       />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <div className="section-label mb-4">
-            <div className="w-4 h-px bg-cedar-red" />
-            Contact
-            <div className="w-4 h-px bg-cedar-red" />
-          </div>
-          <h2 className="section-heading font-orbitron text-4xl sm:text-5xl text-cedar-frost mb-4">
-            Start a <span className="text-gradient-red">Conversation</span>
-          </h2>
-          <p className="text-cedar-frost/50 max-w-xl mx-auto">
-            Tell us about your project. We'll respond within one business day with 
-            a thoughtful response—not a sales script.
-          </p>
-        </motion.div>
-
-        <div className="grid lg:grid-cols-5 gap-8 max-w-5xl mx-auto">
-          {/* Info panel */}
+      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-[420px_1fr] gap-12 items-start">
+          {/* Left: heading + contact details */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="lg:col-span-2 space-y-6"
+            className="lg:sticky lg:top-28"
           >
-            <div className="glass-card rounded-2xl p-6 space-y-5">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-4 h-px" style={{ background: HOT }} />
+              <span className="text-xs font-semibold tracking-[0.2em] uppercase" style={{ color: BRIGHT }}>
+                Contact
+              </span>
+            </div>
+            <h2 className="font-orbitron text-4xl sm:text-5xl text-cedar-frost mb-5">
+              Start a <span style={{ color: HOT }}>Conversation</span>
+            </h2>
+            <p className="text-cedar-frost/70 leading-relaxed mb-10 max-w-sm">
+              Tell us about your project. We'll respond within one business day with
+              a thoughtful message — not a sales script.
+            </p>
+
+            <div className="space-y-4 mb-10">
               {[
-                { icon: Mail, label: 'Email', value: 'hello@cedarlogics.com', href: 'mailto:hello@cedarlogics.com' },
-                { icon: Phone, label: 'Phone', value: '+1 (415) 000-0000', href: 'tel:+14150000000' },
-                { icon: MapPin, label: 'Location', value: 'San Francisco, CA\nUnited States', href: '#' },
+                { Icon: Mail, label: 'Email', value: 'hello@cedarlogics.com', href: 'mailto:hello@cedarlogics.com' },
+                { Icon: Phone, label: 'Phone', value: '+1 (415) 000-0000', href: 'tel:+14150000000' },
+                { Icon: MapPin, label: 'Location', value: 'San Francisco, CA', href: '#' },
               ].map((item) => (
-                <a key={item.label} href={item.href} className="flex items-start gap-4 group">
-                  <div className="w-10 h-10 rounded-xl glass flex items-center justify-center flex-shrink-0 group-hover:border-cedar-red/30 transition-colors">
-                    <item.icon size={16} className="text-cedar-red" />
+                <a key={item.label} href={item.href} className="flex items-center gap-4 group">
+                  <div
+                    className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors"
+                    style={{ background: SOFT, border: `1px solid ${HOT}35` }}
+                  >
+                    <item.Icon size={17} style={{ color: BRIGHT }} />
                   </div>
                   <div>
-                    <div className="text-xs text-cedar-frost/30 mb-0.5">{item.label}</div>
-                    <div className="text-sm text-cedar-frost/70 group-hover:text-cedar-frost transition-colors whitespace-pre-line">
+                    <div className="text-xs uppercase tracking-wide" style={{ color: `${BRIGHT}99` }}>
+                      {item.label}
+                    </div>
+                    <div className="text-sm text-cedar-frost/85 group-hover:text-white transition-colors">
                       {item.value}
                     </div>
                   </div>
@@ -68,113 +76,176 @@ export default function ContactSection() {
               ))}
             </div>
 
-            {/* Map placeholder */}
-            <div className="glass-card rounded-2xl h-40 flex items-center justify-center relative overflow-hidden">
-              <div className="absolute inset-0 opacity-10"
-                style={{ background: 'radial-gradient(circle at 50% 50%, #FFB8E0 0%, transparent 60%)' }} />
-              <div className="absolute inset-0 grid-dot-bg opacity-30" />
-              <div className="text-center">
-                <MapPin size={24} className="text-cedar-red mx-auto mb-2" />
-                <span className="text-xs text-cedar-frost/40">San Francisco, CA</span>
-              </div>
-            </div>
-
-            {/* Social */}
-            <div className="glass-card rounded-2xl p-5">
-              <div className="text-xs text-cedar-frost/30 uppercase tracking-widest mb-4">Follow Our Work</div>
-              <div className="flex gap-3">
-                {[
-                  { Icon: Github, href: '#', label: 'GitHub' },
-                  { Icon: Twitter, href: '#', label: 'Twitter' },
-                  { Icon: Linkedin, href: '#', label: 'LinkedIn' },
-                ].map((s) => (
-                  <a key={s.label} href={s.href} aria-label={s.label}
-                    className="flex-1 py-3 rounded-xl glass flex items-center justify-center text-cedar-frost/40 hover:text-cedar-frost hover:border-cedar-violet/30 transition-all duration-200 group">
-                    <s.Icon size={18} />
-                  </a>
-                ))}
-              </div>
+            <div className="flex gap-3">
+              {[
+                { Icon: Github, label: 'GitHub' },
+                { Icon: Twitter, label: 'Twitter' },
+                { Icon: Linkedin, label: 'LinkedIn' },
+              ].map((s) => (
+                <a
+                  key={s.label}
+                  href="#"
+                  aria-label={s.label}
+                  className="w-10 h-10 rounded-lg flex items-center justify-center text-cedar-frost/60 hover:text-white transition-colors"
+                  style={{ border: `1px solid ${HOT}30`, background: SOFT }}
+                >
+                  <s.Icon size={17} />
+                </a>
+              ))}
             </div>
           </motion.div>
 
-          {/* Form */}
+          {/* Right: message thread */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="lg:col-span-3"
+            className="rounded-3xl overflow-hidden"
+            style={{ background: 'rgba(255,45,135,0.04)', border: `1px solid ${HOT}30` }}
           >
-            <div className="glass-card rounded-2xl p-8">
-              {sent ? (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="flex flex-col items-center justify-center h-64 text-center"
-                >
-                  <div className="w-16 h-16 rounded-full bg-cedar-red/20 flex items-center justify-center mb-4">
-                    <Send size={24} className="text-cedar-red" />
-                  </div>
-                  <h3 className="font-display font-semibold text-cedar-frost text-xl mb-2">Message Sent!</h3>
-                  <p className="text-cedar-frost/50 text-sm max-w-xs">
-                    We'll review your message and get back to you within one business day.
-                  </p>
-                </motion.div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-5">
-                  <div className="grid sm:grid-cols-2 gap-5">
-                    <div>
-                      <label className="block text-xs text-cedar-frost/40 mb-2">Name *</label>
-                      <input
-                        required
-                        value={form.name}
-                        onChange={(e) => setForm({ ...form, name: e.target.value })}
-                        placeholder="Your name"
-                        className="w-full px-4 py-3 rounded-xl bg-cedar-red/5 border border-cedar-red/15 text-sm text-cedar-frost placeholder-cedar-frost/25 focus:outline-none focus:border-cedar-red/50 transition-colors"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs text-cedar-frost/40 mb-2">Email *</label>
-                      <input
-                        required
-                        type="email"
-                        value={form.email}
-                        onChange={(e) => setForm({ ...form, email: e.target.value })}
-                        placeholder="your@email.com"
-                        className="w-full px-4 py-3 rounded-xl bg-cedar-red/5 border border-cedar-red/15 text-sm text-cedar-frost placeholder-cedar-frost/25 focus:outline-none focus:border-cedar-red/50 transition-colors"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-xs text-cedar-frost/40 mb-2">Company</label>
-                    <input
-                      value={form.company}
-                      onChange={(e) => setForm({ ...form, company: e.target.value })}
-                      placeholder="Your company (optional)"
-                      className="w-full px-4 py-3 rounded-xl bg-cedar-red/5 border border-cedar-red/15 text-sm text-cedar-frost placeholder-cedar-frost/25 focus:outline-none focus:border-cedar-red/50 transition-colors"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs text-cedar-frost/40 mb-2">Message *</label>
-                    <textarea
-                      required
-                      rows={5}
-                      value={form.message}
-                      onChange={(e) => setForm({ ...form, message: e.target.value })}
-                      placeholder="Tell us about your project, timeline, and goals..."
-                      className="w-full px-4 py-3 rounded-xl bg-cedar-red/5 border border-cedar-red/15 text-sm text-cedar-frost placeholder-cedar-frost/25 focus:outline-none focus:border-cedar-red/50 transition-colors resize-none"
-                    />
-                  </div>
-                  <button type="submit" className="btn-primary w-full justify-center py-4 text-base rounded-xl">
-                    <Send size={16} />
-                    Send Message
-                    <ArrowRight size={16} />
-                  </button>
-                  <p className="text-xs text-cedar-frost/30 text-center">
-                    By submitting, you agree to our Privacy Policy. We never share your data.
-                  </p>
-                </form>
-              )}
+            {/* Header bar */}
+            <div className="flex items-center gap-3 px-6 py-4 border-b" style={{ borderColor: `${HOT}25` }}>
+              <div
+                className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-white flex-shrink-0"
+                style={{ background: `linear-gradient(135deg, ${DEEP}, ${HOT})` }}
+              >
+                CL
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="text-sm font-semibold text-cedar-frost">CedarLogics</div>
+                <div className="flex items-center gap-1.5 text-xs" style={{ color: `${BRIGHT}cc` }}>
+                  <span className="w-1.5 h-1.5 rounded-full" style={{ background: HOT }} />
+                  Usually replies within 1 business day
+                </div>
+              </div>
             </div>
+
+            {/* Thread body */}
+            <div className="px-6 py-6 space-y-4">
+              <div className="flex justify-start">
+                <div
+                  className="max-w-[85%] rounded-2xl rounded-bl-sm px-4 py-3 text-sm text-cedar-frost/90 leading-relaxed"
+                  style={{ background: SOFT, border: `1px solid ${HOT}30` }}
+                >
+                  Hi! Tell us about your project — company, timeline, and goals. We'll get back to you
+                  within one business day.
+                </div>
+              </div>
+
+              <div className="flex justify-end pt-1">
+                <div
+                  className="max-w-[85%] rounded-2xl rounded-br-sm px-4 py-3 text-sm leading-relaxed"
+                  style={{
+                    background: hasDraft ? `linear-gradient(135deg, ${HOT}, ${BRIGHT})` : 'transparent',
+                    border: hasDraft ? 'none' : `1.5px dashed ${HOT}40`,
+                    color: hasDraft ? '#fff' : 'rgba(232,232,235,0.45)',
+                  }}
+                >
+                  {hasDraft ? form.message : 'Your message will appear here as you type...'}
+                  {status !== 'idle' && (
+                    <div className="flex items-center justify-end gap-1 mt-1.5">
+                      {status === 'sent' ? (
+                        <Check size={12} className="text-white/80" />
+                      ) : (
+                        <CheckCheck size={12} className="text-white/80" />
+                      )}
+                      <span className="text-[10px] text-white/70">{status === 'sent' ? 'Sent' : 'Seen'}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <AnimatePresence>
+                {status === 'sent' && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    className="flex justify-start"
+                  >
+                    <div className="flex gap-1 px-4 py-3 rounded-2xl rounded-bl-sm" style={{ background: SOFT, border: `1px solid ${HOT}30` }}>
+                      {[0, 1, 2].map((d) => (
+                        <motion.span
+                          key={d}
+                          className="w-1.5 h-1.5 rounded-full"
+                          style={{ background: HOT }}
+                          animate={{ y: [0, -4, 0] }}
+                          transition={{ duration: 0.7, repeat: Infinity, delay: d * 0.15 }}
+                        />
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+                {status === 'replied' && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="flex justify-start"
+                  >
+                    <div
+                      className="max-w-[85%] rounded-2xl rounded-bl-sm px-4 py-3 text-sm text-cedar-frost/90"
+                      style={{ background: SOFT, border: `1px solid ${HOT}30` }}
+                    >
+                      Got it, thanks{form.name ? `, ${form.name.split(' ')[0]}` : ''}. We'll review this and reply soon.
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* Composer */}
+            {status === 'idle' && (
+              <form onSubmit={handleSubmit} className="border-t" style={{ borderColor: `${HOT}25` }}>
+                <div className="grid grid-cols-2 gap-px" style={{ background: `${HOT}20` }}>
+                  <input
+                    required
+                    value={form.name}
+                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                    placeholder="Your name"
+                    className="px-4 py-3 text-sm text-white placeholder-cedar-frost/40 focus:outline-none"
+                    style={{ background: 'rgba(0,0,0,0.2)' }}
+                  />
+                  <input
+                    required
+                    type="email"
+                    value={form.email}
+                    onChange={(e) => setForm({ ...form, email: e.target.value })}
+                    placeholder="your@email.com"
+                    className="px-4 py-3 text-sm text-white placeholder-cedar-frost/40 focus:outline-none"
+                    style={{ background: 'rgba(0,0,0,0.2)' }}
+                  />
+                </div>
+                <input
+                  value={form.company}
+                  onChange={(e) => setForm({ ...form, company: e.target.value })}
+                  placeholder="Company (optional)"
+                  className="w-full px-4 py-3 text-sm text-white placeholder-cedar-frost/40 focus:outline-none border-t"
+                  style={{ borderColor: `${HOT}20`, background: 'rgba(0,0,0,0.2)' }}
+                />
+                <div className="flex items-end gap-2 p-3">
+                  <textarea
+                    required
+                    rows={1}
+                    value={form.message}
+                    onChange={(e) => setForm({ ...form, message: e.target.value })}
+                    placeholder="Write your message..."
+                    className="flex-1 px-4 py-3 rounded-xl text-sm text-white placeholder-cedar-frost/40 focus:outline-none resize-none"
+                    style={{ background: 'rgba(255,45,135,0.06)', border: `1px solid ${HOT}35` }}
+                  />
+                  <button
+                    type="submit"
+                    disabled={!hasDraft}
+                    className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 transition-transform disabled:opacity-30"
+                    style={{ background: `linear-gradient(135deg, ${DEEP}, ${HOT})` }}
+                  >
+                    <Send size={17} className="text-white" />
+                  </button>
+                </div>
+                <p className="text-[11px] text-center pb-3" style={{ color: `${BRIGHT}80` }}>
+                  By sending, you agree to our Privacy Policy. We never share your data.
+                </p>
+              </form>
+            )}
           </motion.div>
         </div>
       </div>

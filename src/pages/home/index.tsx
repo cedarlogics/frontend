@@ -5,7 +5,7 @@ import WhyCedarLogics from './WhyCedarLogics';
 import ServicesSection from './ServicesSection';
 import ConsolePreview from './ConsolePreview';
 import ProcessSection from './ProcessSection';
-import TechStack from './TechStack';
+import WhoWeAre from './WhoWeAre';
 import TestimonialsSection from './TestimonialsSection';
 import PricingSection from './PricingSection';
 import BlogPreview from './BlogPreview';
@@ -23,7 +23,7 @@ export default function HomePage() {
       <ServicesSection />
       <ConsolePreview />
       <ProcessSection />
-      <TechStack />
+      <WhoWeAre />
       <TestimonialsSection />
       <PricingSection />
       <BlogPreview />

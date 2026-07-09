@@ -2,21 +2,29 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Zap } from 'lucide-react';
 
+const BLUSH = '#F9A8D4';
+const ROSE = '#EC4899';
+const MAROON = '#7A1247';
+const WINE = '#1A0510';
+
 export default function FinalCTA() {
   return (
-    <section className="py-28 relative overflow-hidden">
-      {/* Big glow */}
+    <section className="py-28 relative overflow-hidden" style={{ background: `linear-gradient(180deg, ${WINE} 0%, #0F0309 100%)` }}>
       <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] pointer-events-none"
+        className="absolute inset-0 opacity-[0.06] pointer-events-none"
         style={{
-          background: 'radial-gradient(ellipse, rgba(236,127,169,0.12) 0%, rgba(236,127,169,0.08) 40%, transparent 70%)',
-          filter: 'blur(40px)',
+          backgroundImage: 'radial-gradient(rgba(255,255,255,0.8) 1px, transparent 1px)',
+          backgroundSize: '4px 4px',
         }}
       />
-      <div className="absolute inset-0 grid-dot-bg opacity-20" />
-
-      {/* Decorative lines */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-full bg-gradient-to-b from-transparent via-cedar-red/20 to-transparent" />
+      <div
+        className="absolute -top-40 -left-40 w-[620px] h-[620px] rounded-full pointer-events-none"
+        style={{ background: `radial-gradient(circle, ${MAROON}40 0%, transparent 65%)`, filter: 'blur(100px)' }}
+      />
+      <div
+        className="absolute -bottom-40 -right-40 w-[620px] h-[620px] rounded-full pointer-events-none"
+        style={{ background: `radial-gradient(circle, ${ROSE}2e 0%, transparent 65%)`, filter: 'blur(90px)' }}
+      />
 
       <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <motion.div
@@ -25,19 +33,30 @@ export default function FinalCTA() {
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <div className="section-label justify-center mb-6">
-            <div className="w-4 h-px bg-cedar-red" />
-            Ready to Build?
-            <div className="w-4 h-px bg-cedar-red" />
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <div className="w-4 h-px" style={{ background: `linear-gradient(90deg, transparent, ${ROSE})` }} />
+            <span className="text-xs tracking-[0.3em] uppercase font-orbitron font-semibold" style={{ color: BLUSH }}>
+              Ready to Build?
+            </span>
+            <div className="w-4 h-px" style={{ background: `linear-gradient(90deg, ${ROSE}, transparent)` }} />
           </div>
 
-          <h2 className="section-heading font-orbitron text-5xl sm:text-6xl lg:text-7xl text-cedar-frost mb-6 leading-tight">
+          <h2 className="font-orbitron text-4xl sm:text-5xl text-white mb-5">
             Ready to Engineer
             <br />
-            <span className="text-gradient-red">the Future?</span>
+            <span
+              style={{
+                backgroundImage: `linear-gradient(90deg, ${BLUSH}, ${ROSE} 45%, ${MAROON})`,
+                WebkitBackgroundClip: 'text',
+                backgroundClip: 'text',
+                color: 'transparent',
+              }}
+            >
+              the Future?
+            </span>
           </h2>
 
-          <p className="text-xl text-cedar-frost/50 max-w-2xl mx-auto mb-10 leading-relaxed">
+          <p className="text-xl text-white/50 max-w-2xl mx-auto mb-10 leading-relaxed">
             Let's build your next intelligent platform together. 
             Share your vision — we'll architect the path forward.
           </p>
@@ -51,7 +70,15 @@ export default function FinalCTA() {
               Start a Project
               <ArrowRight size={18} />
             </a>
-            <Link to="/console" className="btn-secondary text-lg px-10 py-5 rounded-2xl">
+            <Link
+              to="/console"
+              className="inline-flex items-center gap-2 px-10 py-5 text-lg font-semibold rounded-2xl transition-all duration-300 hover:scale-[1.02]"
+              style={{
+                color: '#fff',
+                border: `1px solid ${ROSE}50`,
+                background: 'rgba(255,255,255,0.03)',
+              }}
+            >
               <Zap size={18} />
               Explore Console
             </Link>
@@ -65,8 +92,8 @@ export default function FinalCTA() {
               'NDA on request',
               '24h response time',
             ].map((item) => (
-              <div key={item} className="flex items-center gap-2 text-sm text-cedar-frost/40">
-                <div className="w-1.5 h-1.5 rounded-full bg-cedar-red" />
+              <div key={item} className="flex items-center gap-2 text-sm text-white/40">
+                <div className="w-1.5 h-1.5 rounded-full" style={{ background: ROSE }} />
                 {item}
               </div>
             ))}

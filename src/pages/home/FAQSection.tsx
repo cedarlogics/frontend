@@ -2,34 +2,39 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 
+const BLUSH = '#F9A8D4';
+const ROSE = '#EC4899';
+const MAROON = '#7A1247';
+const WINE = '#1A0510';
+
 const faqs = [
   {
-    q: 'What types of projects does CedarLogics take on?',
-    a: 'We specialize in AI-integrated applications, enterprise software platforms, cloud-native systems, and product engineering. We work best with companies that value engineering quality over commodity delivery — whether you are a funded startup building your core product or an enterprise modernizing critical infrastructure.',
+    q: 'What is CedarLogics?',
+    a: 'CedarLogics is an Enterprise AI Workflow Automation Platform that orchestrates end-to-end business operations across departments, applications, and enterprise systems. We deploy AI agents that analyze, automate, monitor, and continuously optimize enterprise workflows — serving as an intelligent orchestration layer for digital transformation.',
   },
   {
-    q: 'How long does a typical project take?',
-    a: 'Timelines vary based on scope. A focused MVP typically takes 6–12 weeks. Enterprise platform builds or AI system integrations range from 3–9 months. We always provide a detailed timeline during our discovery phase, and we have never missed a committed delivery date in our company history.',
+    q: 'How does the AI Workflow Designer work?',
+    a: 'The AI Workflow Designer provides visual process modeling to build intelligent, multi-step enterprise workflows. It supports conditional logic, AI-assisted decision paths, and automated task execution across systems. Workflows are designed using a drag-and-drop interface with AI recommendations for optimization.',
   },
   {
-    q: 'Do you provide ongoing support after launch?',
-    a: 'Yes. Every engagement includes structured post-launch support. Our Starter plan includes 30 days of support, Professional includes 3 months, and Enterprise clients receive dedicated SLA-backed support with guaranteed response times. We also offer retainer-based long-term maintenance plans.',
+    q: 'What enterprise systems can CedarLogics integrate with?',
+    a: 'Our Enterprise Integration Hub connects seamlessly with ERP, CRM, HRMS, finance platforms, cloud services, and custom APIs. We support major platforms like SAP, Salesforce, Workday, Oracle, Microsoft Dynamics, and thousands of API-driven enterprise applications through our extensible connector framework.',
   },
   {
     q: 'What does the CedarLogics Console do?',
-    a: 'CedarLogics Console is our flagship AI operations platform — a unified workspace for deploying intelligent agents, building automation workflows, monitoring infrastructure, and analyzing business intelligence. It is designed for engineering and operations teams who need enterprise-grade AI tooling without the enterprise complexity.',
+    a: 'CedarLogics Console is the unified command center for your enterprise workflow automation. It provides real-time monitoring of workflow execution, AI agent activity tracking, automation success metrics, business KPI dashboards, and workflow optimization insights — all from a single operations dashboard.',
   },
   {
-    q: 'How do you handle intellectual property?',
-    a: 'You own 100% of everything we build for you. All source code, architecture decisions, documentation, and assets are fully transferred to you upon project completion. We retain no licensing claims, no backdoors, and no dependencies on proprietary CedarLogics infrastructure.',
+    q: 'How does AI Agent Orchestration work?',
+    a: 'Our AI Agent Orchestration Layer coordinates specialized AI agents across business functions. Agents handle approvals, routing, task execution, and collaborative multi-step workflows autonomously. Each agent is purpose-built for specific business domains and learns from historical process data to improve decision-making.',
   },
   {
-    q: 'Can you work with our existing team?',
-    a: 'Absolutely — team augmentation is one of our most common engagement models. We embed senior engineers, AI specialists, and architects directly into your workflow, matching your tooling, processes, and communication style. Many clients prefer this approach for continuity and knowledge transfer.',
+    q: 'What kind of businesses benefit from CedarLogics?',
+    a: 'CedarLogics serves enterprise operations teams, digital transformation leaders, business process managers, IT departments, finance and HR teams, healthcare organizations, manufacturing enterprises, and government agencies. Any organization that relies on complex, multi-system business processes can benefit from intelligent workflow automation.',
   },
   {
-    q: 'What is your approach to AI integration?',
-    a: 'We treat AI as an architectural layer, not an add-on feature. This means we design data pipelines, vector stores, inference infrastructure, and model selection strategies from day one. We work with OpenAI, Anthropic, open-source models, and fine-tuned domain-specific models — always choosing what is right for your use case, not what is trending.',
+    q: 'How is CedarLogics priced?',
+    a: 'We offer subscription-based SaaS pricing with flexible tiers: Workflow Execution pricing based on volume, Enterprise Licensing for large-scale deployments, and API access for custom automation needs. We also provide professional implementation services and consulting for complex enterprise deployments.',
   },
 ];
 
@@ -37,10 +42,21 @@ export default function FAQSection() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="py-28 relative overflow-hidden">
+    <section id="faq" className="py-28 relative overflow-hidden" style={{ background: `linear-gradient(180deg, ${WINE} 0%, #0F0309 100%)` }}>
       <div
-        className="absolute inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 60% 50% at 50% 50%, rgba(255,184,224,0.06) 0%, transparent 70%)' }}
+        className="absolute inset-0 opacity-[0.06] pointer-events-none"
+        style={{
+          backgroundImage: 'radial-gradient(rgba(255,255,255,0.8) 1px, transparent 1px)',
+          backgroundSize: '4px 4px',
+        }}
+      />
+      <div
+        className="absolute -top-40 -left-40 w-[620px] h-[620px] rounded-full pointer-events-none"
+        style={{ background: `radial-gradient(circle, ${MAROON}40 0%, transparent 65%)`, filter: 'blur(100px)' }}
+      />
+      <div
+        className="absolute -bottom-40 -right-40 w-[620px] h-[620px] rounded-full pointer-events-none"
+        style={{ background: `radial-gradient(circle, ${ROSE}2e 0%, transparent 65%)`, filter: 'blur(90px)' }}
       />
 
       <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -50,13 +66,25 @@ export default function FAQSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <div className="section-label mb-4">
-            <div className="w-4 h-px bg-cedar-red" />
-            FAQ
-            <div className="w-4 h-px bg-cedar-red" />
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <div className="w-4 h-px" style={{ background: `linear-gradient(90deg, transparent, ${ROSE})` }} />
+            <span className="text-xs tracking-[0.3em] uppercase font-orbitron font-semibold" style={{ color: BLUSH }}>
+              FAQ
+            </span>
+            <div className="w-4 h-px" style={{ background: `linear-gradient(90deg, ${ROSE}, transparent)` }} />
           </div>
-          <h2 className="section-heading font-orbitron text-4xl sm:text-5xl text-cedar-frost mb-4">
-            Common <span className="text-gradient-red">Questions</span>
+          <h2 className="font-orbitron text-4xl sm:text-5xl text-white mb-5">
+            Common{' '}
+            <span
+              style={{
+                backgroundImage: `linear-gradient(90deg, ${BLUSH}, ${ROSE} 45%, ${MAROON})`,
+                WebkitBackgroundClip: 'text',
+                backgroundClip: 'text',
+                color: 'transparent',
+              }}
+            >
+              Questions
+            </span>
           </h2>
         </motion.div>
 
@@ -68,13 +96,17 @@ export default function FAQSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.05 }}
-              className="glass-card rounded-2xl overflow-hidden hover:border-cedar-red/20 transition-all duration-300"
+              className="group relative rounded-2xl overflow-hidden transition-all duration-500 border"
+              style={{
+                background: 'rgba(255,255,255,0.03)',
+                borderColor: 'rgba(255,255,255,0.08)',
+              }}
             >
               <button
                 className="w-full flex items-center justify-between p-6 text-left gap-4"
                 onClick={() => setOpen(open === i ? null : i)}
               >
-                <span className="font-medium text-cedar-frost text-sm sm:text-base leading-snug">
+                <span className="font-medium text-sm sm:text-base leading-snug" style={{ color: open === i ? '#fff' : 'rgba(255,255,255,0.85)' }}>
                   {faq.q}
                 </span>
                 <motion.div
@@ -82,7 +114,7 @@ export default function FAQSection() {
                   transition={{ duration: 0.2 }}
                   className="flex-shrink-0"
                 >
-                  <ChevronDown size={18} className="text-cedar-frost/40" />
+                  <ChevronDown size={18} style={{ color: 'rgba(255,255,255,0.4)' }} />
                 </motion.div>
               </button>
 
@@ -96,8 +128,8 @@ export default function FAQSection() {
                     className="overflow-hidden"
                   >
                     <div className="px-6 pb-6">
-                      <div className="h-px bg-cedar-red/5 mb-4" />
-                      <p className="text-cedar-frost/60 text-sm leading-relaxed">{faq.a}</p>
+                      <div className="h-px mb-4" style={{ background: `linear-gradient(90deg, transparent, ${ROSE}40, transparent)` }} />
+                      <p className="text-sm leading-relaxed text-white/50">{faq.a}</p>
                     </div>
                   </motion.div>
                 )}

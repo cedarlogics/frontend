@@ -266,7 +266,7 @@ export default function HeroSection() {
             >
               <div className="w-1.5 h-1.5 rounded-full bg-cedar-red animate-pulse" />
               <span className="text-xs font-semibold uppercase tracking-widest text-cedar-red/80">
-                AI Engineering Studio
+                Enterprise AI Workflow Automation
               </span>
             </motion.div>
 
@@ -276,10 +276,10 @@ export default function HeroSection() {
               transition={{ duration: 0.8, delay: 0.1 }}
               className="section-heading font-orbitron text-5xl sm:text-6xl lg:text-7xl leading-[0.95] mb-6"
             >
-              <span className="text-cedar-frost block">INTELLIGENT</span>
-              <span className="text-gradient-red block">SOFTWARE.</span>
-              <span className="text-cedar-frost block">TIMELESS</span>
-              <span className="text-gradient-red block">ENGINEERING.</span>
+              <span className="text-cedar-frost block">ENTERPRISE</span>
+              <span className="text-gradient-red block">WORKFLOW</span>
+              <span className="text-cedar-frost block">INTELLIGENCE</span>
+              <span className="text-gradient-red block">ENGINE</span>
             </motion.h1>
 
             <motion.p
@@ -288,7 +288,7 @@ export default function HeroSection() {
               transition={{ duration: 0.6, delay: 0.3 }}
               className="text-cedar-frost/60 text-sm sm:text-base max-w-sm mx-auto lg:mx-0 lg:ml-auto mb-10 leading-relaxed"
             >
-              We engineer platforms, automation, and cloud-native systems built to endure — every client, a story worth telling.
+              AI-powered workflow orchestration that connects people, systems, and AI agents to automate complex business processes autonomously.
             </motion.p>
 
             <motion.div

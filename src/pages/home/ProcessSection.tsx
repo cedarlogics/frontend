@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Microscope, Palette, Code2, Rocket, BarChart3, TrendingUp } from 'lucide-react';
 
 const steps = [
@@ -11,7 +12,30 @@ const steps = [
   { icon: TrendingUp, label: 'Scale', desc: 'Evolve architecture to handle 10x, 100x, and beyond.' },
 ];
 
+const BLUSH = '#F9A8D4';
+const ROSE = '#EC4899';
+const DARK = '#7A1247';
+const DARK_SOFT = 'rgba(122,18,71,0.14)';
+const BRIGHT = '#EC7FA9';
+
 export default function ProcessSection() {
+  const [active, setActive] = useState(0);
+  const interacted = useRef(false);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if (!interacted.current) setActive((p) => (p + 1) % steps.length);
+    }, 4200);
+    return () => clearInterval(timer);
+  }, []);
+
+  const handleSelect = (i: number) => {
+    interacted.current = true;
+    setActive(i);
+  };
+
+  const progressPct = ((active + 1) / steps.length) * 100;
+
   return (
     <section className="py-28 relative overflow-hidden">
       <div className="absolute inset-0 grid-dot-bg opacity-20" />
@@ -21,100 +45,153 @@ export default function ProcessSection() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-20"
+          className="text-center mb-16"
         >
-          <div className="section-label mb-4">
-            <div className="w-4 h-px bg-cedar-red" />
-            Our Process
-            <div className="w-4 h-px bg-cedar-red" />
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <div className="w-4 h-px" style={{ background: `linear-gradient(90deg, transparent, ${ROSE})` }} />
+            <span className="text-xs tracking-[0.3em] uppercase font-orbitron font-semibold" style={{ color: DARK }}>Our Process</span>
+            <div className="w-4 h-px" style={{ background: `linear-gradient(90deg, ${ROSE}, transparent)` }} />
           </div>
           <h2 className="section-heading font-orbitron text-4xl sm:text-5xl text-cedar-frost mb-5">
             From Concept to
             <br />
-            <span className="text-gradient-violet">Production at Scale</span>
+            <span className="text-gradient-process">Production at Scale</span>
           </h2>
           <p className="text-lg text-cedar-frost/50 max-w-2xl mx-auto">
-            A methodical approach that respects your time, budget, and engineering standards—
+            A methodical approach that respects your time, budget, and engineering standards —
             every phase designed to reduce risk and maximize output.
           </p>
         </motion.div>
 
-        {/* Desktop: horizontal timeline */}
-        <div className="hidden lg:block relative">
-          {/* Connection line */}
-          <div className="absolute top-14 left-0 right-0 h-px"
-            style={{ background: 'linear-gradient(90deg, transparent, rgba(236,127,169,0.3) 10%, rgba(255,184,224,0.3) 50%, rgba(236,127,169,0.3) 90%, transparent)' }} />
-
-          <div className="grid grid-cols-7 gap-4">
-            {steps.map((step, i) => {
-              const Icon = step.icon;
-              return (
-                <motion.div
-                  key={step.label}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: i * 0.1 }}
-                  className="flex flex-col items-center text-center group"
-                >
-                  {/* Node */}
-                  <div className="relative mb-6">
-                    <motion.div
-                      className="w-10 h-10 rounded-2xl flex items-center justify-center relative z-10 transition-all duration-300 group-hover:scale-110"
-                      style={{
-                        background: i === 0 || i === 3 || i === 6
-                          ? 'linear-gradient(135deg, #EC7FA9, #EC7FA9)'
-                          : 'linear-gradient(135deg, rgba(255,184,224,0.6), rgba(255,184,224,0.3))',
-                        boxShadow: i === 0 || i === 3 || i === 6
-                          ? '0 0 20px rgba(236,127,169,0.3)'
-                          : 'none',
-                      }}
-                      whileHover={{ boxShadow: '0 0 20px rgba(236,127,169,0.4)' }}
-                    >
-                      <Icon size={18} className="text-white" />
-                    </motion.div>
-                    {/* Step number */}
-                    <div className="absolute -top-2 -right-2 w-5 h-5 rounded-full text-xs font-bold text-white flex items-center justify-center"
-                      style={{ background: '#EC7FA9' }}>
-                      {i + 1}
-                    </div>
-                  </div>
-
-                  <h3 className="font-display font-semibold text-cedar-frost text-sm mb-2">{step.label}</h3>
-                  <p className="text-xs text-cedar-frost/40 leading-relaxed">{step.desc}</p>
-                </motion.div>
-              );
-            })}
-          </div>
+        {/* Progress rail */}
+        <div className="flex items-center justify-between font-mono text-[10px] tracking-widest text-cedar-frost/30 mb-3">
+          <span>DELIVERY PIPELINE</span>
+          <span>STAGE {String(active + 1).padStart(2, '0')} / {String(steps.length).padStart(2, '0')}</span>
+        </div>
+        <div className="relative h-[3px] rounded-full bg-cedar-frost/10 mb-12 overflow-hidden">
+          <motion.div
+            className="absolute inset-y-0 left-0 rounded-full"
+            style={{ background: `linear-gradient(90deg, ${DARK}, ${BRIGHT})` }}
+            animate={{ width: `${progressPct}%` }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          />
+          <motion.div
+            className="absolute inset-y-0 w-16 opacity-60"
+            style={{ background: `linear-gradient(90deg, transparent, ${BRIGHT}, transparent)` }}
+            animate={{ left: ['-10%', '110%'] }}
+            transition={{ duration: 2.6, repeat: Infinity, ease: 'linear' }}
+          />
         </div>
 
-        {/* Mobile: vertical */}
-        <div className="lg:hidden space-y-4">
+        {/* Desktop: expanding stepper */}
+        <div className="hidden lg:flex gap-3 h-64">
           {steps.map((step, i) => {
             const Icon = step.icon;
+            const isActive = i === active;
             return (
-              <motion.div
+              <motion.button
                 key={step.label}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.06 }}
-                className="flex items-start gap-4 glass-card rounded-xl p-4"
+                onClick={() => handleSelect(i)}
+                layout
+                initial={false}
+                animate={{ flexGrow: isActive ? 5 : 1 }}
+                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                className={`relative flex-shrink-0 rounded-2xl border text-left overflow-hidden ${
+                  isActive ? 'border-violet-400/30' : 'border-cedar-frost/10 hover:border-cedar-frost/25'
+                }`}
+                style={{
+                  flexBasis: 0,
+                  minWidth: isActive ? 260 : 64,
+                  background: isActive ? DARK_SOFT : 'transparent',
+                }}
               >
-                <div className="relative flex-shrink-0">
-                  <div className="w-10 h-10 rounded-xl flex items-center justify-center"
-                    style={{ background: i === 0 || i === 3 || i === 6 ? 'linear-gradient(135deg, #EC7FA9, #EC7FA9)' : 'rgba(255,184,224,0.5)' }}>
-                    <Icon size={18} className="text-white" />
-                  </div>
-                  <div className="absolute -top-1 -right-1 w-4 h-4 rounded-full text-xs font-bold text-white flex items-center justify-center"
-                    style={{ background: '#EC7FA9', fontSize: '9px' }}>
-                    {i + 1}
-                  </div>
+                {/* Number */}
+                <div className="absolute top-4 left-4 font-mono text-[10px] text-cedar-frost/25">
+                  {String(i + 1).padStart(2, '0')}
                 </div>
-                <div>
-                  <h3 className="font-display font-semibold text-cedar-frost text-sm mb-1">{step.label}</h3>
-                  <p className="text-xs text-cedar-frost/50">{step.desc}</p>
-                </div>
+
+                <AnimatePresence mode="wait">
+                  {isActive ? (
+                    <motion.div
+                      key="expanded"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.25, delay: 0.15 }}
+                      className="h-full flex flex-col justify-end p-6"
+                    >
+                      <div
+                        className="w-11 h-11 rounded-xl flex items-center justify-center mb-5"
+                        style={{ background: DARK, boxShadow: `0 0 24px ${DARK}60` }}
+                      >
+                        <Icon size={20} className="text-white" />
+                      </div>
+                      <h3 className="font-display font-semibold text-cedar-frost text-base mb-2">
+                        {step.label}
+                      </h3>
+                      <p className="text-xs text-cedar-frost/45 leading-relaxed">{step.desc}</p>
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="collapsed"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="h-full flex flex-col items-center justify-end gap-4 pb-6"
+                    >
+                      <div className="w-9 h-9 rounded-lg flex items-center justify-center bg-cedar-frost/[0.06] group-hover:bg-cedar-frost/10">
+                        <Icon size={16} className="text-cedar-frost/40" />
+                      </div>
+                      <span
+                        className="text-[11px] font-medium text-cedar-frost/35 whitespace-nowrap"
+                        style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+                      >
+                        {step.label}
+                      </span>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.button>
+            );
+          })}
+        </div>
+
+        {/* Mobile: vertical accordion */}
+        <div className="lg:hidden space-y-3">
+          {steps.map((step, i) => {
+            const Icon = step.icon;
+            const isActive = i === active;
+            return (
+              <motion.div key={step.label} layout className="rounded-2xl border border-cedar-frost/10 overflow-hidden">
+                <button
+                  onClick={() => handleSelect(i)}
+                  className="w-full flex items-center gap-4 p-4 text-left"
+                  style={{ background: isActive ? DARK_SOFT : 'transparent' }}
+                >
+                  <span className="font-mono text-[10px] text-cedar-frost/25">{String(i + 1).padStart(2, '0')}</span>
+                  <div
+                    className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
+                    style={{ background: isActive ? DARK : 'rgba(255,255,255,0.06)' }}
+                  >
+                    <Icon size={16} className={isActive ? 'text-white' : 'text-cedar-frost/40'} />
+                  </div>
+                  <span className="font-display font-semibold text-cedar-frost text-sm flex-1">{step.label}</span>
+                </button>
+                <AnimatePresence initial={false}>
+                  {isActive && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                    >
+                      <p className="text-xs text-cedar-frost/50 leading-relaxed px-4 pb-4 pl-[52px]">
+                        {step.desc}
+                      </p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </motion.div>
             );
           })}

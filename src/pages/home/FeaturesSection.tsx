@@ -1,163 +1,327 @@
-import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
-import { Bot, Building2, Cloud, Code2, BarChart3, ShieldCheck, Layers, Cpu } from 'lucide-react';
+import { useState, useRef } from 'react';
+import { motion, AnimatePresence, useInView } from 'framer-motion';
+import { Workflow, GitBranch, Bot, BarChart3, Share2, LayoutDashboard, ArrowRight } from 'lucide-react';
+
+const HOT = '#FF1A75';
+const BRIGHT = '#FF5CA8';
+const SOFT = '#FFE3EF';
+const INK = '#1A1024';
 
 const features = [
   {
+    icon: Workflow,
+    title: 'AI Workflow Automation Engine',
+    description: 'Core orchestration engine powering end-to-end enterprise workflows with AI-driven execution, conditional branching, and adaptive process management at scale.',
+    accent: HOT,
+    tag: 'Core Engine',
+  },
+  {
+    icon: GitBranch,
+    title: 'Visual Workflow Designer',
+    description: 'Drag-and-drop interface for designing complex multi-step workflows with conditional logic, parallel branches, and AI-assisted decision paths.',
+    accent: '#E0117A',
+    tag: 'Design',
+  },
+  {
     icon: Bot,
-    title: 'AI Automation',
-    description: 'Intelligent agents that learn, adapt, and autonomously execute complex workflows across your entire stack.',
-    accent: '#EC7FA9',
-    tag: 'Machine Learning',
-  },
-  {
-    icon: Building2,
-    title: 'Enterprise Platforms',
-    description: 'Architecting resilient, scalable platforms designed to power thousands of concurrent users across global regions.',
-    accent: '#FFB8E0',
-    tag: 'Distributed Systems',
-  },
-  {
-    icon: Cloud,
-    title: 'Cloud Engineering',
-    description: 'Cloud-native infrastructure with multi-region deployments, auto-scaling, and zero-downtime delivery pipelines.',
-    accent: '#FFB8E0',
-    tag: 'Infrastructure',
-  },
-  {
-    icon: Code2,
-    title: 'API Development',
-    description: 'Design-first REST and GraphQL APIs that scale effortlessly while maintaining strict type safety and SLA guarantees.',
-    accent: '#EC7FA9',
-    tag: 'Backend Engineering',
+    title: 'AI Agent Orchestration Framework',
+    description: 'Coordinate specialized AI agents across business functions. Automate approvals, routing, and task execution with collaborative multi-agent workflows.',
+    accent: BRIGHT,
+    tag: 'Agent Management',
   },
   {
     icon: BarChart3,
-    title: 'Intelligent Analytics',
-    description: 'Real-time data pipelines and AI-powered dashboards that surface actionable insights without the noise.',
-    accent: '#FFB8E0',
-    tag: 'Data Intelligence',
+    title: 'Business Process Intelligence',
+    description: 'Identify bottlenecks, analyze execution patterns, and optimize process paths using AI-driven recommendations. Continuously improve operational efficiency.',
+    accent: '#E0117A',
+    tag: 'Analytics',
   },
   {
-    icon: ShieldCheck,
-    title: 'Enterprise Security',
-    description: 'Zero-trust architecture, automated vulnerability scanning, and compliance-ready security frameworks.',
-    accent: '#EC7FA9',
-    tag: 'Security',
+    icon: Share2,
+    title: 'Enterprise Integration Hub',
+    description: 'Connect ERP, CRM, HRMS, finance, and cloud platforms. Synchronize workflows across systems with API-driven automation and pre-built enterprise connectors.',
+    accent: BRIGHT,
+    tag: 'Connectivity',
   },
   {
-    icon: Layers,
-    title: 'Digital Transformation',
-    description: 'End-to-end modernization of legacy systems into composable, event-driven architectures.',
-    accent: '#FFB8E0',
-    tag: 'Modernization',
+    icon: LayoutDashboard,
+    title: 'Workflow Monitoring Dashboard',
+    description: 'Centralized real-time monitoring of workflow execution. Track active processes, completion rates, error states, and system health across all automation pipelines.',
+    accent: '#E0117A',
+    tag: 'Monitoring',
   },
-  {
-    icon: Cpu,
-    title: 'Product Engineering',
-    description: 'From ideation to production—we design, build, and iterate on digital products that users love.',
-    accent: '#FFB8E0',
-    tag: 'Full-Stack',
-  },
+];
+
+const NODE_POS = [
+  { x: 50, y: 12 },
+  { x: 86, y: 38 },
+  { x: 72, y: 81 },
+  { x: 28, y: 81 },
+  { x: 14, y: 38 },
 ];
 
 export default function FeaturesSection() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: '-100px' });
+  const [active, setActive] = useState(0);
+
+  const satellites = features.slice(1);
+  const activeFeat = features[active];
 
   return (
-    <section id="features" className="py-28 relative overflow-hidden">
-      <div className="absolute inset-0 grid-line-bg opacity-20" />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-24 bg-gradient-to-b from-transparent via-cedar-red/40 to-transparent" />
+    <section id="features" className="py-28 relative overflow-hidden" style={{ background: '#FFFFFF' }}>
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse 70% 50% at 100% 20%, #FFE3EF 0%, transparent 60%)' }}
+      />
+      <div
+        className="absolute inset-0 opacity-[0.08] pointer-events-none"
+        style={{
+          backgroundImage: `radial-gradient(${HOT} 1px, transparent 1px)`,
+          backgroundSize: '4px 4px',
+        }}
+      />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7 }}
-          className="text-center mb-20"
-        >
-          <div className="section-label mb-4">
-            <div className="w-4 h-px bg-cedar-red" />
-            Core Capabilities
-            <div className="w-4 h-px bg-cedar-red" />
-          </div>
-          <h2 className="section-heading font-orbitron text-4xl sm:text-5xl lg:text-6xl text-cedar-frost mb-5">
-            Engineering Capabilities
-            <br />
-            <span className="text-gradient-violet">That Scale Infinitely</span>
-          </h2>
-          <p className="text-lg text-cedar-frost/50 max-w-2xl mx-auto">
-            A comprehensive suite of AI and engineering capabilities, each built to enterprise standards 
-            and designed to work cohesively together.
-          </p>
-        </motion.div>
+        <div className="grid grid-cols-1 lg:grid-cols-[380px_1fr] gap-10 lg:gap-16 items-center">
+          {/* Left: sticky heading + copy */}
+          <motion.div
+            ref={ref}
+            initial={{ opacity: 0, x: -30 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.7 }}
+            className="lg:sticky lg:top-28"
+          >
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-4 h-px" style={{ background: HOT }} />
+              <span className="text-xs font-semibold tracking-[0.2em] uppercase" style={{ color: HOT }}>
+                Core Features
+              </span>
+            </div>
+            <h2 className="font-orbitron text-4xl sm:text-5xl leading-[1.08] mb-6" style={{ color: INK }}>
+              Enterprise AI
+              <br />
+              Workflow
+              <br />
+              <span style={{ color: HOT }}>Automation Platform</span>
+            </h2>
+            <p className="text-base leading-relaxed mb-8" style={{ color: `${INK}90` }}>
+              A comprehensive suite of AI-powered workflow automation capabilities — from visual
+              process design and agent orchestration to enterprise integration and real-time analytics.
+            </p>
 
-        {/* Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {features.map((feat, i) => (
-            <FeatureCard key={feat.title} feat={feat} index={i} />
-          ))}
+            {/* Feature quick-nav list */}
+            <div className="hidden lg:flex flex-col gap-1">
+              {features.map((feat, i) => {
+                const isActive = active === i;
+                return (
+                  <button
+                    key={feat.title}
+                    onClick={() => setActive(i)}
+                    className="group flex items-center gap-3 py-2.5 text-left border-b transition-colors"
+                    style={{ borderColor: isActive ? `${feat.accent}30` : '#F3E4EC' }}
+                  >
+                    <span
+                      className="w-1.5 h-1.5 rounded-full flex-shrink-0 transition-transform"
+                      style={{ background: feat.accent, transform: isActive ? 'scale(1.4)' : 'scale(1)' }}
+                    />
+                    <span
+                      className="text-sm font-medium flex-1 transition-colors"
+                      style={{ color: isActive ? INK : `${INK}55` }}
+                    >
+                      {feat.tag}
+                    </span>
+                    <ArrowRight
+                      size={14}
+                      className="transition-all"
+                      style={{
+                        color: feat.accent,
+                        opacity: isActive ? 1 : 0,
+                        transform: isActive ? 'translateX(0)' : 'translateX(-4px)',
+                      }}
+                    />
+                  </button>
+                );
+              })}
+            </div>
+          </motion.div>
+
+          {/* Right: diagram + detail strip */}
+          <div>
+            <div className="relative aspect-square max-w-[480px] mx-auto w-full">
+              <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full overflow-visible">
+                {satellites.map((feat, i) => {
+                  const pos = NODE_POS[i];
+                  const isActive = active === i + 1;
+                  return (
+                    <line
+                      key={feat.title}
+                      x1={50}
+                      y1={50}
+                      x2={pos.x}
+                      y2={pos.y}
+                      stroke={isActive ? feat.accent : '#FFD5E8'}
+                      strokeWidth={isActive ? 0.6 : 0.4}
+                      style={{ transition: 'stroke 0.4s, stroke-width 0.4s' }}
+                    />
+                  );
+                })}
+              </svg>
+
+              <motion.button
+                onClick={() => setActive(0)}
+                className="absolute rounded-2xl flex flex-col items-center justify-center gap-1.5 z-10"
+                initial={{ x: '-50%', y: '-50%' }}
+                style={{
+                  left: '50%',
+                  top: '50%',
+                  width: 116,
+                  height: 116,
+                  background: `linear-gradient(135deg, ${HOT}, ${BRIGHT})`,
+                  boxShadow: active === 0 ? `0 8px 32px ${HOT}55, 0 0 0 6px #FFE3EF` : `0 8px 24px ${HOT}35`,
+                }}
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.3 }}
+              >
+                <Workflow size={24} className="text-white" />
+                <span className="text-[10px] font-mono tracking-wider text-white/90">CORE ENGINE</span>
+              </motion.button>
+
+              {satellites.map((feat, i) => {
+                const pos = NODE_POS[i];
+                const Icon = feat.icon;
+                const isActive = active === i + 1;
+                return (
+                  <motion.button
+                    key={feat.title}
+                    onClick={() => setActive(i + 1)}
+                    className="absolute rounded-xl flex flex-col items-center justify-center gap-1 z-10"
+                    initial={{ x: '-50%', y: '-50%' }}
+                    style={{
+                      left: `${pos.x}%`,
+                      top: `${pos.y}%`,
+                      width: 82,
+                      height: 82,
+                      background: isActive ? `${feat.accent}12` : '#FFFFFF',
+                      border: `1.5px solid ${isActive ? feat.accent : '#FFD5E8'}`,
+                      boxShadow: isActive ? `0 8px 20px ${feat.accent}30` : '0 2px 8px rgba(0,0,0,0.04)',
+                    }}
+                    whileHover={{ scale: 1.08 }}
+                    transition={{ duration: 0.25 }}
+                  >
+                    <Icon size={17} style={{ color: isActive ? feat.accent : '#C9A6BB' }} />
+                    <span
+                      className="text-[9px] font-semibold text-center leading-tight px-1"
+                      style={{ color: isActive ? INK : '#B79AAC' }}
+                    >
+                      {feat.tag}
+                    </span>
+                  </motion.button>
+                );
+              })}
+            </div>
+
+            {/* Detail strip under the diagram */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={active}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.3 }}
+                className="rounded-2xl p-6 mt-6 flex items-start gap-4"
+                style={{
+                  background: '#FFFFFF',
+                  border: `1.5px solid ${activeFeat.accent}30`,
+                  boxShadow: `0 12px 28px ${activeFeat.accent}15`,
+                }}
+              >
+                <div
+                  className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+                  style={{ background: SOFT }}
+                >
+                  <activeFeat.icon size={18} style={{ color: activeFeat.accent }} />
+                </div>
+                <div className="flex-1">
+                  <span
+                    className="text-[10px] font-semibold px-2 py-0.5 rounded-full inline-block mb-2"
+                    style={{ background: SOFT, color: activeFeat.accent }}
+                  >
+                    {activeFeat.tag}
+                  </span>
+                  <h3 className="font-display font-semibold text-base mb-1.5" style={{ color: INK }}>
+                    {activeFeat.title}
+                  </h3>
+                  <p className="text-sm leading-relaxed" style={{ color: `${INK}90` }}>
+                    {activeFeat.description}
+                  </p>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </div>
+
+        {/* Mobile: connected vertical stack (unchanged) */}
+        <div className="lg:hidden relative pl-6 mt-14">
+          <div
+            className="absolute left-[11px] top-2 bottom-2 w-px"
+            style={{ background: `linear-gradient(to bottom, ${HOT}60, #FFE3EF)` }}
+          />
+          <div className="space-y-3">
+            {features.map((feat, i) => {
+              const Icon = feat.icon;
+              const isActive = active === i;
+              return (
+                <motion.div key={feat.title} className="relative">
+                  <div
+                    className="absolute -left-6 top-5 w-[9px] h-[9px] rounded-full"
+                    style={{ background: feat.accent, boxShadow: `0 0 8px ${feat.accent}` }}
+                  />
+                  <button
+                    onClick={() => setActive(isActive ? -1 : i)}
+                    className="w-full text-left rounded-xl p-4 flex items-start gap-3"
+                    style={{
+                      background: '#FFFFFF',
+                      border: `1.5px solid ${isActive ? feat.accent + '50' : '#FFE3EF'}`,
+                      boxShadow: isActive ? `0 8px 20px ${feat.accent}20` : '0 2px 8px rgba(0,0,0,0.03)',
+                    }}
+                  >
+                    <div
+                      className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
+                      style={{ background: SOFT }}
+                    >
+                      <Icon size={16} style={{ color: feat.accent }} />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <span
+                        className="text-[10px] font-semibold px-2 py-0.5 rounded-full inline-block mb-1.5"
+                        style={{ background: SOFT, color: feat.accent }}
+                      >
+                        {feat.tag}
+                      </span>
+                      <h3 className="font-display font-semibold text-sm" style={{ color: INK }}>{feat.title}</h3>
+                      <AnimatePresence>
+                        {isActive && (
+                          <motion.p
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.25 }}
+                            className="text-xs leading-relaxed mt-2 overflow-hidden"
+                            style={{ color: `${INK}90` }}
+                          >
+                            {feat.description}
+                          </motion.p>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  </button>
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>
-  );
-}
-
-function FeatureCard({ feat, index }: { feat: typeof features[0]; index: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: '-50px' });
-  const Icon = feat.icon;
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 30 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, delay: (index % 4) * 0.08 }}
-      className="group relative glass-card rounded-2xl p-6 cursor-default overflow-hidden hover:border-cedar-red/20 transition-all duration-500"
-      whileHover={{ y: -4, transition: { duration: 0.2 } }}
-    >
-      {/* Hover glow */}
-      <div
-        className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-        style={{ background: `radial-gradient(ellipse at 50% 0%, ${feat.accent}10 0%, transparent 70%)` }}
-      />
-      <div
-        className="absolute top-0 left-0 right-0 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-        style={{ background: `linear-gradient(90deg, transparent, ${feat.accent}60, transparent)` }}
-      />
-
-      {/* Tag */}
-      <div className="flex items-center justify-between mb-4">
-        <span
-          className="text-xs font-semibold px-2.5 py-1 rounded-full"
-          style={{ background: `${feat.accent}15`, color: feat.accent }}
-        >
-          {feat.tag}
-        </span>
-        <div
-          className="w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110"
-          style={{ background: `${feat.accent}15` }}
-        >
-          <Icon size={20} style={{ color: feat.accent }} />
-        </div>
-      </div>
-
-      <h3 className="font-display font-semibold text-lg text-cedar-frost mb-2 group-hover:text-white transition-colors">
-        {feat.title}
-      </h3>
-      <p className="text-sm text-cedar-frost/50 leading-relaxed group-hover:text-cedar-frost/70 transition-colors">
-        {feat.description}
-      </p>
-
-      {/* Bottom accent */}
-      <div
-        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-16 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-        style={{ background: `linear-gradient(90deg, transparent, ${feat.accent}, transparent)` }}
-      />
-    </motion.div>
   );
 }
