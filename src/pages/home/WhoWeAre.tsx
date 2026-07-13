@@ -1,17 +1,22 @@
 import { motion } from 'framer-motion';
-import { Building2, Stethoscope, Factory, Landmark, Users, Shield } from 'lucide-react';
+import enterpriseIcon from '../../assets/Enterprise Operations.png';
+import healthcareIcon from '../../assets/Healthcare.png';
+import manufacturingIcon from '../../assets/Manufacturing.png';
+import financeIcon from '../../assets/Finance & Banking.png';
+import hrIcon from '../../assets/HR & People Operations.png';
+import governmentIcon from '../../assets/Government & Public Sector.png';
 
 // A single restrained palette — blush, rose, deep maroon, ink, white —
 // instead of one hue per card. Variation comes from tone + light/dark
 // balance, the way an editorial spread varies within one story, not six.
-const BLUSH = '#F9A8D4';
-const ROSE = '#EC4899';
+const BLUSH = '#FF1A75';
+const ROSE = '#FF5CA8';
 const MAROON = '#7A1247';
 const WINE = '#1A0510';
 
 const industries = [
   {
-    icon: Building2,
+    icon: enterpriseIcon,
     title: 'Enterprise Operations',
     body: 'Automate cross-departmental workflows, approvals, and compliance processes across your entire organization with AI-driven orchestration.',
     tag: 'Operations',
@@ -20,7 +25,7 @@ const industries = [
     shape: 'notch-tl-br',
   },
   {
-    icon: Stethoscope,
+    icon: healthcareIcon,
     title: 'Healthcare',
     body: 'Streamline patient data workflows, clinical approvals, billing automation, and compliance reporting while maintaining HIPAA and regulatory standards.',
     tag: 'Healthcare',
@@ -29,7 +34,7 @@ const industries = [
     shape: 'squircle',
   },
   {
-    icon: Factory,
+    icon: manufacturingIcon,
     title: 'Manufacturing',
     body: 'Integrate supply chain systems, automate production workflows, synchronize inventory management, and optimize logistics with intelligent process automation.',
     tag: 'Manufacturing',
@@ -38,7 +43,7 @@ const industries = [
     shape: 'notch-tr-bl',
   },
   {
-    icon: Landmark,
+    icon: financeIcon,
     title: 'Finance & Banking',
     body: 'Automate fraud detection workflows, compliance checks, transaction processing, and regulatory reporting with AI agents and decision automation.',
     tag: 'Finance',
@@ -47,7 +52,7 @@ const industries = [
     shape: 'notch-tl-br',
   },
   {
-    icon: Users,
+    icon: hrIcon,
     title: 'HR & People Operations',
     body: 'Streamline employee onboarding, benefits administration, performance reviews, and cross-system HR workflows connecting HRMS, payroll, and IT systems.',
     tag: 'Human Resources',
@@ -56,7 +61,7 @@ const industries = [
     shape: 'squircle',
   },
   {
-    icon: Shield,
+    icon: governmentIcon,
     title: 'Government & Public Sector',
     body: 'Modernize legacy processes, automate citizen services workflows, ensure compliance with public sector regulations, and reduce operational overhead.',
     tag: 'Government',
@@ -95,7 +100,7 @@ function getShapeStyle(shape) {
 
 export default function WhoWeAre() {
   return (
-    <section className="py-28 relative overflow-hidden" style={{ background: `linear-gradient(180deg, ${WINE} 0%, #0F0309 100%)` }}>
+    <section id="about" className="py-28 relative overflow-hidden" style={{ background: `linear-gradient(180deg, ${WINE} 0%, #0F0309 100%)` }}>
       {/* Fine grain — reads as film grain rather than a tech grid, keeps the editorial tone */}
       <div
         className="absolute inset-0 opacity-[0.06] pointer-events-none"
@@ -220,7 +225,6 @@ export default function WhoWeAre() {
 
           <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {industries.map((ind, i) => {
-              const Icon = ind.icon;
               const shapeStyle = getShapeStyle(ind.shape);
               const isNotch = ind.shape !== 'squircle';
               const isBlush = ind.mood === 'blush';
@@ -283,14 +287,14 @@ export default function WhoWeAre() {
                       {ind.tag}
                     </span>
                     <div
-                      className="w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:rotate-6"
+                      className="w-14 h-14 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:rotate-6"
                       style={
                         isBlush
                           ? { background: 'rgba(255,255,255,0.08)', boxShadow: '0 0 0 1px rgba(255,255,255,0.18)' }
                           : { background: `${ind.tone}1f`, boxShadow: `0 0 0 1px ${ind.tone}40` }
                       }
                     >
-                      <Icon size={20} style={{ color: isBlush ? ind.tone : '#fff' }} />
+                      <img src={ind.icon} alt={ind.title} className="w-8 h-8 object-contain" />
                     </div>
                   </div>
 

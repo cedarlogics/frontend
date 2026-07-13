@@ -2,13 +2,14 @@ import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ChevronRight, Zap } from 'lucide-react';
+import logo from '../../public/logo.png';
 
 const navLinks = [
   { label: 'Home', href: '/' },
   { label: 'Features', href: '/#features' },
   { label: 'Services', href: '/#services' },
   { label: 'About', href: '/#about' },
-  { label: 'Blog', href: '/blog' },
+  { label: 'Blog', href: '/#blog' },
   { label: 'Contact', href: '/#contact' },
 ];
 
@@ -24,6 +25,35 @@ export default function Navbar() {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (location.pathname !== '/') {
+      setActiveSection('');
+      return;
+    }
+
+    const sectionIds = navLinks
+      .map(l => l.href.replace('/#', ''))
+      .filter(id => id && document.getElementById(id));
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        }
+      },
+      { rootMargin: '-30% 0px -60% 0px' }
+    );
+
+    sectionIds.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, [location.pathname]);
 
   useEffect(() => {
     setMobileOpen(false);
@@ -53,24 +83,11 @@ export default function Navbar() {
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 lg:h-20">
+          <div className="flex items-center justify-between h-16 lg:h-20 overflow-visible">
             {/* Logo */}
             <Link to="/" className="flex items-center gap-3 group flex-shrink-0">
-              <div className="relative">
-                <div className="w-9 h-9 rounded-xl flex items-center justify-center"
-                  style={{ background: 'linear-gradient(135deg, #EC7FA9, #FFB8E0)' }}>
-                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                    <path d="M9 1L16 5.5V12.5L9 17L2 12.5V5.5L9 1Z" stroke="white" strokeWidth="1.5" fill="none"/>
-                    <path d="M9 5L13 7.5V12.5L9 15L5 12.5V7.5L9 5Z" fill="white" fillOpacity="0.3"/>
-                    <circle cx="9" cy="9" r="2" fill="white"/>
-                  </svg>
-                </div>
-                <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  style={{ background: 'linear-gradient(135deg, #EC7FA9, #FFB8E0)', filter: 'blur(8px)' }} />
-              </div>
-              <span className="font-display font-bold text-lg text-cedar-frost tracking-tight">
-                Cedar<span className="text-cedar-red">Logics</span>
-              </span>
+              <img src={logo} alt="CedarLogics" className="w-[120px] h-[120px] rounded-xl object-contain -my-7" />
+              
             </Link>
 
             {/* Desktop Nav */}
@@ -120,10 +137,13 @@ export default function Navbar() {
               transition={{ type: 'spring', damping: 30, stiffness: 300 }}
               className="fixed top-0 right-0 bottom-0 z-50 w-80 glass-dark flex flex-col"
             >
-              <div className="flex items-center justify-between p-6 border-b border-cedar-red/10">
-                <span className="font-display font-bold text-cedar-frost">
-                  Cedar<span className="text-cedar-red">Logics</span>
-                </span>
+              <div className="flex items-center justify-between p-6 border-b" style={{ borderColor: 'rgba(122,18,71,0.1)' }}>
+                <div className="flex items-center gap-2">
+                  <img src={logo} alt="CedarLogics" className="w-14 h-14 rounded-lg object-contain" />
+                  <span className="font-orbitron font-bold" style={{ color: '#8E1155' }}>
+                    Cedar<span style={{ color: '#FF2D87' }}>Logics</span>
+                  </span>
+                </div>
                 <button
                   onClick={() => setMobileOpen(false)}
                   className="p-2 rounded-lg text-cedar-frost/60 hover:text-cedar-frost"
@@ -142,7 +162,10 @@ export default function Navbar() {
                     <Link
                       to={link.href.startsWith('/#') ? '/' : link.href}
                       onClick={() => handleNavClick(link.href)}
-                      className="flex items-center justify-between px-4 py-3 rounded-xl text-cedar-frost/70 hover:text-cedar-frost hover:bg-cedar-red/8 transition-all duration-200 group"
+                      className="flex items-center justify-between px-4 py-3 rounded-xl text-cedar-frost/70 hover:text-cedar-frost transition-all duration-200 group"
+                      style={{ hover: { background: 'rgba(255,20,147,0.08)' } }}
+                      onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,20,147,0.08)' }}
+                      onMouseLeave={e => { e.currentTarget.style.background = '' }}
                     >
                       <span className="font-medium">{link.label}</span>
                       <ChevronRight size={16} className="opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -150,12 +173,11 @@ export default function Navbar() {
                   </motion.div>
                 ))}
               </nav>
-              <div className="p-6 border-t border-cedar-red/10">
-                <Link to="/console" onClick={() => setMobileOpen(false)}
-                  className="btn-primary w-full justify-center">
-                  <Zap size={15} />
-                  CedarLogics Console
-                </Link>
+              <div className="p-6 border-t" style={{ borderColor: 'rgba(122,18,71,0.1)' }}>
+                  <Link to="/console" onClick={() => setMobileOpen(false)}
+                    className="btn-primary w-full justify-center">
+                    Live Dashboard
+                  </Link>
               </div>
             </motion.div>
           </>
@@ -165,11 +187,14 @@ export default function Navbar() {
   );
 }
 
-function NavItem({ link, onNavigate }: { link: { label: string; href: string }; active: string; onNavigate: (href: string) => void }) {
+function NavItem({ link, active, onNavigate }: { link: { label: string; href: string }; active: string; onNavigate: (href: string) => void }) {
   const location = useLocation();
-  const isActive = location.pathname === link.href || 
-    (link.href === '/' && location.pathname === '/') ||
-    (link.href === '/blog' && location.pathname.startsWith('/blog'));
+  const sectionId = link.href.replace('/#', '');
+  const isActive = link.href === '/'
+    ? location.pathname === '/' && active === '' || active === 'home'
+    : link.href.startsWith('/#')
+      ? active === sectionId
+      : location.pathname.startsWith(link.href);
 
   return (
     <Link
@@ -180,22 +205,22 @@ function NavItem({ link, onNavigate }: { link: { label: string; href: string }; 
           onNavigate(link.href);
         }
       }}
-      className="relative px-4 py-2 text-sm font-medium rounded-lg transition-colors duration-200 group"
-      style={{ color: isActive ? '#FFFFFF' : 'rgba(190,89,133,0.6)' }}
+      className="relative px-4 py-2 text-sm font-orbitron font-semibold rounded-lg transition-colors duration-200 group"
+      style={{ color: isActive ? '#7A1247' : 'rgba(122,18,71,0.5)' }}
     >
-      <span className="relative z-10 group-hover:text-cedar-frost transition-colors">
+      <span className="relative z-10 transition-colors" style={{ color: 'inherit' }}>
         {link.label}
       </span>
       {isActive && (
         <motion.div
           layoutId="nav-indicator"
           className="absolute inset-0 rounded-lg"
-          style={{ background: 'rgba(236,127,169,0.07)' }}
+          style={{ background: 'rgba(255,20,147,0.07)' }}
           transition={{ type: 'spring', bounce: 0.2, duration: 0.4 }}
         />
       )}
       <div className="absolute bottom-1 left-4 right-4 h-px rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-        style={{ background: 'linear-gradient(90deg, transparent, rgba(236,127,169,0.6), transparent)' }} />
+        style={{ background: 'linear-gradient(90deg, transparent, rgba(255,20,147,0.6), transparent)' }} />
     </Link>
   );
 }
@@ -218,17 +243,16 @@ function ConsoleButton() {
         ref={btnRef}
         to="/console"
         className="relative inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white overflow-hidden group"
-        style={{ background: 'linear-gradient(135deg, #EC7FA9, #EC7FA9)' }}
+        style={{ background: 'linear-gradient(135deg, #FF2D87, #8E1155)' }}
         onMouseMove={handleMouseMove}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => { setHovered(false); setPos({ x: 0, y: 0 }); }}
       >
         <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          style={{ background: 'linear-gradient(135deg, #FFB8E0, #EC7FA9)' }} />
+          style={{ background: 'linear-gradient(135deg, #FF2D87, #8E1155)' }} />
         <span className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          style={{ boxShadow: '0 0 30px rgba(236,127,169,0.5)', }} />
-        <Zap size={14} className="relative z-10" />
-        <span className="relative z-10">Console</span>
+          style={{ boxShadow: '0 0 30px rgba(255,20,147,0.5)', }} />
+        <span className="relative z-10">Live Dashboard</span>
       </Link>
     </motion.div>
   );

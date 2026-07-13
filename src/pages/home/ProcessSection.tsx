@@ -1,22 +1,28 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Microscope, Palette, Code2, Rocket, BarChart3, TrendingUp } from 'lucide-react';
+import discoverIcon from '../../assets/Discover.png';
+import researchIcon from '../../assets/Research.png';
+import designIcon from '../../assets/Design (2).png';
+import buildIcon from '../../assets/Build.png';
+import deployIcon from '../../assets/Deploy.png';
+import optimizeIcon from '../../assets/Optimize.png';
+import scaleIcon from '../../assets/Scale.png';
 
 const steps = [
-  { icon: Search, label: 'Discover', desc: 'Deep dive into your business context, technical landscape, and user needs.' },
-  { icon: Microscope, label: 'Research', desc: 'Competitive analysis, technical feasibility, and architecture scoping.' },
-  { icon: Palette, label: 'Design', desc: 'Systems thinking meets interface design — clarity before code.' },
-  { icon: Code2, label: 'Build', desc: 'Iterative development with continuous feedback and engineering rigor.' },
-  { icon: Rocket, label: 'Deploy', desc: 'Zero-downtime releases with full observability from day one.' },
-  { icon: BarChart3, label: 'Optimize', desc: 'Performance profiling, cost analysis, and reliability improvements.' },
-  { icon: TrendingUp, label: 'Scale', desc: 'Evolve architecture to handle 10x, 100x, and beyond.' },
+  { icon: discoverIcon, label: 'Discover', desc: 'Deep dive into your business context, technical landscape, and user needs.' },
+  { icon: researchIcon, label: 'Research', desc: 'Competitive analysis, technical feasibility, and architecture scoping.' },
+  { icon: designIcon, label: 'Design', desc: 'Systems thinking meets interface design — clarity before code.' },
+  { icon: buildIcon, label: 'Build', desc: 'Iterative development with continuous feedback and engineering rigor.' },
+  { icon: deployIcon, label: 'Deploy', desc: 'Zero-downtime releases with full observability from day one.' },
+  { icon: optimizeIcon, label: 'Optimize', desc: 'Performance profiling, cost analysis, and reliability improvements.' },
+  { icon: scaleIcon, label: 'Scale', desc: 'Evolve architecture to handle 10x, 100x, and beyond.' },
 ];
 
-const BLUSH = '#F9A8D4';
-const ROSE = '#EC4899';
-const DARK = '#7A1247';
-const DARK_SOFT = 'rgba(122,18,71,0.14)';
-const BRIGHT = '#EC7FA9';
+const BLUSH = '#FF6FB5';
+const ROSE = '#FF2D87';
+const DARK = '#8E1155';
+const DARK_SOFT = 'rgba(142,17,85,0.14)';
+const BRIGHT = '#FF6FB5';
 
 export default function ProcessSection() {
   const [active, setActive] = useState(0);
@@ -38,7 +44,13 @@ export default function ProcessSection() {
 
   return (
     <section className="py-28 relative overflow-hidden">
-      <div className="absolute inset-0 grid-dot-bg opacity-20" />
+      <div
+        className="absolute inset-0 opacity-[0.08] pointer-events-none"
+        style={{
+          backgroundImage: `radial-gradient(${BLUSH} 1px, transparent 1px)`,
+          backgroundSize: '4px 4px',
+        }}
+      />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -49,13 +61,22 @@ export default function ProcessSection() {
         >
           <div className="flex items-center justify-center gap-3 mb-4">
             <div className="w-4 h-px" style={{ background: `linear-gradient(90deg, transparent, ${ROSE})` }} />
-            <span className="text-xs tracking-[0.3em] uppercase font-orbitron font-semibold" style={{ color: DARK }}>Our Process</span>
+            <span className="text-xs tracking-[0.3em] uppercase font-orbitron font-semibold" style={{ color: BLUSH }}>Our Process</span>
             <div className="w-4 h-px" style={{ background: `linear-gradient(90deg, ${ROSE}, transparent)` }} />
           </div>
-          <h2 className="section-heading font-orbitron text-4xl sm:text-5xl text-cedar-frost mb-5">
+          <h2 className="font-orbitron text-4xl sm:text-5xl text-cedar-frost mb-5">
             From Concept to
             <br />
-            <span className="text-gradient-process">Production at Scale</span>
+            <span
+              style={{
+                backgroundImage: `linear-gradient(90deg, ${BLUSH}, ${ROSE} 45%, ${DARK})`,
+                WebkitBackgroundClip: 'text',
+                backgroundClip: 'text',
+                color: 'transparent',
+              }}
+            >
+              Production at Scale
+            </span>
           </h2>
           <p className="text-lg text-cedar-frost/50 max-w-2xl mx-auto">
             A methodical approach that respects your time, budget, and engineering standards —
@@ -86,7 +107,6 @@ export default function ProcessSection() {
         {/* Desktop: expanding stepper */}
         <div className="hidden lg:flex gap-3 h-64">
           {steps.map((step, i) => {
-            const Icon = step.icon;
             const isActive = i === active;
             return (
               <motion.button
@@ -124,7 +144,7 @@ export default function ProcessSection() {
                         className="w-11 h-11 rounded-xl flex items-center justify-center mb-5"
                         style={{ background: DARK, boxShadow: `0 0 24px ${DARK}60` }}
                       >
-                        <Icon size={20} className="text-white" />
+                        <img src={step.icon} alt={step.label} className="w-5 h-5 object-contain" />
                       </div>
                       <h3 className="font-display font-semibold text-cedar-frost text-base mb-2">
                         {step.label}
@@ -141,7 +161,7 @@ export default function ProcessSection() {
                       className="h-full flex flex-col items-center justify-end gap-4 pb-6"
                     >
                       <div className="w-9 h-9 rounded-lg flex items-center justify-center bg-cedar-frost/[0.06] group-hover:bg-cedar-frost/10">
-                        <Icon size={16} className="text-cedar-frost/40" />
+                        <img src={step.icon} alt={step.label} className="w-4 h-4 object-contain opacity-40" />
                       </div>
                       <span
                         className="text-[11px] font-medium text-cedar-frost/35 whitespace-nowrap"
@@ -160,7 +180,6 @@ export default function ProcessSection() {
         {/* Mobile: vertical accordion */}
         <div className="lg:hidden space-y-3">
           {steps.map((step, i) => {
-            const Icon = step.icon;
             const isActive = i === active;
             return (
               <motion.div key={step.label} layout className="rounded-2xl border border-cedar-frost/10 overflow-hidden">
@@ -174,7 +193,7 @@ export default function ProcessSection() {
                     className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
                     style={{ background: isActive ? DARK : 'rgba(255,255,255,0.06)' }}
                   >
-                    <Icon size={16} className={isActive ? 'text-white' : 'text-cedar-frost/40'} />
+                    <img src={step.icon} alt={step.label} className={`w-4 h-4 object-contain ${isActive ? '' : 'opacity-40'}`} />
                   </div>
                   <span className="font-display font-semibold text-cedar-frost text-sm flex-1">{step.label}</span>
                 </button>

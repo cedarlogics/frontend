@@ -81,7 +81,7 @@
   }
 
   .text-gradient-red {
-    background: linear-gradient(135deg, #EC7FA9 0%, #FFB8E0 50%, #EC7FA9 100%);
+    background: linear-gradient(135deg, #FF2D87 0%, #8E1155 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -96,13 +96,6 @@
 
   .text-gradient-violet {
     background: linear-gradient(135deg, #EC7FA9 0%, #FFB8E0 50%, #EC7FA9 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .text-gradient-process {
-    background: linear-gradient(135deg, #FF1493 0%, #7A1247 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -158,7 +151,7 @@
 
   .section-label {
     @apply inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest;
-    color: #EC7FA9;
+    color: #FF1A75;
   }
 
   .section-heading {

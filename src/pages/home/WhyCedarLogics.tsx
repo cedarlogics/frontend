@@ -1,36 +1,39 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { TreePine, Zap, Target, Infinity } from 'lucide-react';
+import builtToEndure from '../../assets/Built to Endure.png';
+import aiNative from '../../assets/AI-Native Architecture.png';
+import processPrecision from '../../assets/Process Precision.png';
+import continuousOpt from '../../assets/Process Precision (2).png';
 
-const BLUSH = '#F9A8D4';
-const ROSE = '#EC4899';
+const BLUSH = '#FF1A75';
+const ROSE = '#FF5CA8';
 const MAROON = '#7A1247';
 const WINE = '#1A0510';
 
 const pillars = [
   {
-    icon: TreePine,
     title: 'Built to Endure',
     body: 'Like cedar wood renowned for its strength, we build automation that withstands the test of time. No shortcuts. No technical debt accepted as inevitable.',
     accent: BLUSH,
+    img: builtToEndure,
   },
   {
-    icon: Zap,
     title: 'AI-Native Architecture',
     body: 'Artificial intelligence is not a feature we bolt on — it is the architectural layer from which every workflow is designed. Intelligence woven into the fabric of every process.',
     accent: ROSE,
+    img: aiNative,
   },
   {
-    icon: Target,
     title: 'Process Precision',
     body: 'Every workflow is deliberate. Every automation has a purpose. We apply algorithmic thinking to business process design, enterprise integration, and operational efficiency.',
     accent: MAROON,
+    img: processPrecision,
   },
   {
-    icon: Infinity,
     title: 'Continuous Optimization',
     body: 'Automation that learns and improves over time. Our AI agents monitor, analyze, and optimize workflows continuously — compounding operational value with every cycle.',
     accent: ROSE,
+    img: continuousOpt,
   },
 ];
 
@@ -71,11 +74,11 @@ export default function WhyCedarLogics() {
             <div className="flex items-center gap-3 mb-4">
               <div className="w-4 h-px" style={{ background: `linear-gradient(90deg, transparent, ${ROSE})` }} />
               <span className="text-xs tracking-[0.3em] uppercase font-orbitron font-semibold" style={{ color: BLUSH }}>
-                Who We Are
+                About CedarLogics
               </span>
             </div>
             <h2 className="font-orbitron text-4xl sm:text-5xl text-white mb-5">
-              The Intersection of
+              Intelligent Workflow
               <br />
               <span
                 style={{
@@ -85,18 +88,14 @@ export default function WhyCedarLogics() {
                   color: 'transparent',
                 }}
               >
-                Strength & Intelligence
+                Automation for Modern Enterprises
               </span>
             </h2>
             <p className="text-white/50 leading-relaxed mb-6">
-              The cedar tree has stood at the center of civilizations for thousands of years — sacred,
-              resilient, architectural. We chose this name deliberately. Engineering should be the same:
-              foundational, enduring, and trusted. We merge that philosophy with the precision of modern AI.
+              Business operations shouldn't slow down because of disconnected systems or repetitive manual work. CedarLogics brings your applications, teams, and processes together through AI-powered workflow orchestration.
             </p>
             <p className="text-white/50 leading-relaxed mb-6">
-              Founded by AI researchers, distributed systems engineers, and enterprise architects,
-              CedarLogics is an AI-native enterprise operations brain that intelligently orchestrates
-              people, systems, and AI agents to execute business processes autonomously at scale.
+              Our platform intelligently coordinates tasks, automates decisions, and continuously improves workflows using real-time insights. Instead of managing individual processes, organizations gain a unified automation ecosystem that grows with their business.
             </p>
           </div>
 
@@ -159,9 +158,7 @@ export default function WhyCedarLogics() {
 
         {/* Pillars - circles with icons */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 text-center">
-          {pillars.map((pillar, i) => {
-            const Icon = pillar.icon;
-            return (
+          {pillars.map((pillar, i) => (
               <motion.div
                 key={pillar.title}
                 initial={{ opacity: 0, y: 30 }}
@@ -172,19 +169,18 @@ export default function WhyCedarLogics() {
               >
                 <motion.div
                   whileHover={{ scale: 1.1 }}
-                  className="w-16 h-16 rounded-full flex items-center justify-center mb-5"
+                  className="w-16 h-16 rounded-full flex items-center justify-center mb-5 overflow-hidden"
                   style={{
                     background: `linear-gradient(135deg, ${pillar.accent}25, ${pillar.accent}10)`,
                     border: `2px solid ${pillar.accent}40`,
                   }}
                 >
-                  <Icon size={22} style={{ color: pillar.accent }} />
+                  <img src={pillar.img} alt={pillar.title} className="w-full h-full object-cover" />
                 </motion.div>
                 <h3 className="font-display font-semibold text-white mb-2">{pillar.title}</h3>
                 <p className="text-sm text-white/50 leading-relaxed max-w-xs">{pillar.body}</p>
               </motion.div>
-            );
-          })}
+            ))}
         </div>
       </div>
     </section>

@@ -1,28 +1,35 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
+import { Turnstile } from '@marsidev/react-turnstile';
+import { useForm, ValidationError } from '@formspree/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, MapPin, Phone, Send, Github, Twitter, Linkedin, Check, CheckCheck } from 'lucide-react';
 
-const DEEP = '#7A0F44';
+const DEEP = '#8E1155';
 const HOT = '#FF2D87';
-const BRIGHT = '#FF5FA2';
+const BRIGHT = '#FF6FB5';
 const SOFT = 'rgba(255,45,135,0.10)';
+const BLUSH = HOT;
+const ROSE = BRIGHT;
+const MAROON = DEEP;
 
 export default function ContactSection() {
-  const [form, setForm] = useState({ name: '', email: '', company: '', message: '' });
-  const [status, setStatus] = useState<'idle' | 'sent' | 'replied'>('idle');
+  const [preview, setPreview] = useState({ name: '', email: '', company: '', message: '' });
+  const [state, handleSubmit] = useForm('xkollvkj');
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const turnstileExpire = useCallback(() => setTurnstileToken(null), []);
+  const turnstileError = useCallback(() => setTurnstileToken(null), []);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!form.message.trim()) return;
-    setStatus('sent');
-    setTimeout(() => setStatus('replied'), 1600);
-  };
-
-  const hasDraft = form.message.trim().length > 0;
+  const hasDraft = preview.message.trim().length > 0;
 
   return (
     <section id="contact" className="py-28 relative overflow-hidden">
-      <div className="absolute inset-0 grid-line-bg opacity-15" />
+      <div
+        className="absolute inset-0 opacity-[0.08] pointer-events-none"
+        style={{
+          backgroundImage: `radial-gradient(${HOT} 1px, transparent 1px)`,
+          backgroundSize: '4px 4px',
+        }}
+      />
       <div
         className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-64 pointer-events-none"
         style={{ background: `radial-gradient(ellipse 80% 100% at 50% 100%, ${HOT}18 0%, transparent 70%)` }}
@@ -37,14 +44,25 @@ export default function ContactSection() {
             viewport={{ once: true }}
             className="lg:sticky lg:top-28"
           >
-            <div className="flex items-center gap-3 mb-5">
-              <div className="w-4 h-px" style={{ background: HOT }} />
-              <span className="text-xs font-semibold tracking-[0.2em] uppercase" style={{ color: BRIGHT }}>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-4 h-px" style={{ background: `linear-gradient(90deg, transparent, ${ROSE})` }} />
+              <span className="text-xs tracking-[0.3em] uppercase font-orbitron font-semibold" style={{ color: BLUSH }}>
                 Contact
               </span>
+              <div className="w-4 h-px" style={{ background: `linear-gradient(90deg, ${ROSE}, transparent)` }} />
             </div>
             <h2 className="font-orbitron text-4xl sm:text-5xl text-cedar-frost mb-5">
-              Start a <span style={{ color: HOT }}>Conversation</span>
+              Start a{' '}
+              <span
+                style={{
+                  backgroundImage: `linear-gradient(90deg, ${BLUSH}, ${ROSE} 45%, ${MAROON})`,
+                  WebkitBackgroundClip: 'text',
+                  backgroundClip: 'text',
+                  color: 'transparent',
+                }}
+              >
+                Conversation
+              </span>
             </h2>
             <p className="text-cedar-frost/70 leading-relaxed mb-10 max-w-sm">
               Tell us about your project. We'll respond within one business day with
@@ -54,8 +72,8 @@ export default function ContactSection() {
             <div className="space-y-4 mb-10">
               {[
                 { Icon: Mail, label: 'Email', value: 'hello@cedarlogics.com', href: 'mailto:hello@cedarlogics.com' },
-                { Icon: Phone, label: 'Phone', value: '+1 (415) 000-0000', href: 'tel:+14150000000' },
-                { Icon: MapPin, label: 'Location', value: 'San Francisco, CA', href: '#' },
+                { Icon: Phone, label: 'Phone', value: '+1 (213) 555-2102', href: 'tel:+12135552102' },
+                { Icon: MapPin, label: 'Location', value: 'Los Angeles, CA', href: '#' },
               ].map((item) => (
                 <a key={item.label} href={item.href} className="flex items-center gap-4 group">
                   <div
@@ -138,25 +156,27 @@ export default function ContactSection() {
                   style={{
                     background: hasDraft ? `linear-gradient(135deg, ${HOT}, ${BRIGHT})` : 'transparent',
                     border: hasDraft ? 'none' : `1.5px dashed ${HOT}40`,
-                    color: hasDraft ? '#fff' : 'rgba(232,232,235,0.45)',
+                    color: hasDraft ? '#fff' : 'rgba(26,16,36,0.35)',
                   }}
                 >
-                  {hasDraft ? form.message : 'Your message will appear here as you type...'}
-                  {status !== 'idle' && (
+                  {hasDraft ? preview.message : 'Your message will appear here as you type...'}
+                  {state.submitting && (
                     <div className="flex items-center justify-end gap-1 mt-1.5">
-                      {status === 'sent' ? (
-                        <Check size={12} className="text-white/80" />
-                      ) : (
-                        <CheckCheck size={12} className="text-white/80" />
-                      )}
-                      <span className="text-[10px] text-white/70">{status === 'sent' ? 'Sent' : 'Seen'}</span>
+                      <Check size={12} className="text-white/80" />
+                      <span className="text-[10px] text-white/70">Sent</span>
+                    </div>
+                  )}
+                  {state.succeeded && (
+                    <div className="flex items-center justify-end gap-1 mt-1.5">
+                      <CheckCheck size={12} className="text-white/80" />
+                      <span className="text-[10px] text-white/70">Seen</span>
                     </div>
                   )}
                 </div>
               </div>
 
               <AnimatePresence>
-                {status === 'sent' && (
+                {state.submitting && (
                   <motion.div
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -176,7 +196,7 @@ export default function ContactSection() {
                     </div>
                   </motion.div>
                 )}
-                {status === 'replied' && (
+                {state.succeeded && (
                   <motion.div
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -186,7 +206,7 @@ export default function ContactSection() {
                       className="max-w-[85%] rounded-2xl rounded-bl-sm px-4 py-3 text-sm text-cedar-frost/90"
                       style={{ background: SOFT, border: `1px solid ${HOT}30` }}
                     >
-                      Got it, thanks{form.name ? `, ${form.name.split(' ')[0]}` : ''}. We'll review this and reply soon.
+                      Got it, thanks{preview.name ? `, ${preview.name.split(' ')[0]}` : ''}. We'll review this and reply soon.
                     </div>
                   </motion.div>
                 )}
@@ -194,52 +214,67 @@ export default function ContactSection() {
             </div>
 
             {/* Composer */}
-            {status === 'idle' && (
+            {!state.succeeded && (
               <form onSubmit={handleSubmit} className="border-t" style={{ borderColor: `${HOT}25` }}>
                 <div className="grid grid-cols-2 gap-px" style={{ background: `${HOT}20` }}>
                   <input
+                    name="name"
                     required
-                    value={form.name}
-                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                    value={preview.name}
+                    onChange={(e) => setPreview({ ...preview, name: e.target.value })}
                     placeholder="Your name"
-                    className="px-4 py-3 text-sm text-white placeholder-cedar-frost/40 focus:outline-none"
-                    style={{ background: 'rgba(0,0,0,0.2)' }}
+                    className="px-4 py-3 text-sm focus:outline-none transition-colors"
+                    style={{ color: '#1A1024', background: 'rgba(255,45,135,0.06)', borderBottom: `1px solid ${HOT}25` }}
                   />
                   <input
+                    name="email"
                     required
                     type="email"
-                    value={form.email}
-                    onChange={(e) => setForm({ ...form, email: e.target.value })}
+                    value={preview.email}
+                    onChange={(e) => setPreview({ ...preview, email: e.target.value })}
                     placeholder="your@email.com"
-                    className="px-4 py-3 text-sm text-white placeholder-cedar-frost/40 focus:outline-none"
-                    style={{ background: 'rgba(0,0,0,0.2)' }}
+                    className="px-4 py-3 text-sm focus:outline-none transition-colors"
+                    style={{ color: '#1A1024', background: 'rgba(255,45,135,0.06)', borderBottom: `1px solid ${HOT}25` }}
                   />
                 </div>
+                <ValidationError field="email" errors={state.errors} />
                 <input
-                  value={form.company}
-                  onChange={(e) => setForm({ ...form, company: e.target.value })}
+                  name="company"
+                  value={preview.company}
+                  onChange={(e) => setPreview({ ...preview, company: e.target.value })}
                   placeholder="Company (optional)"
-                  className="w-full px-4 py-3 text-sm text-white placeholder-cedar-frost/40 focus:outline-none border-t"
-                  style={{ borderColor: `${HOT}20`, background: 'rgba(0,0,0,0.2)' }}
+                  className="w-full px-4 py-3 text-sm focus:outline-none transition-colors"
+                  style={{ color: '#1A1024', background: 'rgba(255,45,135,0.06)', borderBottom: `1px solid ${HOT}25` }}
                 />
-                <div className="flex items-end gap-2 p-3">
+                <div className="p-3 space-y-3">
                   <textarea
+                    name="message"
                     required
                     rows={1}
-                    value={form.message}
-                    onChange={(e) => setForm({ ...form, message: e.target.value })}
+                    value={preview.message}
+                    onChange={(e) => setPreview({ ...preview, message: e.target.value })}
                     placeholder="Write your message..."
-                    className="flex-1 px-4 py-3 rounded-xl text-sm text-white placeholder-cedar-frost/40 focus:outline-none resize-none"
-                    style={{ background: 'rgba(255,45,135,0.06)', border: `1px solid ${HOT}35` }}
+                    className="w-full px-4 py-3 rounded-xl text-sm focus:outline-none resize-none transition-colors"
+                    style={{ color: '#1A1024', background: 'rgba(255,45,135,0.08)', border: `1.5px solid ${HOT}45` }}
                   />
-                  <button
-                    type="submit"
-                    disabled={!hasDraft}
-                    className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 transition-transform disabled:opacity-30"
-                    style={{ background: `linear-gradient(135deg, ${DEEP}, ${HOT})` }}
-                  >
-                    <Send size={17} className="text-white" />
-                  </button>
+                  <ValidationError field="message" errors={state.errors} />
+                  <div className="flex items-center justify-between gap-3">
+                    <Turnstile
+                      siteKey="0x4AAAAAADyfg_vS1Wji7upv"
+                      onSuccess={setTurnstileToken}
+                      onExpire={turnstileExpire}
+                      onError={turnstileError}
+                      options={{ theme: 'light' }}
+                    />
+                    <button
+                      type="submit"
+                      disabled={!hasDraft || state.submitting || !turnstileToken}
+                      className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 transition-all disabled:opacity-30 hover:scale-105 active:scale-95"
+                      style={{ background: `linear-gradient(135deg, #FF2D87, #FF6FB5)`, boxShadow: `0 4px 16px rgba(255,45,135,0.4)` }}
+                    >
+                      <Send size={17} className="text-white" />
+                    </button>
+                  </div>
                 </div>
                 <p className="text-[11px] text-center pb-3" style={{ color: `${BRIGHT}80` }}>
                   By sending, you agree to our Privacy Policy. We never share your data.

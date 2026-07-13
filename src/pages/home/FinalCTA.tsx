@@ -2,9 +2,9 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Zap } from 'lucide-react';
 
-const BLUSH = '#F9A8D4';
-const ROSE = '#EC4899';
-const MAROON = '#7A1247';
+const BLUSH = '#FF6FB5';
+const ROSE = '#FF2D87';
+const MAROON = '#8E1155';
 const WINE = '#1A0510';
 
 export default function FinalCTA() {
@@ -65,22 +65,24 @@ export default function FinalCTA() {
             <a
               href="#contact"
               onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}
-              className="btn-primary text-lg px-10 py-5 rounded-2xl"
+              className="relative inline-flex items-center gap-3 px-8 py-4 rounded-full font-semibold text-base text-white transition-all duration-300 hover:translate-y-[-1px] hover:shadow-xl"
+              style={{ background: 'linear-gradient(135deg, #FF2D87, #8E1155)', boxShadow: '0 4px 24px rgba(255,45,135,0.3)' }}
             >
               Start a Project
-              <ArrowRight size={18} />
+              <ArrowRight size={16} />
             </a>
             <Link
               to="/console"
-              className="inline-flex items-center gap-2 px-10 py-5 text-lg font-semibold rounded-2xl transition-all duration-300 hover:scale-[1.02]"
-              style={{
-                color: '#fff',
-                border: `1px solid ${ROSE}50`,
-                background: 'rgba(255,255,255,0.03)',
-              }}
+              className="relative inline-flex items-center gap-3 px-8 py-4 rounded-full font-semibold text-base transition-all duration-300 hover:translate-y-[-1px] border"
+              style={{ color: ROSE, borderColor: 'rgba(255,45,135,0.3)' }}
+              onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(255,45,135,0.6)'}
+              onMouseLeave={e => e.currentTarget.style.borderColor = 'rgba(255,45,135,0.3)'}
             >
-              <Zap size={18} />
+              <Zap size={16} />
               Explore Console
+              <span className="w-7 h-7 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #FF2D87, #8E1155)' }}>
+                <ArrowRight size={14} className="text-white" />
+              </span>
             </Link>
           </div>
 

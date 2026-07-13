@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 
-const BLUSH = '#F9A8D4';
-const ROSE = '#EC4899';
+const BLUSH = '#FF1A75';
+const ROSE = '#FF5CA8';
 const MAROON = '#7A1247';
 const WINE = '#1A0510';
 

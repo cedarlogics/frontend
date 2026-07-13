@@ -1,16 +1,26 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
+import govIcon1 from '../../assets/Government & Public Sector (2).png';
+import govIcon2 from '../../assets/Government & Public Sector (3).png';
+import govIcon3 from '../../assets/Government & Public Sector (4).png';
+import govIcon4 from '../../assets/Government & Public Sector (5).png';
+import govIcon5 from '../../assets/Government & Public Sector (6).png';
+
+const BLUSH = '#FF6FB5';
+const ROSE = '#FF2D87';
+const MAROON = '#8E1155';
 
 interface Testimonial {
   name: string;
   role: string;
   company: string;
   avatarColor: string;
+  avatarIcon: string;
   quote: string;
   metricValue: string;
   metricLabel: string;
-  trend: number[]; // 6 points, relative scale 0-100
+  trend: number[];
 }
 
 const testimonials: Testimonial[] = [
@@ -18,7 +28,8 @@ const testimonials: Testimonial[] = [
     name: 'Sarah Chen',
     role: 'CTO',
     company: 'Meridian Health',
-    avatarColor: '#EC7FA9',
+    avatarColor: '#FF1A75',
+    avatarIcon: govIcon1,
     quote:
       "CedarLogics rebuilt our entire patient data platform with AI-powered triage features. The engineering quality is exceptional. They don't just ship code, they engineer solutions.",
     metricValue: '94%',
@@ -29,7 +40,8 @@ const testimonials: Testimonial[] = [
     name: 'Marcus Williams',
     role: 'VP Engineering',
     company: 'FinPath Capital',
-    avatarColor: '#FFB8E0',
+    avatarColor: '#FF5CA8',
+    avatarIcon: govIcon1,
     quote:
       'Our trading platform required ultra-low latency and bulletproof reliability. CedarLogics delivered a system that processes 50k transactions per second with 99.99% uptime.',
     metricValue: '50k/s',
@@ -40,7 +52,8 @@ const testimonials: Testimonial[] = [
     name: 'Priya Sharma',
     role: 'Founder & CEO',
     company: 'EduFlow',
-    avatarColor: '#EC7FA9',
+    avatarColor: '#FF1A75',
+    avatarIcon: govIcon2,
     quote:
       'Within 4 months CedarLogics transformed our idea into a fully deployed AI tutoring platform serving 40,000 students. They felt like our in-house engineering team.',
     metricValue: '40,000',
@@ -51,7 +64,8 @@ const testimonials: Testimonial[] = [
     name: 'Alexander Frost',
     role: 'Head of Product',
     company: 'Nexus Retail',
-    avatarColor: '#FFB8E0',
+    avatarColor: '#FF5CA8',
+    avatarIcon: govIcon3,
     quote:
       'The intelligent recommendation engine CedarLogics built increased our conversion rate by 38%. What set them apart was total transparency, no surprises, no delays.',
     metricValue: '+38%',
@@ -62,7 +76,8 @@ const testimonials: Testimonial[] = [
     name: 'Yuki Tanaka',
     role: 'Director of Engineering',
     company: 'Automata Labs',
-    avatarColor: '#EC7FA9',
+    avatarColor: '#FF1A75',
+    avatarIcon: govIcon5,
     quote:
       'CedarLogics helped us migrate an 8-year-old monolith to an event-driven microservices architecture without a single hour of downtime. Their methodology is surgical.',
     metricValue: '0 hrs',
@@ -130,6 +145,13 @@ export default function TestimonialsSection() {
         className="absolute inset-0 pointer-events-none"
         style={{ background: 'radial-gradient(ellipse 60% 50% at 50% 50%, rgba(255,184,224,0.08) 0%, transparent 70%)' }}
       />
+      <div
+        className="absolute inset-0 opacity-[0.08] pointer-events-none"
+        style={{
+          backgroundImage: `radial-gradient(${BLUSH} 1px, transparent 1px)`,
+          backgroundSize: '4px 4px',
+        }}
+      />
 
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -138,13 +160,25 @@ export default function TestimonialsSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <div className="section-label mb-4">
-            <div className="w-4 h-px bg-cedar-red" />
-            Testimonials
-            <div className="w-4 h-px bg-cedar-red" />
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <div className="w-4 h-px" style={{ background: `linear-gradient(90deg, transparent, ${ROSE})` }} />
+            <span className="text-xs tracking-[0.3em] uppercase font-orbitron font-semibold" style={{ color: BLUSH }}>
+              Testimonials
+            </span>
+            <div className="w-4 h-px" style={{ background: `linear-gradient(90deg, ${ROSE}, transparent)` }} />
           </div>
-          <h2 className="section-heading font-orbitron text-4xl sm:text-5xl text-cedar-frost mb-4">
-            What Our Clients <span className="text-gradient-red">Say</span>
+          <h2 className="font-orbitron text-4xl sm:text-5xl text-cedar-frost mb-5">
+            What Our Clients{' '}
+            <span
+              style={{
+                backgroundImage: `linear-gradient(90deg, ${BLUSH}, ${ROSE} 45%, ${MAROON})`,
+                WebkitBackgroundClip: 'text',
+                backgroundClip: 'text',
+                color: 'transparent',
+              }}
+            >
+              Say
+            </span>
           </h2>
         </motion.div>
 
@@ -162,22 +196,16 @@ export default function TestimonialsSection() {
                 }`}
               >
                 <div className="flex items-center gap-2 min-w-[180px] lg:min-w-0">
-                  <span
-                    className={`font-mono text-[10px] tracking-wider transition-colors ${
-                      i === current ? 'text-cedar-red' : 'text-cedar-frost/30'
-                    }`}
-                  >
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
+                  <img src={item.avatarIcon} alt={item.name} className="w-5 h-5 object-contain flex-shrink-0" />
                   <div className="min-w-0">
                     <div
                       className={`text-sm font-semibold truncate transition-colors ${
                         i === current ? 'text-cedar-frost' : 'text-cedar-frost/60'
                       }`}
                     >
-                      {item.company}
+                      {item.name}
                     </div>
-                    <div className="text-[11px] text-cedar-frost/35 truncate">{item.role}</div>
+                    <div className="text-[11px] text-cedar-frost/35 truncate">{item.role} · {item.company}</div>
                   </div>
                 </div>
                 {i === current && (
@@ -215,10 +243,9 @@ export default function TestimonialsSection() {
                   </p>
                   <div className="flex items-center gap-3">
                     <div
-                      className="w-9 h-9 rounded-lg flex items-center justify-center text-xs font-bold text-white flex-shrink-0"
-                      style={{ background: t.avatarColor }}
+                      className="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0"
                     >
-                      {t.name.split(' ').map((n) => n[0]).join('')}
+                      <img src={t.avatarIcon} alt={t.name} className="w-8 h-8 object-contain" />
                     </div>
                     <div>
                       <div className="font-semibold text-cedar-frost text-sm">{t.name}</div>

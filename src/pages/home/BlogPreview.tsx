@@ -1,10 +1,13 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, Calendar, Clock } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import blogImg1 from '../../assets/Building AI Agents That Scale.png';
+import blogImg2 from '../../assets/Deploy.png';
+import blogImg3 from '../../assets/Optimize.png';
 
-const BLUSH = '#F9A8D4';
-const ROSE = '#EC4899';
-const MAROON = '#7A1247';
+const BLUSH = '#FF6FB5';
+const ROSE = '#FF2D87';
+const MAROON = '#8E1155';
 const tones = [ROSE, BLUSH, MAROON];
 
 const posts = [
@@ -13,7 +16,7 @@ const posts = [
     category: 'AI Engineering',
     title: 'Building AI Agents That Scale: Architecture Patterns for Production',
     excerpt: 'A deep technical exploration of agent architectures, memory systems, and the infrastructure decisions that determine whether your AI agents thrive or fail under real-world load.',
-    image: 'https://images.pexels.com/photos/8386434/pexels-photo-8386434.jpeg?auto=compress&cs=tinysrgb&w=800',
+    image: blogImg1,
     author: 'Aiden Cole',
     authorInitials: 'AC',
     date: 'Jun 28, 2025',
@@ -24,7 +27,7 @@ const posts = [
     category: 'Platform Engineering',
     title: 'Zero-Downtime Database Migrations at Enterprise Scale',
     excerpt: 'How we migrated 2TB of production PostgreSQL data for a financial services client without a single minute of downtime, using blue-green deployments and event sourcing.',
-    image: 'https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800',
+    image: blogImg2,
     author: 'Maya Torres',
     authorInitials: 'MT',
     date: 'Jun 14, 2025',
@@ -35,7 +38,7 @@ const posts = [
     category: 'AI Cost',
     title: 'LLM Cost Optimization: How We Cut AI Inference Costs by 78%',
     excerpt: 'Practical techniques including prompt caching, model routing, quantization, and smart batching that dramatically reduce inference costs without sacrificing output quality.',
-    image: 'https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=800',
+    image: blogImg3,
     author: 'Liam Park',
     authorInitials: 'LP',
     date: 'May 30, 2025',
@@ -47,8 +50,14 @@ const [featured, ...rest] = posts;
 
 export default function BlogPreview() {
   return (
-    <section className="py-28 relative overflow-hidden">
-      <div className="absolute inset-0 grid-line-bg opacity-15" />
+    <section id="blog" className="py-28 relative overflow-hidden">
+      <div
+        className="absolute inset-0 opacity-[0.08] pointer-events-none"
+        style={{
+          backgroundImage: `radial-gradient(${BLUSH} 1px, transparent 1px)`,
+          backgroundSize: '4px 4px',
+        }}
+      />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -64,7 +73,7 @@ export default function BlogPreview() {
                 Latest Insights
               </span>
             </div>
-            <h2 className="font-orbitron text-4xl sm:text-5xl text-cedar-frost">
+            <h2 className="font-orbitron text-4xl sm:text-5xl text-cedar-frost mb-5">
               Engineering{' '}
               <span
                 style={{
@@ -80,9 +89,13 @@ export default function BlogPreview() {
           </div>
           <Link
             to="/blog"
-            className="btn-secondary inline-flex items-center gap-2 flex-shrink-0 px-6 py-3 text-sm"
+            className="relative inline-flex items-center gap-3 px-6 py-3 rounded-full font-semibold text-sm text-white transition-all duration-300 hover:translate-y-[-1px] hover:shadow-xl"
+            style={{ background: 'linear-gradient(135deg, #FF2D87, #8E1155)', boxShadow: '0 4px 24px rgba(255,45,135,0.3)' }}
           >
-            View all posts <ArrowRight size={16} />
+            View all posts
+            <span className="w-7 h-7 rounded-full flex items-center justify-center bg-white/20">
+              <ArrowRight size={14} className="text-white" />
+            </span>
           </Link>
         </motion.div>
 

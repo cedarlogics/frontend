@@ -86,7 +86,7 @@ CedarLogics
 Attn: Privacy Team
 privacy@cedarlogics.com
 
-San Francisco, CA, United States
+801 N Spring Street, Los Angeles, CA 90012, USA
 
 We are committed to resolving any concerns regarding your privacy promptly and transparently.`,
     },

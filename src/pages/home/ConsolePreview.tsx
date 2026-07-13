@@ -4,13 +4,13 @@ import { Zap, ArrowRight, GitBranch, BarChart2, Shield, Bot } from 'lucide-react
 
 // Same restrained palette as the "Who Uses Us" section — blush, rose,
 // deep maroon, ink, white — so the two sections read as one story.
-const BLUSH = '#F9A8D4';
-const ROSE = '#EC4899';
-const MAROON = '#7A1247';
+const BLUSH = '#FF6FB5';
+const ROSE = '#FF2D87';
+const MAROON = '#8E1155';
 const WINE = '#1A0510';
 
 // rgba equivalents of ROSE (236,72,153), used for translucent fills/borders
-const ROSE_RGB = '236,72,153';
+const ROSE_RGB = '255,45,135';
 
 const highlights = [
   { icon: GitBranch, label: 'AI Workflow Designer', color: ROSE },
@@ -94,15 +94,17 @@ export default function ConsolePreview() {
 
             <Link
               to="/console"
-              className="inline-flex items-center gap-2 px-8 py-4 text-base rounded-2xl font-semibold text-white transition-transform hover:scale-[1.02]"
+              className="relative inline-flex items-center gap-3 px-8 py-4 rounded-full font-semibold text-base text-white transition-all duration-300 hover:translate-y-[-1px] hover:shadow-xl"
               style={{
                 background: `linear-gradient(135deg, ${ROSE}, ${MAROON})`,
-                boxShadow: `0 8px 32px ${ROSE}30`,
+                boxShadow: '0 4px 24px rgba(255,45,135,0.3)',
               }}
             >
-              <Zap size={18} />
+              <Zap size={16} />
               Explore Console
-              <ArrowRight size={16} />
+              <span className="w-7 h-7 rounded-full flex items-center justify-center bg-white/20">
+                <ArrowRight size={14} className="text-white" />
+              </span>
             </Link>
           </motion.div>
 

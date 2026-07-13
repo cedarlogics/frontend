@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Check, ArrowRight, Sparkles } from 'lucide-react';
 
-const BLUSH = '#F9A8D4';
-const ROSE = '#EC4899';
-const MAROON = '#7A1247';
+const BLUSH = '#FF6FB5';
+const ROSE = '#FF2D87';
+const MAROON = '#8E1155';
 const WINE = '#1A0510';
 
 const plans = [
@@ -246,8 +246,8 @@ export default function PricingSection() {
                 className="w-full py-3 rounded-xl text-sm font-semibold transition-all duration-300 hover:scale-[1.02]"
                 style={
                   plan.popular
-                    ? { background: `linear-gradient(135deg, ${ROSE}, ${MAROON})`, color: '#fff', boxShadow: `0 8px 24px ${ROSE}35` }
-                    : { background: 'rgba(255,255,255,0.06)', color: '#fff', border: '1px solid rgba(255,255,255,0.14)' }
+                    ? { background: `linear-gradient(135deg, ${ROSE}, ${MAROON})`, color: '#fff', boxShadow: `0 4px 24px rgba(255,45,135,0.3)` }
+                    : { background: 'rgba(255,255,255,0.06)', color: ROSE, border: `1px solid rgba(255,45,135,0.3)` }
                 }
               >
                 {plan.cta}

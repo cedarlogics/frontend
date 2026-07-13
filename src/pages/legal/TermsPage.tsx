@@ -84,7 +84,7 @@ You waive any objection to venue in such courts. For international users, we com
 CedarLogics Legal
 legal@cedarlogics.com
 
-San Francisco, CA, United States
+801 N Spring Street, Los Angeles, CA 90012, USA
 
 We aim to respond to all legal inquiries within 5 business days.`,
     },

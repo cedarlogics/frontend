@@ -1,50 +1,59 @@
 import { useState, useRef } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
-import { Workflow, GitBranch, Bot, BarChart3, Share2, LayoutDashboard, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
+import coreEngineIcon from '../../assets/Process Precision.png';
+import designIcon from '../../assets/Design.png';
+import agentManagementIcon from '../../assets/Agent Management.png';
+import analyticsIcon from '../../assets/analysis.png';
+import connectivityIcon from '../../assets/Connectivity.png';
+import monitoringIcon from '../../assets/Monitoring.png';
 
-const HOT = '#FF1A75';
-const BRIGHT = '#FF5CA8';
+const HOT = '#FF2D87';
+const BRIGHT = '#FF6FB5';
 const SOFT = '#FFE3EF';
 const INK = '#1A1024';
+const BLUSH = HOT;
+const ROSE = BRIGHT;
+const MAROON = '#8E1155';
 
 const features = [
   {
-    icon: Workflow,
+    icon: coreEngineIcon,
     title: 'AI Workflow Automation Engine',
     description: 'Core orchestration engine powering end-to-end enterprise workflows with AI-driven execution, conditional branching, and adaptive process management at scale.',
     accent: HOT,
     tag: 'Core Engine',
   },
   {
-    icon: GitBranch,
+    icon: designIcon,
     title: 'Visual Workflow Designer',
     description: 'Drag-and-drop interface for designing complex multi-step workflows with conditional logic, parallel branches, and AI-assisted decision paths.',
     accent: '#E0117A',
     tag: 'Design',
   },
   {
-    icon: Bot,
+    icon: agentManagementIcon,
     title: 'AI Agent Orchestration Framework',
     description: 'Coordinate specialized AI agents across business functions. Automate approvals, routing, and task execution with collaborative multi-agent workflows.',
     accent: BRIGHT,
     tag: 'Agent Management',
   },
   {
-    icon: BarChart3,
+    icon: analyticsIcon,
     title: 'Business Process Intelligence',
     description: 'Identify bottlenecks, analyze execution patterns, and optimize process paths using AI-driven recommendations. Continuously improve operational efficiency.',
     accent: '#E0117A',
     tag: 'Analytics',
   },
   {
-    icon: Share2,
+    icon: connectivityIcon,
     title: 'Enterprise Integration Hub',
     description: 'Connect ERP, CRM, HRMS, finance, and cloud platforms. Synchronize workflows across systems with API-driven automation and pre-built enterprise connectors.',
     accent: BRIGHT,
     tag: 'Connectivity',
   },
   {
-    icon: LayoutDashboard,
+    icon: monitoringIcon,
     title: 'Workflow Monitoring Dashboard',
     description: 'Centralized real-time monitoring of workflow execution. Track active processes, completion rates, error states, and system health across all automation pipelines.',
     accent: '#E0117A',
@@ -92,18 +101,28 @@ export default function FeaturesSection() {
             transition={{ duration: 0.7 }}
             className="lg:sticky lg:top-28"
           >
-            <div className="flex items-center gap-3 mb-5">
-              <div className="w-4 h-px" style={{ background: HOT }} />
-              <span className="text-xs font-semibold tracking-[0.2em] uppercase" style={{ color: HOT }}>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-4 h-px" style={{ background: `linear-gradient(90deg, transparent, ${ROSE})` }} />
+              <span className="text-xs tracking-[0.3em] uppercase font-orbitron font-semibold" style={{ color: BLUSH }}>
                 Core Features
               </span>
+              <div className="w-4 h-px" style={{ background: `linear-gradient(90deg, ${ROSE}, transparent)` }} />
             </div>
-            <h2 className="font-orbitron text-4xl sm:text-5xl leading-[1.08] mb-6" style={{ color: INK }}>
+            <h2 className="font-orbitron text-4xl sm:text-5xl text-cedar-frost mb-5">
               Enterprise AI
               <br />
               Workflow
               <br />
-              <span style={{ color: HOT }}>Automation Platform</span>
+              <span
+                style={{
+                  backgroundImage: `linear-gradient(90deg, ${BLUSH}, ${ROSE} 45%, ${MAROON})`,
+                  WebkitBackgroundClip: 'text',
+                  backgroundClip: 'text',
+                  color: 'transparent',
+                }}
+              >
+                Automation Platform
+              </span>
             </h2>
             <p className="text-base leading-relaxed mb-8" style={{ color: `${INK}90` }}>
               A comprehensive suite of AI-powered workflow automation capabilities — from visual
@@ -183,13 +202,12 @@ export default function FeaturesSection() {
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3 }}
               >
-                <Workflow size={24} className="text-white" />
+                <img src={coreEngineIcon} alt="Core Engine" className="w-10 h-10 object-contain" />
                 <span className="text-[10px] font-mono tracking-wider text-white/90">CORE ENGINE</span>
               </motion.button>
 
               {satellites.map((feat, i) => {
                 const pos = NODE_POS[i];
-                const Icon = feat.icon;
                 const isActive = active === i + 1;
                 return (
                   <motion.button
@@ -209,7 +227,7 @@ export default function FeaturesSection() {
                     whileHover={{ scale: 1.08 }}
                     transition={{ duration: 0.25 }}
                   >
-                    <Icon size={17} style={{ color: isActive ? feat.accent : '#C9A6BB' }} />
+                    <img src={feat.icon} alt={feat.tag} className="w-[32px] h-[32px] object-contain" />
                     <span
                       className="text-[9px] font-semibold text-center leading-tight px-1"
                       style={{ color: isActive ? INK : '#B79AAC' }}
@@ -240,7 +258,7 @@ export default function FeaturesSection() {
                   className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
                   style={{ background: SOFT }}
                 >
-                  <activeFeat.icon size={18} style={{ color: activeFeat.accent }} />
+                  <img src={activeFeat.icon} alt={activeFeat.tag} className="w-[36px] h-[36px] object-contain" />
                 </div>
                 <div className="flex-1">
                   <span
@@ -269,7 +287,6 @@ export default function FeaturesSection() {
           />
           <div className="space-y-3">
             {features.map((feat, i) => {
-              const Icon = feat.icon;
               const isActive = active === i;
               return (
                 <motion.div key={feat.title} className="relative">
@@ -290,7 +307,7 @@ export default function FeaturesSection() {
                       className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
                       style={{ background: SOFT }}
                     >
-                      <Icon size={16} style={{ color: feat.accent }} />
+                      <img src={feat.icon} alt={feat.tag} className="w-8 h-8 object-contain" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <span

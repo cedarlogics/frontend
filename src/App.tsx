@@ -2,9 +2,11 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import CookieConsent from './components/CookieConsent';
 import HomePage from './pages/home';
 import ConsolePage from './pages/console';
 import BlogPage from './pages/blog';
+import BlogPost from './pages/blog/BlogPost';
 import PrivacyPage from './pages/legal/PrivacyPage';
 import TermsPage from './pages/legal/TermsPage';
 
@@ -29,7 +31,7 @@ function AppRoutes() {
         <Route path="/" element={<PageWrapper><HomePage /></PageWrapper>} />
         <Route path="/console" element={<PageWrapper><ConsolePage /></PageWrapper>} />
         <Route path="/blog" element={<PageWrapper><BlogPage /></PageWrapper>} />
-        <Route path="/blog/:slug" element={<PageWrapper><BlogPage /></PageWrapper>} />
+        <Route path="/blog/:slug" element={<PageWrapper><BlogPost /></PageWrapper>} />
         <Route path="/privacy" element={<PageWrapper><PrivacyPage /></PageWrapper>} />
         <Route path="/terms" element={<PageWrapper><TermsPage /></PageWrapper>} />
         <Route path="*" element={
@@ -56,6 +58,7 @@ export default function App() {
         <Navbar />
         <AppRoutes />
         <Footer />
+        <CookieConsent />
       </div>
     </BrowserRouter>
   );
