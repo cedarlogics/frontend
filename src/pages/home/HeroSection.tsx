@@ -1,11 +1,25 @@
 import { useRef, useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ArrowUpRight, Cog, Github } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Cog } from 'lucide-react';
 import heroImg1 from '../../assets/Hero image.png';
 import heroImg2 from '../../assets/Hero image (2).png';
 import heroImg3 from '../../assets/Hero image (3).png';
 import heroImg4 from '../../assets/Hero image (4).png';
+
+function useIsMobile(breakpoint = 768) {
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== 'undefined' ? window.innerWidth < breakpoint : false,
+  );
+  useEffect(() => {
+    const mq = window.matchMedia(`(max-width: ${breakpoint - 1}px)`);
+    setIsMobile(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, [breakpoint]);
+  return isMobile;
+}
 
 const heroImages = [heroImg1, heroImg2, heroImg3, heroImg4];
 
@@ -126,6 +140,7 @@ function EngineeringDial() {
 export default function HeroSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(1);
+  const isMobile = useIsMobile();
   const featured = stories[active];
 
   useEffect(() => {
@@ -138,6 +153,7 @@ export default function HeroSection() {
   return (
     <section
       ref={containerRef}
+      id="home"
       className="relative min-h-screen flex flex-col overflow-hidden pt-28 pb-16"
     >
       <div className="absolute inset-0 grid-dot-bg opacity-40" />
@@ -154,26 +170,28 @@ export default function HeroSection() {
         transition={{ duration: 0.8, delay: 1 }}
         className="absolute left-4 sm:left-6 top-1/2 -translate-y-1/2 z-20 flex flex-col items-center gap-5"
       >
-        <a href="https://github.com" target="_blank" rel="noopener noreferrer"
-          className="w-9 h-9 rounded-full glass-card flex items-center justify-center text-cedar-frost/40 hover:text-[#FF2D87] transition-colors">
-          <Github size={16} />
-        </a>
-        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer"
-          className="w-9 h-9 rounded-full glass-card flex items-center justify-center text-cedar-frost/40 hover:text-[#FF2D87] transition-colors">
-          <svg viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5">
-            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-          </svg>
-        </a>
-        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"
-          className="w-9 h-9 rounded-full glass-card flex items-center justify-center text-cedar-frost/40 hover:text-[#FF2D87] transition-colors">
-          <svg viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5">
-            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-          </svg>
-        </a>
-        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"
+        <a href="https://www.facebook.com/CedarLogics/" target="_blank" rel="noopener noreferrer"
           className="w-9 h-9 rounded-full glass-card flex items-center justify-center text-cedar-frost/40 hover:text-[#FF2D87] transition-colors">
           <svg viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5">
             <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+          </svg>
+        </a>
+        <a href="https://x.com/CedarLogics" target="_blank" rel="noopener noreferrer"
+          className="w-9 h-9 rounded-full glass-card flex items-center justify-center text-cedar-frost/40 hover:text-[#FF2D87] transition-colors">
+          <svg viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+          </svg>
+        </a>
+        <a href="https://www.pinterest.com/CedarLogics/" target="_blank" rel="noopener noreferrer"
+          className="w-9 h-9 rounded-full glass-card flex items-center justify-center text-cedar-frost/40 hover:text-[#FF2D87] transition-colors">
+          <svg viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5">
+            <path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 01.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z" />
+          </svg>
+        </a>
+        <a href="https://www.youtube.com/@CedarLogics" target="_blank" rel="noopener noreferrer"
+          className="w-9 h-9 rounded-full glass-card flex items-center justify-center text-cedar-frost/40 hover:text-[#FF2D87] transition-colors">
+          <svg viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5">
+            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
           </svg>
         </a>
         <div className="w-px h-12" style={{ background: DARK, opacity: 0.2 }} />
@@ -202,62 +220,95 @@ export default function HeroSection() {
               {featured.quote}
             </motion.p>
 
-            <div className="relative h-72 sm:h-80" style={{ perspective: 1200 }}>
-              {stories.map((story, i) => {
-                const t = fanTransforms[i];
-                const isActive = i === active;
-                return (
-                  <motion.button
-                    key={story.client}
-                    onClick={() => setActive(i)}
-                    initial={{ opacity: 0, y: 40 }}
-                    animate={{
-                      opacity: 1,
-                      y: isActive ? -10 : 0,
-                      x: t.x,
-                      rotate: t.rotate,
-                      scale: isActive ? t.scale + 0.08 : t.scale,
-                    }}
-                    transition={{ duration: 0.5, delay: 0.15 * i }}
-                    style={{
-                      zIndex: isActive ? 20 : t.z,
-                      transformOrigin: 'bottom center',
-                      borderColor: isActive ? `rgba(199, 21, 133, 0.3)` : undefined,
-                    }}
-                    className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-40 sm:w-48 aspect-[3/4] rounded-2xl glass-card p-4 flex flex-col justify-between text-left transition-shadow ${
-                      isActive ? 'shadow-xl' : 'border-transparent'
-                    }`}
-                  >
-                    <div
-                      className="relative w-full h-2/3 rounded-xl overflow-hidden"
+            <div className="relative h-72 sm:h-80" style={{ perspective: isMobile ? undefined : 1200 }}>
+              {isMobile ? (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <AnimatePresence mode="wait">
+                    <motion.button
+                      key={active}
+                      onClick={() => setActive((active + 1) % stories.length)}
+                      initial={{ opacity: 0, x: 50 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -50 }}
+                      transition={{ duration: 0.35 }}
+                      className="w-44 aspect-[3/4] rounded-2xl glass-card p-4 flex flex-col justify-between text-left shadow-xl"
+                      style={{ borderColor: `rgba(199, 21, 133, 0.3)` }}
                     >
-                      <div
-                        className="absolute inset-0"
-                        style={{
-                          background: isActive
-                            ? 'linear-gradient(135deg, rgba(255,45,135,0.4), rgba(142,17,85,0.4))'
-                            : 'linear-gradient(135deg, rgba(255,45,135,0.15), rgba(142,17,85,0.15))',
-                        }}
-                      />
-                      <img
-                        src={heroImages[i]}
-                        alt={story.client}
-                        className="absolute inset-0 w-full h-full object-cover"
-                        style={{ opacity: isActive ? 1 : 0.6 }}
-                      />
-                    </div>
-                    <div>
-                      <div className="font-display font-bold text-sm text-cedar-frost leading-tight">
-                        {story.client}
+                      <div className="relative w-full h-2/3 rounded-xl overflow-hidden">
+                        <div
+                          className="absolute inset-0"
+                          style={{ background: 'linear-gradient(135deg, rgba(255,45,135,0.4), rgba(142,17,85,0.4))' }}
+                        />
+                        <img
+                          src={heroImages[active]}
+                          alt={stories[active].client}
+                          className="absolute inset-0 w-full h-full object-cover"
+                        />
                       </div>
-                      <div className="text-xs text-cedar-frost/50 font-medium">{story.project}</div>
-                    </div>
-                  </motion.button>
-                );
-              })}
+                      <div>
+                        <div className="font-display font-bold text-sm text-cedar-frost leading-tight">
+                          {stories[active].client}
+                        </div>
+                        <div className="text-xs text-cedar-frost/50 font-medium">{stories[active].project}</div>
+                      </div>
+                    </motion.button>
+                  </AnimatePresence>
+                </div>
+              ) : (
+                stories.map((story, i) => {
+                  const t = fanTransforms[i];
+                  const isActive = i === active;
+                  return (
+                    <motion.button
+                      key={story.client}
+                      onClick={() => setActive(i)}
+                      initial={{ opacity: 0, y: 40 }}
+                      animate={{
+                        opacity: 1,
+                        y: isActive ? -10 : 0,
+                        x: t.x,
+                        rotate: t.rotate,
+                        scale: isActive ? t.scale + 0.08 : t.scale,
+                      }}
+                      transition={{ duration: 0.5, delay: 0.15 * i }}
+                      style={{
+                        zIndex: isActive ? 20 : t.z,
+                        transformOrigin: 'bottom center',
+                        borderColor: isActive ? `rgba(199, 21, 133, 0.3)` : undefined,
+                      }}
+                      className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-40 sm:w-48 aspect-[3/4] rounded-2xl glass-card p-4 flex flex-col justify-between text-left transition-shadow ${
+                        isActive ? 'shadow-xl' : 'border-transparent'
+                      }`}
+                    >
+                      <div className="relative w-full h-2/3 rounded-xl overflow-hidden">
+                        <div
+                          className="absolute inset-0"
+                          style={{
+                            background: isActive
+                              ? 'linear-gradient(135deg, rgba(255,45,135,0.4), rgba(142,17,85,0.4))'
+                              : 'linear-gradient(135deg, rgba(255,45,135,0.15), rgba(142,17,85,0.15))',
+                          }}
+                        />
+                        <img
+                          src={heroImages[i]}
+                          alt={story.client}
+                          className="absolute inset-0 w-full h-full object-cover"
+                          style={{ opacity: isActive ? 1 : 0.6 }}
+                        />
+                      </div>
+                      <div>
+                        <div className="font-display font-bold text-sm text-cedar-frost leading-tight">
+                          {story.client}
+                        </div>
+                        <div className="text-xs text-cedar-frost/50 font-medium">{story.project}</div>
+                      </div>
+                    </motion.button>
+                  );
+                })
+              )}
             </div>
 
-            <div className="flex items-center gap-3 mt-8">
+            <div className="flex items-center justify-center lg:justify-start gap-3 mt-8">
               <span className="font-display text-sm font-bold" style={{ color: BRIGHT }}>
                 {String(active + 1).padStart(2, '0')}
               </span>
@@ -265,13 +316,13 @@ export default function HeroSection() {
               <span className="font-display text-sm text-cedar-frost/40 font-medium">
                 {String(stories.length).padStart(2, '0')}
               </span>
-              <div className="flex gap-1.5 ml-2">
+              <div className="flex gap-2 ml-2">
                 {stories.map((_, i) => (
                   <button
                     key={i}
                     onClick={() => setActive(i)}
                     aria-label={`Show case study ${i + 1}`}
-                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                    className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
                       i === active ? 'scale-125' : 'bg-cedar-frost/20 hover:bg-cedar-frost/40'
                     }`}
                     style={i === active ? { background: BRIGHT } : undefined}
@@ -323,17 +374,23 @@ export default function HeroSection() {
               transition={{ duration: 0.7, delay: 0.45, ease: 'easeOut' }}
               className="flex flex-col sm:flex-row items-center lg:justify-end justify-center gap-4"
             >
-              <Link to="/console" className="relative inline-flex items-center gap-3 px-6 py-3 rounded-full font-semibold text-sm transition-all duration-300 hover:translate-y-[-1px] bg-white/50 hover:bg-white/80 backdrop-blur-sm group border" style={{ color: BRIGHT, borderColor: `rgba(255, 45, 135, 0.3)` }}
+              <a
+                href="#contact"
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (location.pathname !== '/') { window.location.href = '/#contact'; return; }
+                  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="relative inline-flex items-center gap-3 px-6 py-3 rounded-full font-semibold text-sm transition-all duration-300 hover:translate-y-[-1px] bg-white/50 hover:bg-white/80 backdrop-blur-sm group border" style={{ color: BRIGHT, borderColor: `rgba(255, 45, 135, 0.3)` }}
                 onMouseEnter={e => e.currentTarget.style.borderColor = `rgba(255, 45, 135, 0.6)`}
                 onMouseLeave={e => e.currentTarget.style.borderColor = `rgba(255, 45, 135, 0.3)`}>
                 Get a Demo
                 <span className="w-7 h-7 rounded-full flex items-center justify-center" style={{ background: `linear-gradient(135deg, ${BRIGHT}, ${DARK})` }}>
                   <ArrowRight size={14} className="text-white" />
                 </span>
-              </Link>
-              <a
-                href="#services"
-                onClick={(e) => { e.preventDefault(); document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' }); }}
+              </a>
+              <Link
+                to="/console"
                 className="relative inline-flex items-center gap-3 px-6 py-3 rounded-full font-semibold text-sm text-white transition-all duration-300 hover:translate-y-[-1px] hover:shadow-xl"
                 style={{ background: `linear-gradient(135deg, ${BRIGHT}, ${DARK})`, boxShadow: `0 4px 24px rgba(199, 21, 133, 0.3)` }}
               >
@@ -341,7 +398,7 @@ export default function HeroSection() {
                 <span className="w-7 h-7 rounded-full flex items-center justify-center bg-white/20">
                   <ArrowRight size={14} className="text-white" />
                 </span>
-              </a>
+              </Link>
             </motion.div>
           </div>
         </div>

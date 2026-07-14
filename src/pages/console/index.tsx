@@ -11,11 +11,11 @@ import { AnimatePresence } from 'framer-motion';
 // ---- Hero ----
 function ConsoleHero() {
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center pt-20 overflow-hidden">
+    <section className="relative min-h-screen flex flex-col items-center justify-center pt-20 sm:overflow-hidden">
       <div className="absolute inset-0 grid-dot-bg opacity-30" />
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] pointer-events-none"
+      <div className="hidden sm:block absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] pointer-events-none"
         style={{ background: 'radial-gradient(ellipse, rgba(255,184,224,0.25) 0%, transparent 70%)', filter: 'blur(40px)' }} />
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-48 pointer-events-none"
+      <div className="hidden sm:block absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-48 pointer-events-none"
         style={{ background: 'radial-gradient(ellipse 80% 100% at 50% 100%, rgba(236,127,169,0.08) 0%, transparent 70%)' }} />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -32,12 +32,12 @@ function ConsoleHero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="section-heading text-5xl sm:text-6xl lg:text-7xl mb-6 max-w-4xl mx-auto"
+          className="section-heading text-3xl sm:text-5xl lg:text-7xl mb-4 sm:mb-6 max-w-4xl mx-auto"
         >
           <span className="text-cedar-frost">The AI Operations</span>
-          <br />
+          <span className="hidden sm:inline"><br /></span>{' '}
           <span className="text-gradient-red">Platform for</span>
-          <br />
+          <span className="hidden sm:inline"><br /></span>{' '}
           <span className="text-cedar-frost">Modern Engineering Teams</span>
         </motion.h1>
 
@@ -45,7 +45,7 @@ function ConsoleHero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.25 }}
-          className="text-xl text-cedar-frost/50 max-w-2xl mx-auto mb-10"
+          className="text-sm sm:text-xl text-cedar-frost/50 max-w-2xl mx-auto mb-6 sm:mb-10"
         >
           Deploy intelligent agents, orchestrate automation workflows, and monitor everything in real time — unified in a single, powerful platform.
         </motion.p>
@@ -54,7 +54,7 @@ function ConsoleHero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.35 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
+          className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-8 sm:mb-16"
         >
           <a href="#demo" onClick={(e) => { e.preventDefault(); document.getElementById('demo')?.scrollIntoView({ behavior: 'smooth' }); }}
             className="btn-primary text-base px-8 py-4 rounded-2xl">
@@ -70,20 +70,20 @@ function ConsoleHero() {
           </button>
         </motion.div>
 
-        {/* Mega Dashboard */}
+        {/* Mega Dashboard — Desktop */}
         <motion.div
           initial={{ opacity: 0, y: 60, scale: 0.96 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 1, delay: 0.4 }}
-          className="relative max-w-5xl mx-auto"
+          className="relative max-w-5xl mx-auto hidden sm:block"
         >
-          <div className="absolute -inset-4 rounded-3xl opacity-20"
+          <div className="hidden sm:block absolute -inset-4 rounded-3xl opacity-20"
             style={{ background: 'radial-gradient(ellipse, rgba(255,184,224,0.6) 0%, transparent 70%)' }} />
 
           <div className="relative glass-card rounded-2xl overflow-hidden"
             style={{ border: '1px solid rgba(236,127,169,0.1)' }}>
             {/* Title bar */}
-            <div className="flex items-center justify-between px-4 py-3 border-b border-cedar-red/10"
+            <div className="flex items-center justify-between px-3 sm:px-4 py-3 border-b border-cedar-red/10"
               style={{ background: 'rgba(255,255,255,0.95)' }}>
               <div className="flex items-center gap-2">
                 <div className="flex gap-1.5">
@@ -91,20 +91,20 @@ function ConsoleHero() {
                   <div className="w-3 h-3 rounded-full bg-yellow-400/50" />
                   <div className="w-3 h-3 rounded-full bg-green-400/50" />
                 </div>
-                <div className="ml-2 w-56 h-5 rounded glass flex items-center justify-center text-xs text-cedar-frost/30">
+                <div className="ml-2 hidden sm:block w-56 h-5 rounded glass items-center justify-center text-xs text-cedar-frost/30">
                   console.cedarlogics.com/dashboard
                 </div>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                <span className="text-xs text-cedar-frost/40">All systems operational</span>
+                <span className="text-xs text-cedar-frost/40 hidden sm:inline">All systems operational</span>
               </div>
             </div>
 
-            <div className="grid grid-cols-5 h-[360px] sm:h-[420px]"
+            <div className="flex flex-col sm:grid sm:grid-cols-5"
               style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.85))' }}>
               {/* Sidebar */}
-              <div className="col-span-1 border-r border-cedar-red/10 p-3 space-y-1 hidden sm:block">
+              <div className="hidden sm:block col-span-1 border-r border-cedar-red/10 p-3 space-y-1">
                 {[
                   { icon: Activity, label: 'Dashboard', active: true },
                   { icon: Bot, label: 'Agents' },
@@ -122,29 +122,29 @@ function ConsoleHero() {
               </div>
 
               {/* Main content */}
-              <div className="col-span-5 sm:col-span-4 p-4 space-y-4 overflow-hidden">
+              <div className="col-span-1 sm:col-span-4 p-3 sm:p-4 space-y-3 sm:space-y-4">
                 {/* Top metrics */}
-                <div className="grid grid-cols-4 gap-3">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
                   {[
                     { l: 'Agents', v: '24', c: '#EC7FA9', ch: '+3' },
                     { l: 'Workflows', v: '847', c: '#FFB8E0', ch: '+12' },
                     { l: 'API/min', v: '14.2K', c: '#FFB8E0', ch: '+5%' },
                     { l: 'Accuracy', v: '97.4%', c: '#EC7FA9', ch: '+0.4' },
                   ].map((m) => (
-                    <div key={m.l} className="glass rounded-xl p-3">
-                      <div className="text-xs text-cedar-frost/40 mb-1">{m.l}</div>
-                      <div className="font-display font-bold text-lg leading-none" style={{ color: m.c }}>{m.v}</div>
-                      <div className="text-xs text-green-400 mt-1">{m.ch}</div>
+                    <div key={m.l} className="glass rounded-xl p-2.5 sm:p-3">
+                      <div className="text-[10px] sm:text-xs text-cedar-frost/40 mb-1">{m.l}</div>
+                      <div className="font-display font-bold text-sm sm:text-lg leading-none" style={{ color: m.c }}>{m.v}</div>
+                      <div className="text-[10px] sm:text-xs text-green-400 mt-1">{m.ch}</div>
                     </div>
                   ))}
                 </div>
 
                 {/* Two columns */}
-                <div className="grid grid-cols-2 gap-3 flex-1">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {/* Chart */}
-                  <div className="glass rounded-xl p-4">
-                    <div className="text-xs text-cedar-frost/50 font-semibold mb-3">Inference Volume (7d)</div>
-                    <div className="flex items-end gap-1 h-24">
+                  <div className="glass rounded-xl p-3 sm:p-4">
+                    <div className="text-[10px] sm:text-xs text-cedar-frost/50 font-semibold mb-3">Inference Volume (7d)</div>
+                    <div className="flex items-end gap-1 h-20 sm:h-24">
                       {[30, 45, 38, 62, 55, 78, 70, 88, 72, 95, 88, 100].map((h, i) => (
                         <motion.div
                           key={i}
@@ -162,8 +162,8 @@ function ConsoleHero() {
                   </div>
 
                   {/* Agents */}
-                  <div className="glass rounded-xl p-4">
-                    <div className="text-xs text-cedar-frost/50 font-semibold mb-3">Active Agents</div>
+                  <div className="glass rounded-xl p-3 sm:p-4">
+                    <div className="text-[10px] sm:text-xs text-cedar-frost/50 font-semibold mb-3">Active Agents</div>
                     <div className="space-y-2">
                       {[
                         { name: 'Classifier #1', status: 'Running', load: 82 },
@@ -172,8 +172,8 @@ function ConsoleHero() {
                       ].map((agent) => (
                         <div key={agent.name} className="flex items-center gap-2">
                           <div className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${agent.status === 'Running' ? 'bg-green-400' : 'bg-cedar-frost/30'}`} />
-                          <span className="text-xs text-cedar-frost/60 flex-1 truncate">{agent.name}</span>
-                          <div className="w-16 h-1.5 rounded-full bg-cedar-red/10 overflow-hidden">
+                          <span className="text-[10px] sm:text-xs text-cedar-frost/60 flex-1 truncate">{agent.name}</span>
+                          <div className="w-14 sm:w-16 h-1.5 rounded-full bg-cedar-red/10 overflow-hidden">
                             <div className="h-full rounded-full bg-cedar-red/60" style={{ width: `${agent.load}%` }} />
                           </div>
                         </div>
@@ -183,15 +183,15 @@ function ConsoleHero() {
                 </div>
 
                 {/* Workflow */}
-                <div className="glass rounded-xl p-4">
-                  <div className="text-xs text-cedar-frost/50 font-semibold mb-2">Workflow: Customer Intent Pipeline</div>
-                  <div className="flex items-center gap-2 overflow-x-auto">
+                <div className="glass rounded-xl p-3 sm:p-4">
+                  <div className="text-[10px] sm:text-xs text-cedar-frost/50 font-semibold mb-2">Workflow: Customer Intent Pipeline</div>
+                  <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1">
                     {['Ingest', 'Preprocess', 'Embed', 'Classify', 'Route', 'Respond', 'Log'].map((s, i) => (
-                      <div key={s} className="flex items-center gap-2 flex-shrink-0">
-                        <div className={`px-2.5 py-1 rounded-lg text-xs font-medium ${i === 3 ? 'bg-cedar-red/20 text-cedar-red border border-cedar-red/30' : i < 3 ? 'bg-green-400/15 text-green-400' : 'bg-cedar-red/5 text-cedar-frost/35'}`}>
+                      <div key={s} className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
+                        <div className={`px-2 sm:px-2.5 py-1 rounded-lg text-[10px] sm:text-xs font-medium whitespace-nowrap ${i === 3 ? 'bg-cedar-red/20 text-cedar-red border border-cedar-red/30' : i < 3 ? 'bg-green-400/15 text-green-400' : 'bg-cedar-red/5 text-cedar-frost/35'}`}>
                           {s}
                         </div>
-                        {i < 6 && <div className="w-3 h-px bg-cedar-red/15" />}
+                        {i < 6 && <div className="w-2 sm:w-3 h-px bg-cedar-red/15" />}
                       </div>
                     ))}
                   </div>
@@ -200,6 +200,97 @@ function ConsoleHero() {
             </div>
           </div>
         </motion.div>
+
+        {/* Mega Dashboard — Mobile */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="sm:hidden mx-auto rounded-2xl overflow-hidden"
+          style={{ border: '1px solid rgba(236,127,169,0.15)', background: 'rgba(255,255,255,0.95)' }}
+        >
+          <div className="p-3 space-y-2.5">
+            <div className="flex items-center justify-between px-1">
+              <div className="flex gap-1.5">
+                <div className="w-2 h-2 rounded-full bg-cedar-red/70" />
+                <div className="w-2 h-2 rounded-full bg-yellow-400/50" />
+                <div className="w-2 h-2 rounded-full bg-green-400/50" />
+              </div>
+              <div className="flex items-center gap-1">
+                <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+                <span className="text-[9px] text-gray-400">Live</span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2">
+              {[
+                { l: 'Agents', v: '24', c: '#EC7FA9' },
+                { l: 'Workflows', v: '847', c: '#FFB8E0' },
+                { l: 'API/min', v: '14.2K', c: '#FFB8E0' },
+                { l: 'Accuracy', v: '97.4%', c: '#EC7FA9' },
+              ].map((m) => (
+                <div key={m.l} className="rounded-lg p-2.5" style={{ background: 'rgba(236,127,169,0.04)', border: '1px solid rgba(236,127,169,0.08)' }}>
+                  <div className="text-[9px] text-gray-400 mb-0.5">{m.l}</div>
+                  <div className="font-display font-bold text-sm leading-none" style={{ color: m.c }}>{m.v}</div>
+                </div>
+              ))}
+            </div>
+
+            <div className="rounded-lg p-2.5" style={{ background: 'rgba(236,127,169,0.04)', border: '1px solid rgba(236,127,169,0.08)' }}>
+              <div className="text-[9px] text-gray-400 font-semibold mb-2">Inference Volume (7d)</div>
+              <div className="flex items-end gap-0.5 h-14">
+                {[30, 45, 38, 62, 55, 78, 70, 88, 72, 95, 88, 100].map((h, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ scaleY: 0 }}
+                    animate={{ scaleY: 1 }}
+                    transition={{ delay: 0.8 + i * 0.04 }}
+                    className="flex-1 rounded-t-sm origin-bottom"
+                    style={{
+                      height: `${h}%`,
+                      background: i >= 10 ? '#EC7FA9' : 'rgba(255,184,224,0.5)',
+                    }}
+                  />
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-lg p-2.5" style={{ background: 'rgba(236,127,169,0.04)', border: '1px solid rgba(236,127,169,0.08)' }}>
+              <div className="text-[9px] text-gray-400 font-semibold mb-1.5">Active Agents</div>
+              <div className="space-y-1">
+                {[
+                  { name: 'Classifier #1', status: 'Running', load: 82 },
+                  { name: 'Summarizer #3', status: 'Running', load: 64 },
+                  { name: 'Extractor #5', status: 'Idle', load: 12 },
+                ].map((agent) => (
+                  <div key={agent.name} className="flex items-center gap-2">
+                    <div className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${agent.status === 'Running' ? 'bg-green-400' : 'bg-gray-300'}`} />
+                    <span className="text-[10px] text-gray-500 flex-1 truncate">{agent.name}</span>
+                    <div className="w-10 h-1 rounded-full bg-gray-200 overflow-hidden">
+                      <div className="h-full rounded-full" style={{ width: `${agent.load}%`, background: '#EC7FA9' }} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-lg p-2.5" style={{ background: 'rgba(236,127,169,0.04)', border: '1px solid rgba(236,127,169,0.08)' }}>
+              <div className="text-[9px] text-gray-400 font-semibold mb-1.5">Workflow</div>
+              <div className="flex items-center gap-1 overflow-x-auto">
+                {['Ingest', 'Preprocess', 'Embed', 'Classify', 'Route', 'Respond', 'Log'].map((s, i) => (
+                  <div key={s} className="flex items-center gap-1 flex-shrink-0">
+                    <div className={`px-1.5 py-0.5 rounded text-[9px] font-medium whitespace-nowrap ${i === 3 ? 'text-pink-500' : i < 3 ? 'text-green-500' : 'text-gray-400'}`}
+                      style={i === 3 ? { background: 'rgba(236,127,169,0.15)', border: '1px solid rgba(236,127,169,0.25)' } : i < 3 ? { background: 'rgba(74,222,128,0.1)' } : { background: 'rgba(0,0,0,0.03)' }}>
+                      {s}
+                    </div>
+                    {i < 6 && <div className="w-1 h-px bg-gray-300" />}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
       </div>
     </section>
   );
@@ -324,7 +415,7 @@ function ArchitectureSection() {
   return (
     <section className="py-24 relative overflow-hidden">
       <div className="absolute inset-0 grid-line-bg opacity-10" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] pointer-events-none opacity-10"
+      <div className="hidden sm:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] pointer-events-none opacity-10"
         style={{ background: 'radial-gradient(ellipse, #FFB8E0 0%, transparent 70%)' }} />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -585,7 +676,7 @@ function DemoCTA() {
 
   return (
     <section id="demo" className="py-28 relative overflow-hidden">
-      <div className="absolute inset-0"
+      <div className="hidden sm:block absolute inset-0"
         style={{ background: 'radial-gradient(ellipse 80% 60% at 50% 50%, rgba(236,127,169,0.08) 0%, transparent 70%)' }} />
       <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <motion.div

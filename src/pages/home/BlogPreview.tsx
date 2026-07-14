@@ -1,54 +1,31 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Calendar, Clock } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import blogImg1 from '../../assets/Building AI Agents That Scale.png';
-import blogImg2 from '../../assets/Deploy.png';
-import blogImg3 from '../../assets/Optimize.png';
+import { Calendar, Clock } from 'lucide-react';
+import { blogPosts, BlogPost } from '../../data/blogPosts';
+import BlogPostPopup from '../../components/BlogPostPopup';
 
 const BLUSH = '#FF6FB5';
 const ROSE = '#FF2D87';
 const MAROON = '#8E1155';
 const tones = [ROSE, BLUSH, MAROON];
 
-const posts = [
-  {
-    slug: 'building-ai-agents-that-scale',
-    category: 'AI Engineering',
-    title: 'Building AI Agents That Scale: Architecture Patterns for Production',
-    excerpt: 'A deep technical exploration of agent architectures, memory systems, and the infrastructure decisions that determine whether your AI agents thrive or fail under real-world load.',
-    image: blogImg1,
-    author: 'Aiden Cole',
-    authorInitials: 'AC',
-    date: 'Jun 28, 2025',
-    readTime: '12 min read',
-  },
-  {
-    slug: 'zero-downtime-migrations',
-    category: 'Platform Engineering',
-    title: 'Zero-Downtime Database Migrations at Enterprise Scale',
-    excerpt: 'How we migrated 2TB of production PostgreSQL data for a financial services client without a single minute of downtime, using blue-green deployments and event sourcing.',
-    image: blogImg2,
-    author: 'Maya Torres',
-    authorInitials: 'MT',
-    date: 'Jun 14, 2025',
-    readTime: '9 min read',
-  },
-  {
-    slug: 'llm-cost-optimization',
-    category: 'AI Cost',
-    title: 'LLM Cost Optimization: How We Cut AI Inference Costs by 78%',
-    excerpt: 'Practical techniques including prompt caching, model routing, quantization, and smart batching that dramatically reduce inference costs without sacrificing output quality.',
-    image: blogImg3,
-    author: 'Liam Park',
-    authorInitials: 'LP',
-    date: 'May 30, 2025',
-    readTime: '15 min read',
-  },
-].map((p, i) => ({ ...p, tone: tones[i % tones.length], index: String(i + 1).padStart(2, '0') }));
+const posts = blogPosts.slice(0, 3).map((p, i) => ({
+  ...p,
+  tone: tones[i % tones.length],
+  index: String(i + 1).padStart(2, '0'),
+}));
 
 const [featured, ...rest] = posts;
 
 export default function BlogPreview() {
+  const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
+  const [popupOpen, setPopupOpen] = useState(false);
+
+  const openPost = (post: BlogPost) => {
+    setSelectedPost(post);
+    setPopupOpen(true);
+  };
+
   return (
     <section id="blog" className="py-28 relative overflow-hidden">
       <div
@@ -87,31 +64,18 @@ export default function BlogPreview() {
               </span>
             </h2>
           </div>
-          <Link
-            to="/blog"
-            className="relative inline-flex items-center gap-3 px-6 py-3 rounded-full font-semibold text-sm text-white transition-all duration-300 hover:translate-y-[-1px] hover:shadow-xl"
-            style={{ background: 'linear-gradient(135deg, #FF2D87, #8E1155)', boxShadow: '0 4px 24px rgba(255,45,135,0.3)' }}
-          >
-            View all posts
-            <span className="w-7 h-7 rounded-full flex items-center justify-center bg-white/20">
-              <ArrowRight size={14} className="text-white" />
-            </span>
-          </Link>
         </motion.div>
 
-        {/* Editorial spread: one large feature + a stacked "further reading" column,
-            instead of three identical cards — the hierarchy itself is the point */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Featured post */}
           <motion.article
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="group relative lg:col-span-2 rounded-3xl overflow-hidden border"
+            className="group relative lg:col-span-2 rounded-3xl overflow-hidden border cursor-pointer"
             style={{ borderColor: 'rgba(255,255,255,0.08)', minHeight: '480px' }}
+            onClick={() => openPost(featured)}
           >
-            <Link to={`/blog/${featured.slug}`} className="absolute inset-0 z-20" aria-label={featured.title} />
-
             <img
               src={featured.image}
               alt={featured.title}
@@ -123,7 +87,6 @@ export default function BlogPreview() {
               style={{ background: `linear-gradient(0deg, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.45) 55%, rgba(0,0,0,0.15) 100%)` }}
             />
 
-            {/* Giant outline numeral — the editorial marker */}
             <span
               className="absolute top-2 right-4 font-orbitron font-bold pointer-events-none select-none"
               style={{
@@ -173,7 +136,7 @@ export default function BlogPreview() {
             />
           </motion.article>
 
-          {/* Further reading — compact horizontal rows instead of a repeated card shape */}
+          {/* Further reading */}
           <div className="flex flex-col gap-6">
             {rest.map((post, i) => (
               <motion.article
@@ -182,13 +145,12 @@ export default function BlogPreview() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: (i + 1) * 0.1 }}
-                className="group relative flex-1 rounded-2xl overflow-hidden p-5 flex gap-4 items-start"
+                className="group relative flex-1 rounded-2xl overflow-hidden p-5 flex gap-4 items-start cursor-pointer"
                 style={{ background: `linear-gradient(135deg, ${post.tone}18, ${post.tone}08)`, border: `1px solid ${post.tone}25` }}
                 onMouseEnter={(e) => (e.currentTarget.style.border = `1px solid ${post.tone}55`)}
                 onMouseLeave={(e) => (e.currentTarget.style.border = `1px solid ${post.tone}25`)}
+                onClick={() => openPost(post)}
               >
-                <Link to={`/blog/${post.slug}`} className="absolute inset-0 z-20" aria-label={post.title} />
-
                 <span
                   className="absolute -bottom-3 -right-1 font-orbitron font-bold pointer-events-none select-none"
                   style={{ fontSize: '4.5rem', lineHeight: 1, color: 'transparent', WebkitTextStroke: `1px ${post.tone}30` }}
@@ -221,6 +183,12 @@ export default function BlogPreview() {
           </div>
         </div>
       </div>
+
+      <BlogPostPopup
+        isOpen={popupOpen}
+        onClose={() => setPopupOpen(false)}
+        post={selectedPost}
+      />
     </section>
   );
 }

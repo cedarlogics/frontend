@@ -1,12 +1,11 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import CookieConsent from './components/CookieConsent';
 import HomePage from './pages/home';
 import ConsolePage from './pages/console';
-import BlogPage from './pages/blog';
-import BlogPost from './pages/blog/BlogPost';
 import PrivacyPage from './pages/legal/PrivacyPage';
 import TermsPage from './pages/legal/TermsPage';
 
@@ -23,6 +22,14 @@ function PageWrapper({ children }: { children: React.ReactNode }) {
   );
 }
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
+
 function AppRoutes() {
   const location = useLocation();
   return (
@@ -30,8 +37,6 @@ function AppRoutes() {
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<PageWrapper><HomePage /></PageWrapper>} />
         <Route path="/console" element={<PageWrapper><ConsolePage /></PageWrapper>} />
-        <Route path="/blog" element={<PageWrapper><BlogPage /></PageWrapper>} />
-        <Route path="/blog/:slug" element={<PageWrapper><BlogPost /></PageWrapper>} />
         <Route path="/privacy" element={<PageWrapper><PrivacyPage /></PageWrapper>} />
         <Route path="/terms" element={<PageWrapper><TermsPage /></PageWrapper>} />
         <Route path="*" element={
@@ -54,6 +59,7 @@ function AppRoutes() {
 export default function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <div className="min-h-screen bg-cedar-dark">
         <Navbar />
         <AppRoutes />

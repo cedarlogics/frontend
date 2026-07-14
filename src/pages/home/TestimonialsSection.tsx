@@ -3,10 +3,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import govIcon1 from '../../assets/Government & Public Sector (2).png';
 import govIcon2 from '../../assets/Government & Public Sector (3).png';
-import govIcon3 from '../../assets/Government & Public Sector (4).png';
+import govIcon3 from '../../assets/Government & Public Sector (8).png';
+import govIcon5 from '../../assets/Government & Public Sector (4).png';
 import govIcon4 from '../../assets/Government & Public Sector (5).png';
-import govIcon5 from '../../assets/Government & Public Sector (6).png';
-
 const BLUSH = '#FF6FB5';
 const ROSE = '#FF2D87';
 const MAROON = '#8E1155';
@@ -41,7 +40,7 @@ const testimonials: Testimonial[] = [
     role: 'VP Engineering',
     company: 'FinPath Capital',
     avatarColor: '#FF5CA8',
-    avatarIcon: govIcon1,
+    avatarIcon: govIcon5,
     quote:
       'Our trading platform required ultra-low latency and bulletproof reliability. CedarLogics delivered a system that processes 50k transactions per second with 99.99% uptime.',
     metricValue: '50k/s',
@@ -53,7 +52,7 @@ const testimonials: Testimonial[] = [
     role: 'Founder & CEO',
     company: 'EduFlow',
     avatarColor: '#FF1A75',
-    avatarIcon: govIcon2,
+    avatarIcon: govIcon3,
     quote:
       'Within 4 months CedarLogics transformed our idea into a fully deployed AI tutoring platform serving 40,000 students. They felt like our in-house engineering team.',
     metricValue: '40,000',
@@ -65,7 +64,7 @@ const testimonials: Testimonial[] = [
     role: 'Head of Product',
     company: 'Nexus Retail',
     avatarColor: '#FF5CA8',
-    avatarIcon: govIcon3,
+    avatarIcon: govIcon4,
     quote:
       'The intelligent recommendation engine CedarLogics built increased our conversion rate by 38%. What set them apart was total transparency, no surprises, no delays.',
     metricValue: '+38%',
@@ -77,7 +76,7 @@ const testimonials: Testimonial[] = [
     role: 'Director of Engineering',
     company: 'Automata Labs',
     avatarColor: '#FF1A75',
-    avatarIcon: govIcon5,
+    avatarIcon: govIcon2,
     quote:
       'CedarLogics helped us migrate an 8-year-old monolith to an event-driven microservices architecture without a single hour of downtime. Their methodology is surgical.',
     metricValue: '0 hrs',

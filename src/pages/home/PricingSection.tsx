@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Check, ArrowRight, Sparkles } from 'lucide-react';
+import PayPalPopup from '../../components/PayPalPopup';
 
 const BLUSH = '#FF6FB5';
 const ROSE = '#FF2D87';
@@ -42,9 +44,10 @@ const plans = [
       'API access',
       'Custom AI model training',
     ],
-    cta: 'Contact Sales',
+    cta: 'Enroll Now',
     popular: true,
     accent: ROSE,
+    amount: 'Custom',
   },
   {
     name: 'Enterprise',
@@ -70,11 +73,12 @@ const plans = [
 
 export default function PricingSection() {
   const [annual, setAnnual] = useState(false);
+  const [paypalOpen, setPaypalOpen] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState<{ name: string; amount: string } | null>(null);
+  const navigate = useNavigate();
 
   return (
     <section id="pricing" className="py-28 relative overflow-hidden" style={{ background: `linear-gradient(180deg, ${WINE} 0%, #0F0309 100%)` }}>
-      {/* Same editorial system as the rest of the page: fine grain + two
-          restrained glow pools instead of a generic dot grid */}
       <div
         className="absolute inset-0 opacity-[0.06] pointer-events-none"
         style={{
@@ -123,7 +127,6 @@ export default function PricingSection() {
             Enterprise licensing and professional services available.
           </p>
 
-          {/* Annual / monthly toggle */}
           <div className="inline-flex items-center gap-3 px-1.5 py-1.5 rounded-full"
             style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)' }}>
             <button
@@ -202,7 +205,6 @@ export default function PricingSection() {
                 </div>
               )}
 
-              {/* Header */}
               <div className="mb-6">
                 <div
                   className="inline-block px-3 py-1 rounded-lg text-xs font-semibold mb-3"
@@ -226,7 +228,6 @@ export default function PricingSection() {
                 <p className="text-sm text-white/50">{plan.description}</p>
               </div>
 
-              {/* Features */}
               <ul className="space-y-3 mb-8">
                 {plan.features.map((f) => (
                   <li key={f} className="flex items-center gap-3 text-sm">
@@ -241,8 +242,18 @@ export default function PricingSection() {
                 ))}
               </ul>
 
-              {/* CTA */}
               <button
+                onClick={() => {
+                  if (plan.name === 'Professional') {
+                    setSelectedPlan({ name: plan.name, amount: plan.amount || '99' });
+                    setPaypalOpen(true);
+                  } else if (plan.name === 'Starter') {
+                    navigate('/console');
+                  } else {
+                    const el = document.getElementById('contact');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
                 className="w-full py-3 rounded-xl text-sm font-semibold transition-all duration-300 hover:scale-[1.02]"
                 style={
                   plan.popular
@@ -257,13 +268,19 @@ export default function PricingSection() {
           ))}
         </div>
 
-        {/* Bottom note */}
         <p className="text-center text-sm text-white/30 mt-10">
           Workflow execution-based pricing available. All plans include onboarding, documentation, and support.
           <br />
           Custom enterprise contracts with dedicated infrastructure, compliance, and professional implementation services.
         </p>
       </div>
+
+      <PayPalPopup
+        isOpen={paypalOpen}
+        onClose={() => setPaypalOpen(false)}
+        planName={selectedPlan?.name ?? ''}
+        amount={selectedPlan?.amount ?? '99'}
+      />
     </section>
   );
 }

@@ -19,11 +19,12 @@ export default function HomePage() {
       <HeroSection />
       <TrustedBy />
       <FeaturesSection />
-      <WhyCedarLogics />
+      <WhoWeAre />
       <ServicesSection />
       <ConsolePreview />
       <ProcessSection />
-      <WhoWeAre />
+      
+      <WhyCedarLogics />
       <TestimonialsSection />
       <PricingSection />
       <BlogPreview />

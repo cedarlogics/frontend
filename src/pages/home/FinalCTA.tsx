@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Zap } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 const BLUSH = '#FF6FB5';
 const ROSE = '#FF2D87';
@@ -62,27 +62,13 @@ export default function FinalCTA() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a
-              href="#contact"
-              onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}
+            <Link
+              to="/console"
               className="relative inline-flex items-center gap-3 px-8 py-4 rounded-full font-semibold text-base text-white transition-all duration-300 hover:translate-y-[-1px] hover:shadow-xl"
               style={{ background: 'linear-gradient(135deg, #FF2D87, #8E1155)', boxShadow: '0 4px 24px rgba(255,45,135,0.3)' }}
             >
               Start a Project
               <ArrowRight size={16} />
-            </a>
-            <Link
-              to="/console"
-              className="relative inline-flex items-center gap-3 px-8 py-4 rounded-full font-semibold text-base transition-all duration-300 hover:translate-y-[-1px] border"
-              style={{ color: ROSE, borderColor: 'rgba(255,45,135,0.3)' }}
-              onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(255,45,135,0.6)'}
-              onMouseLeave={e => e.currentTarget.style.borderColor = 'rgba(255,45,135,0.3)'}
-            >
-              <Zap size={16} />
-              Explore Console
-              <span className="w-7 h-7 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #FF2D87, #8E1155)' }}>
-                <ArrowRight size={14} className="text-white" />
-              </span>
             </Link>
           </div>
 

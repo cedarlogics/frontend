@@ -1,14 +1,15 @@
 import { useState, useEffect, useRef } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ChevronRight, Zap } from 'lucide-react';
 import logo from '../../public/logo.png';
 
 const navLinks = [
   { label: 'Home', href: '/' },
+
   { label: 'Features', href: '/#features' },
   { label: 'Services', href: '/#services' },
-  { label: 'About', href: '/#about' },
+    { label: 'About', href: '/#about' },
   { label: 'Blog', href: '/#blog' },
   { label: 'Contact', href: '/#contact' },
 ];
@@ -17,7 +18,9 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const [pendingScroll, setPendingScroll] = useState<string | null>(null);
   const location = useLocation();
+  const navigate = useNavigate();
   const btnRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -32,19 +35,28 @@ export default function Navbar() {
       return;
     }
 
-    const sectionIds = navLinks
+    const sectionIds = ['home', ...navLinks
       .map(l => l.href.replace('/#', ''))
-      .filter(id => id && document.getElementById(id));
+      .filter(id => id && id !== '/' && document.getElementById(id))];
+
+    let currentSections: string[] = [];
 
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
+            if (!currentSections.includes(entry.target.id)) {
+              currentSections.push(entry.target.id);
+            }
+          } else {
+            currentSections = currentSections.filter(id => id !== entry.target.id);
           }
         }
+        if (currentSections.length > 0) {
+          setActiveSection(currentSections[currentSections.length - 1]);
+        }
       },
-      { rootMargin: '-30% 0px -60% 0px' }
+      { rootMargin: '-40% 0px -55% 0px', threshold: 0 }
     );
 
     sectionIds.forEach(id => {
@@ -59,13 +71,37 @@ export default function Navbar() {
     setMobileOpen(false);
   }, [location.pathname]);
 
+  useEffect(() => {
+    if (pendingScroll && location.pathname === '/') {
+      const el = document.getElementById(pendingScroll);
+      if (el) {
+        setTimeout(() => el.scrollIntoView({ behavior: 'smooth' }), 100);
+      }
+      setPendingScroll(null);
+    }
+  }, [pendingScroll, location.pathname]);
+
   const handleNavClick = (href: string) => {
-    if (href.startsWith('/#')) {
+    if (href === '/') {
+      setActiveSection('home');
       if (location.pathname !== '/') {
-        window.location.href = href;
+        navigate('/');
+        setMobileOpen(false);
         return;
       }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setMobileOpen(false);
+      return;
+    }
+    if (href.startsWith('/#')) {
       const id = href.replace('/#', '');
+      setActiveSection(id);
+      if (location.pathname !== '/') {
+        navigate('/');
+        setPendingScroll(id);
+        setMobileOpen(false);
+        return;
+      }
       const el = document.getElementById(id);
       if (el) el.scrollIntoView({ behavior: 'smooth' });
     }
@@ -200,7 +236,7 @@ function NavItem({ link, active, onNavigate }: { link: { label: string; href: st
     <Link
       to={link.href.startsWith('/#') ? '/' : link.href}
       onClick={(e) => {
-        if (link.href.startsWith('/#')) {
+        if (link.href.startsWith('/#') || link.href === '/') {
           e.preventDefault();
           onNavigate(link.href);
         }
@@ -227,33 +263,20 @@ function NavItem({ link, active, onNavigate }: { link: { label: string; href: st
 
 function ConsoleButton() {
   const btnRef = useRef<HTMLAnchorElement>(null);
-  const [pos, setPos] = useState({ x: 0, y: 0 });
-  const [hovered, setHovered] = useState(false);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left - rect.width / 2;
-    const y = e.clientY - rect.top - rect.height / 2;
-    setPos({ x: x * 0.3, y: y * 0.3 });
-  };
 
   return (
-    <motion.div animate={{ x: hovered ? pos.x : 0, y: hovered ? pos.y : 0 }} transition={{ type: 'spring', stiffness: 300, damping: 20 }}>
-      <Link
-        ref={btnRef}
-        to="/console"
-        className="relative inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white overflow-hidden group"
-        style={{ background: 'linear-gradient(135deg, #FF2D87, #8E1155)' }}
-        onMouseMove={handleMouseMove}
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => { setHovered(false); setPos({ x: 0, y: 0 }); }}
-      >
-        <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          style={{ background: 'linear-gradient(135deg, #FF2D87, #8E1155)' }} />
-        <span className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          style={{ boxShadow: '0 0 30px rgba(255,20,147,0.5)', }} />
-        <span className="relative z-10">Live Dashboard</span>
-      </Link>
-    </motion.div>
+    <Link
+      ref={btnRef}
+      to="/console"
+      className="relative inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-semibold text-sm text-white transition-all duration-300 hover:translate-y-[-1px] hover:shadow-xl group"
+      style={{ background: 'linear-gradient(135deg, #FF2D87, #8E1155)', boxShadow: '0 4px 24px rgba(199, 21, 133, 0.3)' }}
+    >
+      <span className="relative z-10">Live Dashboard</span>
+      <span className="w-6 h-6 rounded-full flex items-center justify-center bg-white/20 relative z-10">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5 text-white">
+          <path d="M5 12h14M12 5l7 7-7 7" />
+        </svg>
+      </span>
+    </Link>
   );
 }

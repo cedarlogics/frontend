@@ -4,6 +4,7 @@ import builtToEndure from '../../assets/Built to Endure.png';
 import aiNative from '../../assets/AI-Native Architecture.png';
 import processPrecision from '../../assets/Process Precision.png';
 import continuousOpt from '../../assets/Process Precision (2).png';
+import whoWeAre from '../../assets/Who We Are.png';
 
 const BLUSH = '#FF1A75';
 const ROSE = '#FF5CA8';
@@ -123,14 +124,9 @@ export default function WhyCedarLogics() {
 
               {/* Center */}
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-28 h-28 rounded-3xl flex items-center justify-center"
+                <div className="w-28 h-28 rounded-3xl flex items-center justify-center overflow-hidden"
                   style={{ background: `linear-gradient(135deg, ${ROSE}, ${MAROON})` }}>
-                  <svg width="56" height="56" viewBox="0 0 36 36" fill="none">
-                    <path d="M18 2L32 11V25L18 34L4 25V11L18 2Z" stroke="white" strokeWidth="2" fill="none"/>
-                    <path d="M18 9L26 14V22L18 27L10 22V14L18 9Z" fill="white" fillOpacity="0.2"/>
-                    <circle cx="18" cy="18" r="5" fill="white"/>
-                    <circle cx="18" cy="18" r="2" fill={ROSE}/>
-                  </svg>
+                  <img src={whoWeAre} alt="Who We Are" className="w-full h-full object-cover" />
                 </div>
               </div>
 

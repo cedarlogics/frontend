@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Zap, ArrowRight, GitBranch, BarChart2, Shield, Bot } from 'lucide-react';
+import { ArrowRight, GitBranch, BarChart2, Shield, Bot } from 'lucide-react';
 
 // Same restrained palette as the "Who Uses Us" section — blush, rose,
 // deep maroon, ink, white — so the two sections read as one story.
@@ -34,16 +34,16 @@ export default function ConsolePreview() {
       {/* Two restrained light sources — blush upper-right, maroon lower-left,
           both fading straight to black — instead of a flat purple wash */}
       <div
-        className="absolute -top-40 -right-40 w-[640px] h-[640px] rounded-full pointer-events-none"
+        className="hidden sm:block absolute -top-40 -right-40 w-[640px] h-[640px] rounded-full pointer-events-none"
         style={{ background: `radial-gradient(circle, ${ROSE}2e 0%, transparent 65%)`, filter: 'blur(90px)' }}
       />
       <div
-        className="absolute -bottom-52 -left-40 w-[600px] h-[600px] rounded-full pointer-events-none"
+        className="hidden sm:block absolute -bottom-52 -left-40 w-[600px] h-[600px] rounded-full pointer-events-none"
         style={{ background: `radial-gradient(circle, ${MAROON}40 0%, transparent 65%)`, filter: 'blur(100px)' }}
       />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           {/* Left: copy */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
@@ -55,7 +55,7 @@ export default function ConsolePreview() {
               <div className="w-4 h-px" style={{ background: `linear-gradient(90deg, transparent, ${ROSE})` }} />
               <span className="text-xs tracking-[0.3em] uppercase font-orbitron font-semibold" style={{ color: BLUSH }}>Operations Hub</span>
             </div>
-            <h2 className="font-orbitron text-4xl sm:text-5xl text-white mb-5">
+            <h2 className="font-orbitron text-3xl sm:text-5xl text-white mb-4 sm:mb-5">
               CedarLogics
               <br />
               <span
@@ -69,7 +69,7 @@ export default function ConsolePreview() {
                 Console
               </span>
             </h2>
-            <p className="text-white/70 leading-relaxed mb-8">
+            <p className="text-sm sm:text-base text-white/70 leading-relaxed mb-6 sm:mb-8">
               The unified command center for your enterprise workflow automation. Deploy AI agents,
               design intelligent workflows, monitor execution in real time, and optimize business
               processes — all from a single operations console.
@@ -100,7 +100,6 @@ export default function ConsolePreview() {
                 boxShadow: '0 4px 24px rgba(255,45,135,0.3)',
               }}
             >
-              <Zap size={16} />
               Explore Console
               <span className="w-7 h-7 rounded-full flex items-center justify-center bg-white/20">
                 <ArrowRight size={14} className="text-white" />
@@ -121,7 +120,7 @@ export default function ConsolePreview() {
             <div className="absolute -inset-4 rounded-3xl opacity-20 blur-xl"
               style={{ background: `radial-gradient(ellipse, ${BLUSH} 0%, transparent 60%)` }} />
 
-            {/* Floating insight cards — dot colors now cycle within the same palette */}
+            {/* Floating insight cards — hidden on mobile */}
             {[
               { label: 'Cost Efficiency', value: '32% reduction', desc: 'vs last quarter', dot: ROSE, x: 'left-8', y: '-top-3', delay: 0 },
               { label: 'AI Accuracy', value: '97.4%', desc: 'across all models', dot: MAROON, x: '-right-4', y: 'top-8', delay: 0.15 },
@@ -146,7 +145,7 @@ export default function ConsolePreview() {
                     },
                   }}
                   whileHover={{ scale: 1.05 }}
-                  className={`absolute ${insight.x} ${insight.y} z-10 rounded-2xl px-4 py-2.5 min-w-[175px]`}
+                  className={`hidden sm:block absolute ${insight.x} ${insight.y} z-10 rounded-2xl px-4 py-2.5 min-w-[175px]`}
                   style={{
                     background: 'rgba(255,255,255,0.92)',
                     border: '1px solid rgba(0,0,0,0.08)',
@@ -173,15 +172,15 @@ export default function ConsolePreview() {
               style={{ border: `1px solid ${ROSE}30`, boxShadow: `0 20px 60px rgba(0,0,0,0.5)` }}
             >
               {/* Header */}
-              <div className="flex items-center justify-between px-5 py-4 border-b"
+              <div className="flex items-center justify-between px-3 sm:px-5 py-3 sm:py-4 border-b"
                 style={{ background: 'rgba(255,255,255,0.95)', borderColor: `${ROSE}20` }}>
-                <div className="flex items-center gap-3">
-                  <div className="flex gap-1.5">
-                    <div className="w-2.5 h-2.5 rounded-full" style={{ background: `${ROSE}99` }} />
-                    <div className="w-2.5 h-2.5 rounded-full" style={{ background: `${BLUSH}99` }} />
-                    <div className="w-2.5 h-2.5 rounded-full" style={{ background: `${MAROON}99` }} />
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <div className="flex gap-1 sm:gap-1.5">
+                    <div className="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full" style={{ background: `${ROSE}99` }} />
+                    <div className="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full" style={{ background: `${BLUSH}99` }} />
+                    <div className="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full" style={{ background: `${MAROON}99` }} />
                   </div>
-                  <span className="text-xs text-black/70 font-mono font-semibold">console.cedarlogics.com</span>
+                  <span className="text-[10px] sm:text-xs text-black/70 font-mono font-semibold hidden sm:inline">console.cedarlogics.com</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: ROSE }} />
@@ -190,9 +189,9 @@ export default function ConsolePreview() {
               </div>
 
               {/* Console content */}
-              <div className="p-5 space-y-4 font-mono" style={{ background: 'rgba(255,255,255,0.85)' }}>
+              <div className="p-3 sm:p-5 space-y-3 sm:space-y-4 font-mono" style={{ background: 'rgba(255,255,255,0.85)' }}>
                 {/* Top row */}
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-3 gap-2 sm:gap-3">
                   {[
                     { label: 'AI Agents', val: '24', unit: 'active', color: ROSE },
                     { label: 'Workflows', val: '847', unit: 'running', color: MAROON },
@@ -204,31 +203,31 @@ export default function ConsolePreview() {
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.4, delay: idx * 0.1 }}
-                      className="rounded-xl p-3 text-center"
+                      className="rounded-xl p-2 sm:p-3 text-center"
                       style={{
                         background: `linear-gradient(135deg, ${m.color}22, ${m.color}10)`,
                         border: `1px solid ${m.color}45`,
                       }}
                     >
-                      <div className="text-xs text-black/60 mb-1 font-medium">{m.label}</div>
-                      <div className="font-display font-bold text-xl" style={{ color: m.color }}>{m.val}</div>
-                      <div className="text-xs text-black/50">{m.unit}</div>
+                      <div className="text-[10px] sm:text-xs text-black/60 mb-1 font-medium">{m.label}</div>
+                      <div className="font-display font-bold text-base sm:text-xl" style={{ color: m.color }}>{m.val}</div>
+                      <div className="text-[10px] sm:text-xs text-black/50">{m.unit}</div>
                     </motion.div>
                   ))}
                 </div>
 
                 {/* Workflow builder */}
-                <div className="rounded-xl p-4" style={{
+                <div className="rounded-xl p-3 sm:p-4" style={{
                   background: `linear-gradient(135deg, rgba(${ROSE_RGB},0.12), rgba(${ROSE_RGB},0.04))`,
                   border: `1px solid rgba(${ROSE_RGB},0.2)`,
                 }}>
-                  <div className="text-xs text-black/70 mb-3 font-semibold">Active Workflow — Data Processing Pipeline</div>
-                  <div className="flex items-center gap-2 overflow-x-auto pb-1">
+                  <div className="text-[10px] sm:text-xs text-black/70 mb-2 sm:mb-3 font-semibold">Active Workflow — Data Processing Pipeline</div>
+                  <div className="flex items-center gap-1 sm:gap-2 overflow-x-auto pb-1">
                     {['Trigger', 'Fetch', 'Transform', 'AI Classify', 'Store', 'Notify'].map((step, i) => (
-                      <div key={step} className="flex items-center gap-2 flex-shrink-0">
+                      <div key={step} className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
                         <div className="flex flex-col items-center">
                           <div
-                            className="text-xs px-3 py-1.5 rounded-lg font-medium whitespace-nowrap"
+                            className="text-[10px] sm:text-xs px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg font-medium whitespace-nowrap"
                             style={{
                               background: i === 3 ? `rgba(${ROSE_RGB},0.3)` : `rgba(${ROSE_RGB},0.1)`,
                               color: i === 3 ? ROSE : 'rgba(0,0,0,0.7)',
@@ -238,22 +237,22 @@ export default function ConsolePreview() {
                             {step}
                           </div>
                           {i === 3 && (
-                            <div className="text-xs font-medium mt-1" style={{ color: ROSE }}>● Running</div>
+                            <div className="text-[10px] sm:text-xs font-medium mt-1" style={{ color: ROSE }}>● Running</div>
                           )}
                         </div>
-                        {i < 5 && <div className="w-4 h-px flex-shrink-0" style={{ background: `rgba(${ROSE_RGB},0.3)` }} />}
+                        {i < 5 && <div className="w-2 sm:w-4 h-px flex-shrink-0" style={{ background: `rgba(${ROSE_RGB},0.3)` }} />}
                       </div>
                     ))}
                   </div>
                 </div>
 
                 {/* Activity feed */}
-                <div className="rounded-xl p-4" style={{
+                <div className="rounded-xl p-3 sm:p-4" style={{
                   background: `linear-gradient(135deg, rgba(${ROSE_RGB},0.1), rgba(${ROSE_RGB},0.03))`,
                   border: `1px solid rgba(${ROSE_RGB},0.18)`,
                 }}>
-                  <div className="text-xs text-black/60 mb-3 font-semibold">Recent Activity</div>
-                  <div className="space-y-2.5">
+                  <div className="text-[10px] sm:text-xs text-black/60 mb-2 sm:mb-3 font-semibold">Recent Activity</div>
+                  <div className="space-y-2 sm:space-y-2.5">
                     {[
                       { msg: 'Agent #7 completed classification batch', time: '2s ago', color: ROSE },
                       { msg: 'Workflow "ETL Daily" executed successfully', time: '1m ago', color: MAROON },
@@ -269,9 +268,9 @@ export default function ConsolePreview() {
                       >
                         <div className="flex items-center gap-2">
                           <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: item.color }} />
-                          <span className="text-xs text-black/60">{item.msg}</span>
+                          <span className="text-[10px] sm:text-xs text-black/60 truncate">{item.msg}</span>
                         </div>
-                        <span className="text-xs text-black/40 whitespace-nowrap font-medium">{item.time}</span>
+                        <span className="text-[10px] sm:text-xs text-black/40 whitespace-nowrap font-medium">{item.time}</span>
                       </motion.div>
                     ))}
                   </div>

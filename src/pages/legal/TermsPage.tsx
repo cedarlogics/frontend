@@ -1,95 +1,6 @@
 import { motion } from 'framer-motion';
 
 export default function TermsPage() {
-  const sections = [
-    {
-      title: '1. Acceptance of Terms',
-      content: `By accessing or using CedarLogics services, including our website at cedarlogics.com and the CedarLogics Console platform, you agree to be bound by these Terms and Conditions ("Terms"). If you do not agree to these Terms, you may not use our services.
-
-These Terms apply to all visitors, users, and customers of CedarLogics. We reserve the right to update these Terms at any time, and your continued use of our services constitutes acceptance of any changes.`,
-    },
-    {
-      title: '2. Services Description',
-      content: `CedarLogics provides software engineering services, AI platform products, and the CedarLogics Console SaaS platform. Our services are intended for business and professional use.
-
-We reserve the right to modify, suspend, or discontinue any aspect of our services at any time. We will provide reasonable notice of material changes to paid service subscribers.`,
-    },
-    {
-      title: '3. Account Registration',
-      content: `To access certain features, you must register for an account. You agree to:
-• Provide accurate, current, and complete information during registration
-• Maintain and update your account information
-• Keep your credentials confidential and not share them
-• Notify us immediately of any unauthorized access to your account
-• Accept responsibility for all activity conducted through your account
-
-You must be at least 18 years old and have the authority to enter into these Terms on behalf of any organization you represent.`,
-    },
-    {
-      title: '4. Acceptable Use',
-      content: `You agree not to use our services to:
-• Violate any applicable law or regulation
-• Infringe intellectual property rights of any third party
-• Transmit malware, spam, or any destructive code
-• Attempt to gain unauthorized access to our systems
-• Interfere with the operation of our services or other users
-• Reverse engineer, decompile, or disassemble our software
-• Use our services for cryptocurrency mining or similar resource-intensive unauthorized tasks
-• Engage in any activity that could harm CedarLogics or its users
-
-We reserve the right to suspend or terminate accounts that violate these terms without prior notice.`,
-    },
-    {
-      title: '5. Intellectual Property',
-      content: `CedarLogics and its licensors own all intellectual property rights in our services, including software, design, text, graphics, and branding. You may not copy, modify, distribute, or create derivative works of our proprietary materials without explicit written permission.
-
-For custom software development engagements, intellectual property ownership is governed by the specific project agreement. By default, upon full payment, clients receive full ownership of custom code developed for them, with CedarLogics retaining no license to the delivered work.`,
-    },
-    {
-      title: '6. Payment and Billing',
-      content: `For paid services, you agree to pay all fees in accordance with the pricing presented at the time of purchase. All fees are non-refundable except where required by applicable law or as specified in individual service agreements.
-
-For subscription services, fees are billed in advance on a monthly or annual basis. Failure to pay may result in suspension of service. You are responsible for all taxes applicable to your use of our services.`,
-    },
-    {
-      title: '7. Confidentiality',
-      content: `Both parties agree to keep confidential any non-public information disclosed in connection with a service engagement. This includes technical architecture, business processes, personnel information, and financial data.
-
-Confidentiality obligations survive the termination of any agreement for a period of three (3) years, except for information that becomes publicly known through no fault of the receiving party.`,
-    },
-    {
-      title: '8. Limitation of Liability',
-      content: `To the maximum extent permitted by law, CedarLogics shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of our services, even if advised of the possibility of such damages.
-
-Our total cumulative liability for any claims arising under these Terms shall not exceed the greater of (a) the amount you paid in the 12 months preceding the claim or (b) $1,000 USD.`,
-    },
-    {
-      title: '9. Indemnification',
-      content: `You agree to indemnify and hold harmless CedarLogics and its officers, directors, employees, and agents from any claims, damages, costs, and expenses (including reasonable legal fees) arising from:
-• Your use of our services
-• Your violation of these Terms
-• Your violation of any third-party rights
-• Content you submit or transmit through our services`,
-    },
-    {
-      title: '10. Governing Law',
-      content: `These Terms are governed by the laws of the State of California, United States, without regard to conflict of law principles. Any disputes shall be resolved in the state or federal courts located in San Francisco County, California.
-
-You waive any objection to venue in such courts. For international users, we comply with applicable local regulations and your statutory consumer rights are not affected by these Terms.`,
-    },
-    {
-      title: '11. Contact',
-      content: `For questions about these Terms, contact us at:
-
-CedarLogics Legal
-legal@cedarlogics.com
-
-801 N Spring Street, Los Angeles, CA 90012, USA
-
-We aim to respond to all legal inquiries within 5 business days.`,
-    },
-  ];
-
   return (
     <main className="min-h-screen pt-24 pb-28">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -101,10 +12,8 @@ We aim to respond to all legal inquiries within 5 business days.`,
           <div className="section-label mb-4">
             <div className="w-4 h-px bg-cedar-red" />Legal
           </div>
-          <h1 className="section-heading text-4xl sm:text-5xl text-cedar-frost mb-4">Terms & Conditions</h1>
-          <p className="text-cedar-frost/50">
-            Effective date: January 1, 2025 &nbsp;·&nbsp; Last updated: June 1, 2025
-          </p>
+          <h1 className="section-heading text-4xl sm:text-5xl text-cedar-frost mb-4">Terms and Conditions</h1>
+          <p className="text-cedar-frost/50">Last updated: July 13, 2026</p>
           <div className="h-px bg-cedar-red/5 mt-6" />
         </motion.div>
 
@@ -112,32 +21,200 @@ We aim to respond to all legal inquiries within 5 business days.`,
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
-          className="mb-8 glass-card rounded-2xl p-6"
+          className="space-y-8 text-cedar-frost/60 leading-relaxed text-sm"
         >
-          <p className="text-cedar-frost/70 leading-relaxed">
-            Please read these Terms and Conditions carefully before using any CedarLogics service. 
-            These Terms constitute a legally binding agreement between you and CedarLogics. If you 
-            are using our services on behalf of an organization, you represent that you have the 
-            authority to bind that organization to these Terms.
+          <p>
+            Please read these terms and conditions carefully before using Our Service.
           </p>
-        </motion.div>
 
-        <div className="space-y-8">
-          {sections.map((section, i) => (
-            <motion.div
-              key={section.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 + i * 0.04 }}
-            >
-              <h2 className="font-display font-semibold text-xl text-cedar-frost mb-3">{section.title}</h2>
-              <div className="text-cedar-frost/60 leading-relaxed whitespace-pre-line text-sm">
-                {section.content}
-              </div>
-              {i < sections.length - 1 && <div className="h-px bg-cedar-red/5 mt-8" />}
-            </motion.div>
-          ))}
-        </div>
+          <div>
+            <h2 className="font-display font-semibold text-xl text-cedar-frost mb-3">Interpretation and Definitions</h2>
+            <h3 className="font-display font-semibold text-lg text-cedar-frost/80 mb-2 mt-6">Interpretation</h3>
+            <p className="mb-4">
+              The words whose initial letters are capitalized have meanings defined under the following conditions. The following definitions shall have the same meaning regardless of whether they appear in singular or in plural.
+            </p>
+            <h3 className="font-display font-semibold text-lg text-cedar-frost/80 mb-2">Definitions</h3>
+            <p className="mb-3">For the purposes of these Terms and Conditions:</p>
+            <ul className="space-y-4">
+              <li>
+                <p><strong className="text-cedar-frost">Affiliate</strong> means an entity that controls, is controlled by, or is under common control with a party, where &quot;control&quot; means ownership of 50% or more of the shares, equity interest or other securities entitled to vote for election of directors or other managing authority.</p>
+              </li>
+              <li>
+                <p><strong className="text-cedar-frost">Country</strong> refers to: California, United States</p>
+              </li>
+              <li>
+                <p><strong className="text-cedar-frost">Company</strong> (referred to as either &quot;the Company&quot;, &quot;We&quot;, &quot;Us&quot; or &quot;Our&quot; in these Terms and Conditions) refers to Cedar Logics, 801 N Spring Street, Los Angeles, CA 90012, USA.</p>
+              </li>
+              <li>
+                <p><strong className="text-cedar-frost">Device</strong> means any device that can access the Service such as a computer, a cell phone or a digital tablet.</p>
+              </li>
+              <li>
+                <p><strong className="text-cedar-frost">Service</strong> refers to the Website.</p>
+              </li>
+              
+              <li>
+                <p><strong className="text-cedar-frost">Third-Party Social Media Service</strong> means any services or content (including data, information, products or services) provided by a third party that is displayed, included, made available, or linked to through the Service.</p>
+              </li>
+              <li>
+                <p><strong className="text-cedar-frost">Website</strong> refers to cedar logics, accessible from{' '}
+                  <a href="https://cedarlogics.com/" rel="external nofollow noopener" target="_blank" className="underline hover:text-cedar-red transition-colors">
+                    https://cedarlogics.com/
+                  </a>
+                </p>
+              </li>
+              <li>
+                <p><strong className="text-cedar-frost">You</strong> means the individual accessing or using the Service, or the company, or other legal entity on behalf of which such individual is accessing or using the Service, as applicable.</p>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h2 className="font-display font-semibold text-xl text-cedar-frost mb-3">Acknowledgment</h2>
+            <p className="mb-3">
+              These are the Terms and Conditions governing the use of this Service and the agreement between You and the Company. These Terms and Conditions set out the rights and obligations of all users regarding the use of the Service.
+            </p>
+            <p className="mb-3">
+              Your access to and use of the Service is conditioned on Your acceptance of and compliance with these Terms and Conditions. These Terms and Conditions apply to all visitors, users and others who access or use the Service.
+            </p>
+            <p className="mb-3">
+              By accessing or using the Service You agree to be bound by these Terms and Conditions. If You disagree with any part of these Terms and Conditions then You may not access the Service.
+            </p>
+            <p className="mb-3">
+              You represent that you are over the age of 18. The Company does not permit those under 18 to use the Service.
+            </p>
+            <p>
+              Your access to and use of the Service is also subject to Our Privacy Policy, which describes how We collect, use, and disclose personal information. Please read Our Privacy Policy carefully before using Our Service.
+            </p>
+          </div>
+
+          <div>
+            <h2 className="font-display font-semibold text-xl text-cedar-frost mb-3">Links to Other Websites</h2>
+            <p className="mb-3">
+              Our Service may contain links to third-party websites or services that are not owned or controlled by the Company.
+            </p>
+            <p className="mb-3">
+              The Company has no control over, and assumes no responsibility for, the content, privacy policies, or practices of any third-party websites or services. You further acknowledge and agree that the Company shall not be responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused by or in connection with the use of or reliance on any such content, goods or services available on or through any such websites or services.
+            </p>
+            <p className="mb-4">
+              We strongly advise You to read the terms and conditions and privacy policies of any third-party websites or services that You visit.
+            </p>
+            <h3 className="font-display font-semibold text-lg text-cedar-frost/80 mb-2">Links from a Third-Party Social Media Service</h3>
+            <p className="mb-3">
+              The Service may display, include, make available, or link to content or services provided by a Third-Party Social Media Service. A Third-Party Social Media Service is not owned or controlled by the Company, and the Company does not endorse or assume responsibility for any Third-Party Social Media Service.
+            </p>
+            <p>
+              You acknowledge and agree that the Company shall not be responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused by or in connection with Your access to or use of any Third-Party Social Media Service, including any content, goods, or services made available through them. Your use of any Third-Party Social Media Service is governed by that Third-Party Social Media Service&apos;s terms and privacy policies.
+            </p>
+          </div>
+
+          <div>
+            <h2 className="font-display font-semibold text-xl text-cedar-frost mb-3">Termination</h2>
+            <p className="mb-3">
+              We may terminate or suspend Your access immediately, without prior notice or liability, for any reason whatsoever, including without limitation if You breach these Terms and Conditions.
+            </p>
+            <p>
+              Upon termination, Your right to use the Service will cease immediately.
+            </p>
+          </div>
+
+          <div>
+            <h2 className="font-display font-semibold text-xl text-cedar-frost mb-3">Limitation of Liability</h2>
+            <p className="mb-3">
+              Notwithstanding any damages that You might incur, the entire liability of the Company and any of its suppliers under any provision of these Terms and Your exclusive remedy for all of the foregoing shall be limited to the amount actually paid by You through the Service or 100 USD if You haven&apos;t purchased anything through the Service.
+            </p>
+            <p className="mb-3">
+              To the maximum extent permitted by applicable law, in no event shall the Company or its suppliers be liable for any special, incidental, indirect, or consequential damages whatsoever (including, but not limited to, damages for loss of profits, loss of data or other information, for business interruption, for personal injury, loss of privacy arising out of or in any way related to the use of or inability to use the Service, third-party software and/or third-party hardware used with the Service, or otherwise in connection with any provision of these Terms), even if the Company or any supplier has been advised of the possibility of such damages and even if the remedy fails of its essential purpose.
+            </p>
+            <p>
+              Some states do not allow the exclusion of implied warranties or limitation of liability for incidental or consequential damages, which means that some of the above limitations may not apply. In these states, each party&apos;s liability will be limited to the greatest extent permitted by law.
+            </p>
+          </div>
+
+          <div>
+            <h2 className="font-display font-semibold text-xl text-cedar-frost mb-3">&quot;AS IS&quot; and &quot;AS AVAILABLE&quot; Disclaimer</h2>
+            <p className="mb-3">
+              The Service is provided to You &quot;AS IS&quot; and &quot;AS AVAILABLE&quot; and with all faults and defects without warranty of any kind. To the maximum extent permitted under applicable law, the Company, on its own behalf and on behalf of its Affiliates and its and their respective licensors and service providers, expressly disclaims all warranties, whether express, implied, statutory or otherwise, with respect to the Service, including all implied warranties of merchantability, fitness for a particular purpose, title and non-infringement, and warranties that may arise out of course of dealing, course of performance, usage or trade practice. Without limitation to the foregoing, the Company provides no warranty or undertaking, and makes no representation of any kind that the Service will meet Your requirements, achieve any intended results, be compatible or work with any other software, applications, systems or services, operate without interruption, meet any performance or reliability standards or be error free or that any errors or defects can or will be corrected.
+            </p>
+            <p className="mb-3">
+              Without limiting the foregoing, neither the Company nor any of the company&apos;s provider makes any representation or warranty of any kind, express or implied: (i) as to the operation or availability of the Service, or the information, content, and materials or products included thereon; (ii) that the Service will be uninterrupted or error-free; (iii) as to the accuracy, reliability, or currency of any information or content provided through the Service; or (iv) that the Service, its servers, the content, or e-mails sent from or on behalf of the Company are free of viruses, scripts, trojan horses, worms, malware, timebombs or other harmful components.
+            </p>
+            <p>
+              Some jurisdictions do not allow the exclusion of certain types of warranties or limitations on applicable statutory rights of a consumer, so some or all of the above exclusions and limitations may not apply to You. But in such a case the exclusions and limitations set forth in this section shall be applied to the greatest extent enforceable under applicable law.
+            </p>
+          </div>
+
+          <div>
+            <h2 className="font-display font-semibold text-xl text-cedar-frost mb-3">Governing Law</h2>
+            <p>
+              The laws of the Country, excluding its conflicts of law rules, shall govern these Terms and Your use of the Service. Your use of the Application may also be subject to other local, state, national, or international laws.
+            </p>
+          </div>
+
+          <div>
+            <h2 className="font-display font-semibold text-xl text-cedar-frost mb-3">Disputes Resolution</h2>
+            <p>
+              If You have any concern or dispute about the Service, You agree to first try to resolve the dispute informally by contacting the Company.
+            </p>
+          </div>
+
+          <div>
+            <h2 className="font-display font-semibold text-xl text-cedar-frost mb-3">For European Union (EU) Users</h2>
+            <p>
+              If You are a European Union consumer, you will benefit from any mandatory provisions of the law of the country in which You are resident.
+            </p>
+          </div>
+
+          <div>
+            <h2 className="font-display font-semibold text-xl text-cedar-frost mb-3">United States Legal Compliance</h2>
+            <p>
+              You represent and warrant that (i) You are not located in a country that is subject to the United States government embargo, or that has been designated by the United States government as a &quot;terrorist supporting&quot; country, and (ii) You are not listed on any United States government list of prohibited or restricted parties.
+            </p>
+          </div>
+
+          <div>
+            <h2 className="font-display font-semibold text-xl text-cedar-frost mb-3">Severability and Waiver</h2>
+            <h3 className="font-display font-semibold text-lg text-cedar-frost/80 mb-2 mt-4">Severability</h3>
+            <p className="mb-4">
+              If any provision of these Terms is held to be unenforceable or invalid, such provision will be changed and interpreted to accomplish the objectives of such provision to the greatest extent possible under applicable law and the remaining provisions will continue in full force and effect.
+            </p>
+            <h3 className="font-display font-semibold text-lg text-cedar-frost/80 mb-2">Waiver</h3>
+            <p>
+              Except as provided herein, the failure to exercise a right or to require performance of an obligation under these Terms shall not affect a party&apos;s ability to exercise such right or require such performance at any time thereafter nor shall the waiver of a breach constitute a waiver of any subsequent breach.
+            </p>
+          </div>
+
+          <div>
+            <h2 className="font-display font-semibold text-xl text-cedar-frost mb-3">Translation Interpretation</h2>
+            <p>
+              These Terms and Conditions may have been translated if We have made them available to You on our Service. You agree that the original English text shall prevail in the case of a dispute.
+            </p>
+          </div>
+
+          <div>
+            <h2 className="font-display font-semibold text-xl text-cedar-frost mb-3">Changes to These Terms and Conditions</h2>
+            <p className="mb-3">
+              We reserve the right, at Our sole discretion, to modify or replace these Terms at any time. If a revision is material We will make reasonable efforts to provide at least 30 days&apos; notice prior to any new terms taking effect. What constitutes a material change will be determined at Our sole discretion.
+            </p>
+            <p>
+              By continuing to access or use Our Service after those revisions become effective, You agree to be bound by the revised terms. If You do not agree to the new terms, in whole or in part, please stop using the Service.
+            </p>
+          </div>
+
+          <div>
+            <h2 className="font-display font-semibold text-xl text-cedar-frost mb-3">Contact Us</h2>
+            <p className="mb-3">If you have any questions about these Terms and Conditions, You can contact us:</p>
+            <ul className="space-y-2">
+              <li>By email: support@cedarlogics.com</li>
+              <li>
+                By visiting this page on our website:{' '}
+                <a href="https://cedarlogics.com/" rel="external nofollow noopener" target="_blank" className="underline hover:text-cedar-red transition-colors">
+                  https://cedarlogics.com/
+                </a>
+              </li>
+              <li>By phone: +1 (213) 555-2102</li>
+            </ul>
+          </div>
+        </motion.div>
       </div>
     </main>
   );

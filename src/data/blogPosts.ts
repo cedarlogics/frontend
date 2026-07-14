@@ -1,6 +1,6 @@
 import blogImg1 from '../assets/Building AI Agents That Scale.png';
-import blogImg2 from '../assets/Process Precision.png';
-import blogImg3 from '../assets/analysis.png';
+import blogImg2 from '../assets/Building AI Agents That Scale.png';
+import blogImg3 from '../assets/BuZero-Downtime Database Migrations at Enterprise Scaleilding AI Agents That Scale.png';
 import blogImg4 from '../assets/Web application.png';
 import blogImg5 from '../assets/Deploy.png';
 import blogImg6 from '../assets/AI-Native Architecture.png';

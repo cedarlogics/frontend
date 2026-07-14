@@ -4,7 +4,7 @@ import healthcareIcon from '../../assets/Healthcare.png';
 import manufacturingIcon from '../../assets/Manufacturing.png';
 import financeIcon from '../../assets/Finance & Banking.png';
 import hrIcon from '../../assets/HR & People Operations.png';
-import governmentIcon from '../../assets/Government & Public Sector.png';
+import governmentIcon from '../../assets/Government & Public Sector (7).png';
 
 // A single restrained palette — blush, rose, deep maroon, ink, white —
 // instead of one hue per card. Variation comes from tone + light/dark
@@ -100,7 +100,7 @@ function getShapeStyle(shape) {
 
 export default function WhoWeAre() {
   return (
-    <section id="about" className="py-28 relative overflow-hidden" style={{ background: `linear-gradient(180deg, ${WINE} 0%, #0F0309 100%)` }}>
+    <section className="py-28 relative overflow-hidden" style={{ background: `linear-gradient(180deg, ${WINE} 0%, #0F0309 100%)` }}>
       {/* Fine grain — reads as film grain rather than a tech grid, keeps the editorial tone */}
       <div
         className="absolute inset-0 opacity-[0.06] pointer-events-none"
