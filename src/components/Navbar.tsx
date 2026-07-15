@@ -147,7 +147,7 @@ export default function Navbar() {
             <button
               className="lg:hidden p-2 rounded-lg text-cedar-frost/70 hover:text-cedar-frost transition-colors"
               onClick={() => setMobileOpen(!mobileOpen)}
-              aria-label="Toggle menu"
+              aria-label="Toggle menu" 
             >
               {mobileOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
