@@ -120,7 +120,7 @@ export default function ConsolePreview() {
             <div className="absolute -inset-4 rounded-3xl opacity-20 blur-xl"
               style={{ background: `radial-gradient(ellipse, ${BLUSH} 0%, transparent 60%)` }} />
 
-            {/* Floating insight cards — hidden on mobile */}
+            {/* Floating insight cards — desktop only (absolute positioned) */}
             {[
               { label: 'Cost Efficiency', value: '32% reduction', desc: 'vs last quarter', dot: ROSE, x: 'left-8', y: '-top-3', delay: 0 },
               { label: 'AI Accuracy', value: '97.4%', desc: 'across all models', dot: MAROON, x: '-right-4', y: 'top-8', delay: 0.15 },
@@ -145,7 +145,7 @@ export default function ConsolePreview() {
                     },
                   }}
                   whileHover={{ scale: 1.05 }}
-                  className={`hidden sm:block absolute ${insight.x} ${insight.y} z-10 rounded-2xl px-4 py-2.5 min-w-[175px]`}
+                  className={`hidden md:block absolute ${insight.x} ${insight.y} z-10 rounded-2xl px-4 py-2.5 min-w-[175px]`}
                   style={{
                     background: 'rgba(255,255,255,0.92)',
                     border: '1px solid rgba(0,0,0,0.08)',
@@ -166,6 +166,37 @@ export default function ConsolePreview() {
                 </motion.div>
               );
             })}
+
+            {/* Mobile insight cards — visible on small screens */}
+            <div className="md:hidden grid grid-cols-2 gap-2 mb-4 px-1">
+              {[
+                { label: 'Cost Efficiency', value: '32% reduction', desc: 'vs last quarter', dot: ROSE },
+                { label: 'AI Accuracy', value: '97.4%', desc: 'across all models', dot: MAROON },
+                { label: 'Anomalies', value: '12 detected', desc: '3 critical · resolved', dot: BLUSH },
+                { label: 'Avg Response', value: '48ms', desc: '99.9% uptime', dot: ROSE },
+              ].map((insight, idx) => (
+                <motion.div
+                  key={insight.label}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: 0.2 + idx * 0.1 }}
+                  className="rounded-xl px-3 py-2.5"
+                  style={{
+                    background: 'rgba(255,255,255,0.92)',
+                    border: '1px solid rgba(0,0,0,0.08)',
+                    boxShadow: '0 2px 12px rgba(0,0,0,0.08)',
+                  }}
+                >
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: insight.dot }} />
+                    <span className="text-[10px] font-semibold text-black/70 truncate">{insight.label}</span>
+                  </div>
+                  <div className="font-display font-bold text-sm mt-1" style={{ color: insight.dot }}>{insight.value}</div>
+                  <div className="text-[9px] text-black/50">{insight.desc}</div>
+                </motion.div>
+              ))}
+            </div>
 
             <div
               className="relative rounded-3xl overflow-hidden"
@@ -189,9 +220,9 @@ export default function ConsolePreview() {
               </div>
 
               {/* Console content */}
-              <div className="p-3 sm:p-5 space-y-3 sm:space-y-4 font-mono" style={{ background: 'rgba(255,255,255,0.85)' }}>
-                {/* Top row */}
-                <div className="grid grid-cols-3 gap-2 sm:gap-3">
+              <div className="p-2 sm:p-5 space-y-2 sm:space-y-4 font-mono" style={{ background: 'rgba(255,255,255,0.85)' }}>
+                {/* Top row - metrics in a single row */}
+                <div className="flex gap-1.5 sm:gap-3">
                   {[
                     { label: 'AI Agents', val: '24', unit: 'active', color: ROSE },
                     { label: 'Workflows', val: '847', unit: 'running', color: MAROON },
@@ -203,31 +234,31 @@ export default function ConsolePreview() {
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.4, delay: idx * 0.1 }}
-                      className="rounded-xl p-2 sm:p-3 text-center"
+                      className="flex-1 rounded-lg sm:rounded-xl p-1.5 sm:p-3 text-center min-w-0"
                       style={{
                         background: `linear-gradient(135deg, ${m.color}22, ${m.color}10)`,
                         border: `1px solid ${m.color}45`,
                       }}
                     >
-                      <div className="text-[10px] sm:text-xs text-black/60 mb-1 font-medium">{m.label}</div>
-                      <div className="font-display font-bold text-base sm:text-xl" style={{ color: m.color }}>{m.val}</div>
-                      <div className="text-[10px] sm:text-xs text-black/50">{m.unit}</div>
+                      <div className="text-[7px] sm:text-xs text-black/60 mb-0.5 sm:mb-1 font-medium truncate">{m.label}</div>
+                      <div className="font-display font-bold text-xs sm:text-xl leading-tight" style={{ color: m.color }}>{m.val}</div>
+                      <div className="text-[7px] sm:text-xs text-black/50">{m.unit}</div>
                     </motion.div>
                   ))}
                 </div>
 
                 {/* Workflow builder */}
-                <div className="rounded-xl p-3 sm:p-4" style={{
+                <div className="rounded-lg sm:rounded-xl p-2 sm:p-4" style={{
                   background: `linear-gradient(135deg, rgba(${ROSE_RGB},0.12), rgba(${ROSE_RGB},0.04))`,
                   border: `1px solid rgba(${ROSE_RGB},0.2)`,
                 }}>
-                  <div className="text-[10px] sm:text-xs text-black/70 mb-2 sm:mb-3 font-semibold">Active Workflow — Data Processing Pipeline</div>
-                  <div className="flex items-center gap-1 sm:gap-2 overflow-x-auto pb-1">
+                  <div className="text-[8px] sm:text-xs text-black/70 mb-1.5 sm:mb-3 font-semibold truncate">Active Workflow — Data Processing Pipeline</div>
+                  <div className="flex items-center gap-0.5 sm:gap-2 overflow-x-auto pb-1">
                     {['Trigger', 'Fetch', 'Transform', 'AI Classify', 'Store', 'Notify'].map((step, i) => (
-                      <div key={step} className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
+                      <div key={step} className="flex items-center gap-0.5 sm:gap-2 flex-shrink-0">
                         <div className="flex flex-col items-center">
                           <div
-                            className="text-[10px] sm:text-xs px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg font-medium whitespace-nowrap"
+                            className="text-[7px] sm:text-xs px-1 sm:px-3 py-0.5 sm:py-1.5 rounded-md sm:rounded-lg font-medium whitespace-nowrap"
                             style={{
                               background: i === 3 ? `rgba(${ROSE_RGB},0.3)` : `rgba(${ROSE_RGB},0.1)`,
                               color: i === 3 ? ROSE : 'rgba(0,0,0,0.7)',
@@ -237,22 +268,22 @@ export default function ConsolePreview() {
                             {step}
                           </div>
                           {i === 3 && (
-                            <div className="text-[10px] sm:text-xs font-medium mt-1" style={{ color: ROSE }}>● Running</div>
+                            <div className="text-[6px] sm:text-xs font-medium mt-0.5 sm:mt-1" style={{ color: ROSE }}>● Running</div>
                           )}
                         </div>
-                        {i < 5 && <div className="w-2 sm:w-4 h-px flex-shrink-0" style={{ background: `rgba(${ROSE_RGB},0.3)` }} />}
+                        {i < 5 && <div className="w-1 sm:w-4 h-px flex-shrink-0" style={{ background: `rgba(${ROSE_RGB},0.3)` }} />}
                       </div>
                     ))}
                   </div>
                 </div>
 
                 {/* Activity feed */}
-                <div className="rounded-xl p-3 sm:p-4" style={{
+                <div className="rounded-lg sm:rounded-xl p-2 sm:p-4" style={{
                   background: `linear-gradient(135deg, rgba(${ROSE_RGB},0.1), rgba(${ROSE_RGB},0.03))`,
                   border: `1px solid rgba(${ROSE_RGB},0.18)`,
                 }}>
-                  <div className="text-[10px] sm:text-xs text-black/60 mb-2 sm:mb-3 font-semibold">Recent Activity</div>
-                  <div className="space-y-2 sm:space-y-2.5">
+                  <div className="text-[8px] sm:text-xs text-black/60 mb-1.5 sm:mb-3 font-semibold">Recent Activity</div>
+                  <div className="space-y-1.5 sm:space-y-2.5">
                     {[
                       { msg: 'Agent #7 completed classification batch', time: '2s ago', color: ROSE },
                       { msg: 'Workflow "ETL Daily" executed successfully', time: '1m ago', color: MAROON },
@@ -264,13 +295,13 @@ export default function ConsolePreview() {
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.3, delay: 0.5 + i * 0.1 }}
-                        className="flex items-center justify-between gap-3"
+                        className="flex items-center justify-between gap-1.5 sm:gap-3"
                       >
-                        <div className="flex items-center gap-2">
-                          <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: item.color }} />
-                          <span className="text-[10px] sm:text-xs text-black/60 truncate">{item.msg}</span>
+                        <div className="flex items-center gap-1.5 sm:gap-2 min-w-0 flex-1">
+                          <div className="w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full flex-shrink-0" style={{ background: item.color }} />
+                          <span className="text-[7px] sm:text-xs text-black/60 truncate">{item.msg}</span>
                         </div>
-                        <span className="text-[10px] sm:text-xs text-black/40 whitespace-nowrap font-medium">{item.time}</span>
+                        <span className="text-[7px] sm:text-xs text-black/40 whitespace-nowrap font-medium flex-shrink-0">{item.time}</span>
                       </motion.div>
                     ))}
                   </div>

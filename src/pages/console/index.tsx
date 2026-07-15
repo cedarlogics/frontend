@@ -1,748 +1,478 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import {
-  Zap, Bot, GitBranch, BarChart3, Shield, Users, Puzzle, Activity,
-  ArrowRight, Check, ChevronDown, Star, Play, Building2, HeartPulse,
-  GraduationCap, ShoppingBag, Factory, Landmark, Cpu, ChevronRight
-} from 'lucide-react';
-import { AnimatePresence } from 'framer-motion';
+import { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { motion, useInView } from 'framer-motion';
 
-// ---- Hero ----
-function ConsoleHero() {
+const BLUSH = '#FF6FB5';
+const ROSE = '#FF2D87';
+const MAROON = '#8E1155';
+const WINE = '#1A0510';
+const INK = '#1A1024';
+
+const Icon = ({ path }: { path: string }) => (
+  <svg
+    className="w-6 h-6"
+    style={{ color: ROSE }}
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+    strokeWidth={2}
+  >
+    <path strokeLinecap="round" strokeLinejoin="round" d={path} />
+  </svg>
+);
+
+const SectionLabel = ({ number, text }: { number: string; text: string }) => (
+  <div className="flex items-center justify-center gap-3 mb-4">
+    <div className="w-4 h-px" style={{ background: `linear-gradient(90deg, transparent, ${ROSE})` }} />
+    <span className="text-xs tracking-[0.3em] uppercase font-orbitron font-semibold" style={{ color: BLUSH }}>
+      {number} // {text}
+    </span>
+    <div className="w-4 h-px" style={{ background: `linear-gradient(90deg, ${ROSE}, transparent)` }} />
+  </div>
+);
+
+const SectionHeading = ({ children }: { children: React.ReactNode }) => (
+  <h2 className="font-orbitron text-3xl md:text-5xl text-white mb-5 leading-tight">
+    {children}
+  </h2>
+);
+
+const GradientText = ({ children }: { children: React.ReactNode }) => (
+  <span
+    style={{
+      backgroundImage: `linear-gradient(90deg, ${BLUSH}, ${ROSE} 45%, ${MAROON})`,
+      WebkitBackgroundClip: 'text',
+      backgroundClip: 'text',
+      color: 'transparent',
+    }}
+  >
+    {children}
+  </span>
+);
+
+const gpuCards = [
+  {
+    title: 'Multi-Agent Orchestration',
+    desc: 'PyTorch & LangGraph primitives running specialized task weights directly inside VRAM to bypass Von Neumann CPU bottlenecks.',
+    icon: 'M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10',
+  },
+  {
+    title: 'High-Scale Frame Vectorization',
+    desc: 'NumPy, Pandas, and Scikit-learn structural extensions computing massive custom matrix-based organizational state evaluations.',
+    icon: 'M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z',
+  },
+  {
+    title: 'Containerized Topologies',
+    desc: 'Distributed microservices on AWS EKS maps hardware primitives, CUDA cores, and Tensor cores directly into agent runtimes.',
+    icon: 'M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4',
+  },
+];
+
+const sdkData = [
+  {
+    name: 'NVIDIA RAPIDS (cuDF & cuML)',
+    issue: 'Tabular audit logs & multi-source API payloads via CPU dataframes cause strict memory thrashing.',
+    solution: 'Accelerates pipeline execution up to 30x. Custom enterprise parameters are ingested, normalized, and mapped directly onto VRAM allocations instantly.',
+  },
+  {
+    name: 'NVIDIA NeMo Framework',
+    issue: 'Powering deep agent reasoning loops risks heavy contextual processing lag and unvalidated execution vectors.',
+    solution: 'Enables advanced token tuning models (LoRA / P-Tuning) ensuring deterministic multi-lingual tool orchestration inside absolute system boundaries.',
+  },
+  {
+    name: 'NVIDIA Triton Inference Server',
+    issue: 'Simultaneously maintaining cross-tenant layout parsers, embedding models, and custom matrix pipelines triggers structural execution blocks.',
+    solution: 'Maximizes extreme physical GPU scaling profiles via dynamic token batching, running concurrent pipeline tasks seamlessly under heavy usage spikes.',
+  },
+];
+
+const CedarLogicsProductPage = () => {
+  const navigate = useNavigate();
+  const heroRef = useRef<HTMLDivElement>(null);
+  const heroInView = useInView(heroRef, { once: true, margin: '-100px' });
+
+  const section2Ref = useRef<HTMLDivElement>(null);
+  const section2InView = useInView(section2Ref, { once: true, margin: '-100px' });
+
+  const section3Ref = useRef<HTMLDivElement>(null);
+  const section3InView = useInView(section3Ref, { once: true, margin: '-100px' });
+
+  const section4Ref = useRef<HTMLDivElement>(null);
+  const section4InView = useInView(section4Ref, { once: true, margin: '-100px' });
+
+  const section5Ref = useRef<HTMLDivElement>(null);
+  const section5InView = useInView(section5Ref, { once: true, margin: '-100px' });
+
+  const section6Ref = useRef<HTMLDivElement>(null);
+  const section6InView = useInView(section6Ref, { once: true, margin: '-100px' });
+
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center pt-20 sm:overflow-hidden">
-      <div className="absolute inset-0 grid-dot-bg opacity-30" />
-      <div className="hidden sm:block absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse, rgba(255,184,224,0.25) 0%, transparent 70%)', filter: 'blur(40px)' }} />
-      <div className="hidden sm:block absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-48 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 80% 100% at 50% 100%, rgba(236,127,169,0.08) 0%, transparent 70%)' }} />
+    <div className="min-h-screen relative overflow-hidden antialiased" style={{ background: `linear-gradient(180deg, ${WINE} 0%, #0F0309 100%)` }}>
+      {/* Dot grid background */}
+      <div
+        className="absolute inset-0 opacity-[0.06] pointer-events-none"
+        style={{
+          backgroundImage: 'radial-gradient(rgba(255,255,255,0.8) 1px, transparent 1px)',
+          backgroundSize: '4px 4px',
+        }}
+      />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="flex items-center justify-center mb-8">
-          <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full glass border border-cedar-violet/30">
-            <div className="w-1.5 h-1.5 rounded-full bg-cedar-red animate-pulse" />
-            <span className="text-xs font-semibold uppercase tracking-widest text-cedar-frost/70">Flagship Platform</span>
-            <div className="w-px h-3 bg-cedar-red/20" />
-            <span className="text-xs text-cedar-frost/40">v2.0</span>
-          </div>
-        </motion.div>
+      {/* Glow ambient orbs */}
+      <div
+        className="absolute -top-40 -left-40 w-[620px] h-[620px] rounded-full pointer-events-none"
+        style={{ background: `radial-gradient(circle, ${MAROON}40 0%, transparent 65%)`, filter: 'blur(100px)' }}
+      />
+      <div
+        className="absolute -bottom-40 -right-40 w-[620px] h-[620px] rounded-full pointer-events-none"
+        style={{ background: `radial-gradient(circle, ${ROSE}2e 0%, transparent 65%)`, filter: 'blur(90px)' }}
+      />
 
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="section-heading text-3xl sm:text-5xl lg:text-7xl mb-4 sm:mb-6 max-w-4xl mx-auto"
-        >
-          <span className="text-cedar-frost">The AI Operations</span>
-          <span className="hidden sm:inline"><br /></span>{' '}
-          <span className="text-gradient-red">Platform for</span>
-          <span className="hidden sm:inline"><br /></span>{' '}
-          <span className="text-cedar-frost">Modern Engineering Teams</span>
-        </motion.h1>
+      <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-32 py-20">
 
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.25 }}
-          className="text-sm sm:text-xl text-cedar-frost/50 max-w-2xl mx-auto mb-6 sm:mb-10"
-        >
-          Deploy intelligent agents, orchestrate automation workflows, and monitor everything in real time — unified in a single, powerful platform.
-        </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.35 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-8 sm:mb-16"
-        >
-          <a href="#demo" onClick={(e) => { e.preventDefault(); document.getElementById('demo')?.scrollIntoView({ behavior: 'smooth' }); }}
-            className="btn-primary text-base px-8 py-4 rounded-2xl">
-            <Zap size={18} />
-            Request a Demo
-            <ArrowRight size={16} />
-          </a>
-          <button className="btn-secondary text-base px-8 py-4 rounded-2xl inline-flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-cedar-red/10 flex items-center justify-center">
-              <Play size={12} className="fill-cedar-frost text-cedar-frost ml-0.5" />
-            </div>
-            Watch Overview
-          </button>
-        </motion.div>
-
-        {/* Mega Dashboard — Desktop */}
-        <motion.div
-          initial={{ opacity: 0, y: 60, scale: 0.96 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 1, delay: 0.4 }}
-          className="relative max-w-5xl mx-auto hidden sm:block"
-        >
-          <div className="hidden sm:block absolute -inset-4 rounded-3xl opacity-20"
-            style={{ background: 'radial-gradient(ellipse, rgba(255,184,224,0.6) 0%, transparent 70%)' }} />
-
-          <div className="relative glass-card rounded-2xl overflow-hidden"
-            style={{ border: '1px solid rgba(236,127,169,0.1)' }}>
-            {/* Title bar */}
-            <div className="flex items-center justify-between px-3 sm:px-4 py-3 border-b border-cedar-red/10"
-              style={{ background: 'rgba(255,255,255,0.95)' }}>
-              <div className="flex items-center gap-2">
-                <div className="flex gap-1.5">
-                  <div className="w-3 h-3 rounded-full bg-cedar-red/70" />
-                  <div className="w-3 h-3 rounded-full bg-yellow-400/50" />
-                  <div className="w-3 h-3 rounded-full bg-green-400/50" />
-                </div>
-                <div className="ml-2 hidden sm:block w-56 h-5 rounded glass items-center justify-center text-xs text-cedar-frost/30">
-                  console.cedarlogics.com/dashboard
-                </div>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                <span className="text-xs text-cedar-frost/40 hidden sm:inline">All systems operational</span>
-              </div>
-            </div>
-
-            <div className="flex flex-col sm:grid sm:grid-cols-5"
-              style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.85))' }}>
-              {/* Sidebar */}
-              <div className="hidden sm:block col-span-1 border-r border-cedar-red/10 p-3 space-y-1">
-                {[
-                  { icon: Activity, label: 'Dashboard', active: true },
-                  { icon: Bot, label: 'Agents' },
-                  { icon: GitBranch, label: 'Workflows' },
-                  { icon: BarChart3, label: 'Analytics' },
-                  { icon: Shield, label: 'Security' },
-                  { icon: Users, label: 'Team' },
-                  { icon: Puzzle, label: 'Integrations' },
-                ].map(({ icon: Icon, label, active }) => (
-                  <div key={label} className={`flex items-center gap-2 px-2.5 py-2 rounded-lg text-xs cursor-default ${active ? 'bg-cedar-red/15 text-cedar-frost' : 'text-cedar-frost/35 hover:text-cedar-frost/60'}`}>
-                    <Icon size={13} className={active ? 'text-cedar-red' : ''} />
-                    <span className="hidden lg:block">{label}</span>
-                  </div>
-                ))}
-              </div>
-
-              {/* Main content */}
-              <div className="col-span-1 sm:col-span-4 p-3 sm:p-4 space-y-3 sm:space-y-4">
-                {/* Top metrics */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
-                  {[
-                    { l: 'Agents', v: '24', c: '#EC7FA9', ch: '+3' },
-                    { l: 'Workflows', v: '847', c: '#FFB8E0', ch: '+12' },
-                    { l: 'API/min', v: '14.2K', c: '#FFB8E0', ch: '+5%' },
-                    { l: 'Accuracy', v: '97.4%', c: '#EC7FA9', ch: '+0.4' },
-                  ].map((m) => (
-                    <div key={m.l} className="glass rounded-xl p-2.5 sm:p-3">
-                      <div className="text-[10px] sm:text-xs text-cedar-frost/40 mb-1">{m.l}</div>
-                      <div className="font-display font-bold text-sm sm:text-lg leading-none" style={{ color: m.c }}>{m.v}</div>
-                      <div className="text-[10px] sm:text-xs text-green-400 mt-1">{m.ch}</div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Two columns */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {/* Chart */}
-                  <div className="glass rounded-xl p-3 sm:p-4">
-                    <div className="text-[10px] sm:text-xs text-cedar-frost/50 font-semibold mb-3">Inference Volume (7d)</div>
-                    <div className="flex items-end gap-1 h-20 sm:h-24">
-                      {[30, 45, 38, 62, 55, 78, 70, 88, 72, 95, 88, 100].map((h, i) => (
-                        <motion.div
-                          key={i}
-                          initial={{ scaleY: 0 }}
-                          animate={{ scaleY: 1 }}
-                          transition={{ delay: 0.8 + i * 0.04 }}
-                          className="flex-1 rounded-t-sm origin-bottom"
-                          style={{
-                            height: `${h}%`,
-                            background: i >= 10 ? 'linear-gradient(180deg,#EC7FA9,rgba(236,127,169,0.3))' : 'linear-gradient(180deg,rgba(255,184,224,0.7),rgba(255,184,224,0.2))',
-                          }}
-                        />
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Agents */}
-                  <div className="glass rounded-xl p-3 sm:p-4">
-                    <div className="text-[10px] sm:text-xs text-cedar-frost/50 font-semibold mb-3">Active Agents</div>
-                    <div className="space-y-2">
-                      {[
-                        { name: 'Classifier #1', status: 'Running', load: 82 },
-                        { name: 'Summarizer #3', status: 'Running', load: 64 },
-                        { name: 'Extractor #5', status: 'Idle', load: 12 },
-                      ].map((agent) => (
-                        <div key={agent.name} className="flex items-center gap-2">
-                          <div className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${agent.status === 'Running' ? 'bg-green-400' : 'bg-cedar-frost/30'}`} />
-                          <span className="text-[10px] sm:text-xs text-cedar-frost/60 flex-1 truncate">{agent.name}</span>
-                          <div className="w-14 sm:w-16 h-1.5 rounded-full bg-cedar-red/10 overflow-hidden">
-                            <div className="h-full rounded-full bg-cedar-red/60" style={{ width: `${agent.load}%` }} />
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Workflow */}
-                <div className="glass rounded-xl p-3 sm:p-4">
-                  <div className="text-[10px] sm:text-xs text-cedar-frost/50 font-semibold mb-2">Workflow: Customer Intent Pipeline</div>
-                  <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1">
-                    {['Ingest', 'Preprocess', 'Embed', 'Classify', 'Route', 'Respond', 'Log'].map((s, i) => (
-                      <div key={s} className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
-                        <div className={`px-2 sm:px-2.5 py-1 rounded-lg text-[10px] sm:text-xs font-medium whitespace-nowrap ${i === 3 ? 'bg-cedar-red/20 text-cedar-red border border-cedar-red/30' : i < 3 ? 'bg-green-400/15 text-green-400' : 'bg-cedar-red/5 text-cedar-frost/35'}`}>
-                          {s}
-                        </div>
-                        {i < 6 && <div className="w-2 sm:w-3 h-px bg-cedar-red/15" />}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Mega Dashboard — Mobile */}
-        <motion.div
+        {/* SECTION 1: HERO */}
+        <motion.section
+          ref={heroRef}
           initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="sm:hidden mx-auto rounded-2xl overflow-hidden"
-          style={{ border: '1px solid rgba(236,127,169,0.15)', background: 'rgba(255,255,255,0.95)' }}
+          animate={heroInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+          className="min-h-[80vh] flex flex-col justify-center items-center text-center relative pt-10"
         >
-          <div className="p-3 space-y-2.5">
-            <div className="flex items-center justify-between px-1">
-              <div className="flex gap-1.5">
-                <div className="w-2 h-2 rounded-full bg-cedar-red/70" />
-                <div className="w-2 h-2 rounded-full bg-yellow-400/50" />
-                <div className="w-2 h-2 rounded-full bg-green-400/50" />
-              </div>
-              <div className="flex items-center gap-1">
-                <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-                <span className="text-[9px] text-gray-400">Live</span>
-              </div>
-            </div>
+          <motion.div
+            initial={{ opacity: 0, x: 80 }}
+            animate={heroInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.7, ease: 'easeOut' }}
+            className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full mb-8"
+            style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)' }}
+          >
+            <div className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: ROSE }} />
+            <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: ROSE }}>
+              NVIDIA Inception Architectural Profile
+            </span>
+          </motion.div>
 
-            <div className="grid grid-cols-2 gap-2">
-              {[
-                { l: 'Agents', v: '24', c: '#EC7FA9' },
-                { l: 'Workflows', v: '847', c: '#FFB8E0' },
-                { l: 'API/min', v: '14.2K', c: '#FFB8E0' },
-                { l: 'Accuracy', v: '97.4%', c: '#EC7FA9' },
-              ].map((m) => (
-                <div key={m.l} className="rounded-lg p-2.5" style={{ background: 'rgba(236,127,169,0.04)', border: '1px solid rgba(236,127,169,0.08)' }}>
-                  <div className="text-[9px] text-gray-400 mb-0.5">{m.l}</div>
-                  <div className="font-display font-bold text-sm leading-none" style={{ color: m.c }}>{m.v}</div>
+          <motion.h1
+            initial={{ opacity: 0, x: 100 }}
+            animate={heroInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.15, ease: 'easeOut' }}
+            className="font-orbitron text-4xl md:text-7xl font-extrabold tracking-tight max-w-5xl leading-[0.95] mb-8"
+          >
+            <span className="text-white block">ENTERPRISE AI THAT</span>
+            <span className="block" style={{
+              backgroundImage: `linear-gradient(90deg, ${BLUSH}, ${ROSE} 45%, ${MAROON})`,
+              WebkitBackgroundClip: 'text',
+              backgroundClip: 'text',
+              color: 'transparent',
+            }}>
+              MOVES WORK FORWARD
+            </span>
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, x: 80 }}
+            animate={heroInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.3, ease: 'easeOut' }}
+            className="text-base md:text-xl text-white/50 max-w-3xl mb-12 leading-relaxed"
+          >
+            Transition from rigid RPA to autonomous, context-aware multi-agent workflows. Engineered entirely on the hardware-accelerated NVIDIA AI Enterprise computing platform.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, x: 80 }}
+            animate={heroInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.45, ease: 'easeOut' }}
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+          >
+            <a
+              href="https://app.cedarlogics.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative inline-flex items-center gap-3 px-8 py-4 rounded-full font-semibold text-sm text-white transition-all duration-300 hover:translate-y-[-1px]"
+              style={{ background: `linear-gradient(135deg, ${ROSE}, ${MAROON})`, boxShadow: '0 4px 24px rgba(255,45,135,0.3)' }}
+            >
+              Explore the Dashboard
+              <span className="w-7 h-7 rounded-full flex items-center justify-center bg-white/20">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+              </span>
+            </a>
+            <button
+              onClick={() => {
+                navigate('/');
+                setTimeout(() => {
+                  const el = document.getElementById('contact');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }, 400);
+              }}
+              className="relative inline-flex items-center gap-3 px-8 py-4 rounded-full font-semibold text-sm transition-all duration-300 hover:translate-y-[-1px]"
+              style={{ color: ROSE, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,45,135,0.3)' }}
+            >
+              Contact Us
+            </button>
+          </motion.div>
+        </motion.section>
+
+        {/* SECTION 2: GPU-NATIVE DECOUPLED RUNTIME */}
+        <motion.section
+          ref={section2Ref}
+          initial={{ opacity: 0, y: 40 }}
+          animate={section2InView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+          className="space-y-12"
+        >
+          <div className="text-center space-y-4">
+            <SectionLabel number="01" text="Architectural Layer" />
+            <SectionHeading>
+              GPU-Native <GradientText>Decoupled Runtime</GradientText>
+            </SectionHeading>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {gpuCards.map((item, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-50px' }}
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                whileHover={{ y: -6 }}
+                className="p-8 rounded-2xl transition-all duration-300 group"
+                style={{
+                  background: 'rgba(255,255,255,0.03)',
+                  border: '1px solid rgba(255,255,255,0.08)',
+                }}
+              >
+                <div
+                  className="mb-6 p-3 w-fit rounded-xl transition-colors"
+                  style={{ background: `${ROSE}15` }}
+                >
+                  <Icon path={item.icon} />
                 </div>
+                <h3 className="font-display font-semibold text-lg text-white mb-3">{item.title}</h3>
+                <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.45)' }}>{item.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </motion.section>
+
+        {/* SECTION 3: NVIDIA SDK INTEGRATION MATRIX */}
+        <motion.section
+          ref={section3Ref}
+          initial={{ opacity: 0, y: 40 }}
+          animate={section3InView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+          className="space-y-12"
+        >
+          <div className="text-center space-y-4">
+            <SectionLabel number="02" text="Hardware Acceleration" />
+            <SectionHeading>
+              NVIDIA SDK <GradientText>Ingestion Matrix</GradientText>
+            </SectionHeading>
+          </div>
+          <div
+            className="rounded-3xl p-8 md:p-12 relative overflow-hidden"
+            style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}
+          >
+            <div className="absolute top-4 right-6 opacity-[0.04] font-mono text-5xl md:text-7xl select-none font-bold text-white">CUDA</div>
+            <div className="space-y-8 relative z-10">
+              {sdkData.map((sdk, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-40px' }}
+                  transition={{ duration: 0.4, delay: index * 0.1 }}
+                  className="grid grid-cols-1 lg:grid-cols-3 gap-6 p-6 rounded-xl"
+                  style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)' }}
+                >
+                  <div className="flex items-center">
+                    <h4 className="font-display font-bold text-lg" style={{ color: '#FFB8E0' }}>{sdk.name}</h4>
+                  </div>
+                  <div>
+                    <span className="text-[10px] uppercase tracking-wider block mb-1 font-mono" style={{ color: ROSE }}>The Bottleneck</span>
+                    <p className="text-sm" style={{ color: 'rgba(255,255,255,0.45)' }}>{sdk.issue}</p>
+                  </div>
+                  <div>
+                    <span className="text-[10px] uppercase tracking-wider block mb-1 font-mono" style={{ color: BLUSH }}>Our Integration</span>
+                    <p className="text-sm font-medium" style={{ color: 'rgba(255,255,255,0.65)' }}>{sdk.solution}</p>
+                  </div>
+                </motion.div>
               ))}
             </div>
-
-            <div className="rounded-lg p-2.5" style={{ background: 'rgba(236,127,169,0.04)', border: '1px solid rgba(236,127,169,0.08)' }}>
-              <div className="text-[9px] text-gray-400 font-semibold mb-2">Inference Volume (7d)</div>
-              <div className="flex items-end gap-0.5 h-14">
-                {[30, 45, 38, 62, 55, 78, 70, 88, 72, 95, 88, 100].map((h, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ scaleY: 0 }}
-                    animate={{ scaleY: 1 }}
-                    transition={{ delay: 0.8 + i * 0.04 }}
-                    className="flex-1 rounded-t-sm origin-bottom"
-                    style={{
-                      height: `${h}%`,
-                      background: i >= 10 ? '#EC7FA9' : 'rgba(255,184,224,0.5)',
-                    }}
-                  />
-                ))}
-              </div>
-            </div>
-
-            <div className="rounded-lg p-2.5" style={{ background: 'rgba(236,127,169,0.04)', border: '1px solid rgba(236,127,169,0.08)' }}>
-              <div className="text-[9px] text-gray-400 font-semibold mb-1.5">Active Agents</div>
-              <div className="space-y-1">
-                {[
-                  { name: 'Classifier #1', status: 'Running', load: 82 },
-                  { name: 'Summarizer #3', status: 'Running', load: 64 },
-                  { name: 'Extractor #5', status: 'Idle', load: 12 },
-                ].map((agent) => (
-                  <div key={agent.name} className="flex items-center gap-2">
-                    <div className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${agent.status === 'Running' ? 'bg-green-400' : 'bg-gray-300'}`} />
-                    <span className="text-[10px] text-gray-500 flex-1 truncate">{agent.name}</span>
-                    <div className="w-10 h-1 rounded-full bg-gray-200 overflow-hidden">
-                      <div className="h-full rounded-full" style={{ width: `${agent.load}%`, background: '#EC7FA9' }} />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="rounded-lg p-2.5" style={{ background: 'rgba(236,127,169,0.04)', border: '1px solid rgba(236,127,169,0.08)' }}>
-              <div className="text-[9px] text-gray-400 font-semibold mb-1.5">Workflow</div>
-              <div className="flex items-center gap-1 overflow-x-auto">
-                {['Ingest', 'Preprocess', 'Embed', 'Classify', 'Route', 'Respond', 'Log'].map((s, i) => (
-                  <div key={s} className="flex items-center gap-1 flex-shrink-0">
-                    <div className={`px-1.5 py-0.5 rounded text-[9px] font-medium whitespace-nowrap ${i === 3 ? 'text-pink-500' : i < 3 ? 'text-green-500' : 'text-gray-400'}`}
-                      style={i === 3 ? { background: 'rgba(236,127,169,0.15)', border: '1px solid rgba(236,127,169,0.25)' } : i < 3 ? { background: 'rgba(74,222,128,0.1)' } : { background: 'rgba(0,0,0,0.03)' }}>
-                      {s}
-                    </div>
-                    {i < 6 && <div className="w-1 h-px bg-gray-300" />}
-                  </div>
-                ))}
-              </div>
-            </div>
           </div>
-        </motion.div>
+        </motion.section>
 
-      </div>
-    </section>
-  );
-}
-
-// ---- Core Features ----
-const coreFeatures = [
-  { icon: Bot, title: 'AI Agents', desc: 'Deploy and orchestrate autonomous AI agents that learn from your data and handle complex multi-step tasks with remarkable accuracy.', accent: '#EC7FA9' },
-  { icon: GitBranch, title: 'Workflow Automation', desc: 'Visual workflow builder with 150+ pre-built connectors. Build sophisticated automation pipelines in minutes, not weeks.', accent: '#FFB8E0' },
-  { icon: BarChart3, title: 'Intelligent Analytics', desc: 'AI-powered dashboards that surface anomalies, predict trends, and explain insights in plain language — no data science degree required.', accent: '#FFB8E0' },
-  { icon: Activity, title: 'Live Monitoring', desc: 'Full-stack observability with distributed tracing, log aggregation, and AI-powered anomaly detection that alerts before issues escalate.', accent: '#FFB8E0' },
-  { icon: Shield, title: 'Zero-Trust Security', desc: 'Enterprise-grade security with end-to-end encryption, RBAC, audit logging, and automated compliance checks for SOC 2 and HIPAA.', accent: '#EC7FA9' },
-  { icon: Users, title: 'Team Collaboration', desc: 'Role-based access, shared workspaces, real-time commenting, and version control for every agent, workflow, and dashboard.', accent: '#EC7FA9' },
-  { icon: Puzzle, title: 'API Management', desc: 'Full API lifecycle management with rate limiting, versioning, authentication, documentation generation, and usage analytics.', accent: '#FFB8E0' },
-  { icon: Cpu, title: 'Integrations Hub', desc: '200+ native integrations with your existing stack — Slack, Jira, Salesforce, AWS, GitHub, Stripe, and everything in between.', accent: '#FFB8E0' },
-];
-
-function CoreFeatures() {
-  return (
-    <section className="py-28 relative">
-      <div className="absolute inset-0 grid-line-bg opacity-15" />
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-          className="text-center mb-16"
+        {/* SECTION 4: CLOUD INFRASTRUCTURE SCALING */}
+        <motion.section
+          ref={section4Ref}
+          initial={{ opacity: 0, y: 40 }}
+          animate={section4InView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+          className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
         >
-          <div className="section-label mb-4 justify-center">
-            <div className="w-4 h-px bg-cedar-red" />Platform Features<div className="w-4 h-px bg-cedar-red" />
-          </div>
-          <h2 className="section-heading text-4xl sm:text-5xl text-cedar-frost mb-4">
-            Everything Your Team Needs<br /><span className="text-gradient-red">In One Place</span>
-          </h2>
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {coreFeatures.map((f, i) => {
-            const Icon = f.icon;
-            return (
-              <motion.div
-                key={f.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: (i % 4) * 0.08 }}
-                whileHover={{ y: -4 }}
-                className="glass-card rounded-2xl p-6 group hover:border-cedar-red/20 transition-all duration-300 cursor-default"
-              >
-                <div className="w-12 h-12 rounded-2xl flex items-center justify-center mb-4 transition-transform group-hover:scale-110"
-                  style={{ background: `${f.accent}20` }}>
-                  <Icon size={22} style={{ color: f.accent }} />
-                </div>
-                <h3 className="font-display font-semibold text-cedar-frost mb-2">{f.title}</h3>
-                <p className="text-sm text-cedar-frost/50 leading-relaxed">{f.desc}</p>
-              </motion.div>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ---- Use Cases ----
-const useCases = [
-  { icon: HeartPulse, title: 'Healthcare', desc: 'AI-powered patient triage, clinical note summarization, and HIPAA-compliant data pipelines.', accent: '#EC7FA9' },
-  { icon: Landmark, title: 'Finance', desc: 'Real-time fraud detection, intelligent reporting, and automated compliance monitoring.', accent: '#FFB8E0' },
-  { icon: GraduationCap, title: 'Education', desc: 'Personalized learning agents, automated grading, and student performance analytics.', accent: '#FFB8E0' },
-  { icon: ShoppingBag, title: 'Retail', desc: 'Dynamic pricing optimization, inventory forecasting, and AI product recommendations.', accent: '#EC7FA9' },
-  { icon: Factory, title: 'Manufacturing', desc: 'Predictive maintenance, quality control vision systems, and supply chain automation.', accent: '#FFB8E0' },
-  { icon: Building2, title: 'Enterprise', desc: 'HR automation, document intelligence, and cross-department workflow orchestration.', accent: '#EC7FA9' },
-];
-
-function UseCases() {
-  return (
-    <section className="py-28 relative">
-      <div className="absolute inset-0 grid-dot-bg opacity-15" />
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <div className="section-label mb-4 justify-center">
-            <div className="w-4 h-px bg-cedar-red" />Use Cases<div className="w-4 h-px bg-cedar-red" />
-          </div>
-          <h2 className="section-heading text-4xl sm:text-5xl text-cedar-frost mb-4">
-            Built for Every <span className="text-gradient-red">Industry</span>
-          </h2>
-        </motion.div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {useCases.map((uc, i) => {
-            const Icon = uc.icon;
-            return (
-              <motion.div
-                key={uc.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08 }}
-                whileHover={{ y: -4 }}
-                className="glass-card rounded-2xl p-6 group hover:border-cedar-red/20 transition-all duration-300 cursor-default flex items-start gap-4"
-              >
-                <div className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 transition-transform group-hover:scale-110"
-                  style={{ background: `${uc.accent}20` }}>
-                  <Icon size={22} style={{ color: uc.accent }} />
-                </div>
-                <div>
-                  <h3 className="font-display font-semibold text-cedar-frost mb-1">{uc.title}</h3>
-                  <p className="text-sm text-cedar-frost/50">{uc.desc}</p>
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ---- Architecture ----
-function ArchitectureSection() {
-  return (
-    <section className="py-24 relative overflow-hidden">
-      <div className="absolute inset-0 grid-line-bg opacity-10" />
-      <div className="hidden sm:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] pointer-events-none opacity-10"
-        style={{ background: 'radial-gradient(ellipse, #FFB8E0 0%, transparent 70%)' }} />
-
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <div className="section-label mb-4 justify-center">
-            <div className="w-4 h-px bg-cedar-red" />Architecture<div className="w-4 h-px bg-cedar-red" />
-          </div>
-          <h2 className="section-heading text-4xl sm:text-5xl text-cedar-frost mb-4">
-            Designed for <span className="text-gradient-violet">Reliability & Scale</span>
-          </h2>
-        </motion.div>
-
-        {/* Architecture diagram */}
-        <div className="max-w-4xl mx-auto">
-          <div className="glass-card rounded-3xl p-8 sm:p-12">
-            <div className="flex flex-col items-center gap-4">
-              {/* Input layer */}
-              <div className="flex gap-3 flex-wrap justify-center">
-                {['Web App', 'Mobile', 'API', 'Webhooks', 'SDK'].map((s) => (
-                  <div key={s} className="px-4 py-2 rounded-xl glass text-xs font-semibold text-cedar-frost/60 border border-cedar-red/15">{s}</div>
-                ))}
-              </div>
-              <ChevronRight size={18} className="text-cedar-frost/20 rotate-90" />
-
-              {/* Gateway */}
-              <div className="w-full max-w-sm px-6 py-3 rounded-2xl text-sm font-semibold text-center"
-                style={{ background: 'rgba(255,184,224,0.3)', border: '1px solid rgba(255,184,224,0.4)', color: '#FFB8E0' }}>
-                API Gateway + Auth Layer
-              </div>
-              <ChevronRight size={18} className="text-cedar-frost/20 rotate-90" />
-
-              {/* Core services */}
-              <div className="grid grid-cols-3 gap-3 w-full max-w-lg">
-                {['Agent Engine', 'Workflow Runtime', 'Analytics Core'].map((s, i) => (
-                  <div key={s} className="px-3 py-2.5 rounded-xl text-xs font-semibold text-center"
-                    style={{
-                      background: ['rgba(236,127,169,0.15)', 'rgba(255,184,224,0.2)', 'rgba(236,127,169,0.15)'][i],
-                      border: `1px solid ${['rgba(236,127,169,0.2)', 'rgba(255,184,224,0.3)', 'rgba(236,127,169,0.2)'][i]}`,
-                      color: ['#EC7FA9', '#FFB8E0', '#FFB8E0'][i],
-                    }}>
-                    {s}
-                  </div>
-                ))}
-              </div>
-              <ChevronRight size={18} className="text-cedar-frost/20 rotate-90" />
-
-              {/* Infrastructure */}
-              <div className="flex gap-3 flex-wrap justify-center">
-                {['Vector DB', 'Postgres', 'Redis Cache', 'Object Storage', 'Message Queue'].map((s) => (
-                  <div key={s} className="px-3 py-1.5 rounded-lg glass text-xs text-cedar-frost/50">{s}</div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ---- Integrations ----
-const integrations = [
-  'Slack', 'GitHub', 'Jira', 'Notion', 'Salesforce', 'HubSpot',
-  'Stripe', 'Twilio', 'SendGrid', 'AWS S3', 'Snowflake', 'BigQuery',
-];
-
-function IntegrationsSection() {
-  return (
-    <section className="py-20 relative">
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-          className="text-center mb-12"
-        >
-          <div className="section-label mb-4 justify-center">
-            <div className="w-4 h-px bg-cedar-red" />Integrations<div className="w-4 h-px bg-cedar-red" />
-          </div>
-          <h2 className="section-heading text-4xl text-cedar-frost mb-4">
-            Works with Your <span className="text-gradient-red">Existing Stack</span>
-          </h2>
-          <p className="text-cedar-frost/50">200+ native integrations. No custom code required.</p>
-        </motion.div>
-
-        <div className="flex flex-wrap justify-center gap-3 max-w-3xl mx-auto">
-          {integrations.map((intg, i) => (
-            <motion.div
-              key={intg}
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.04 }}
-              whileHover={{ y: -3 }}
-              className="glass-card rounded-xl px-5 py-3 text-sm font-medium text-cedar-frost/60 hover:text-cedar-frost hover:border-cedar-violet/30 transition-all duration-200 cursor-default"
+          <div className="space-y-6">
+            <SectionLabel number="03" text="Cloud Infrastructure Scaling" />
+            <h3 className="font-orbitron text-3xl md:text-4xl font-bold leading-tight text-white">
+              Processing Large-Horizon Attention Matrices <GradientText>Without Memory Overhead</GradientText>
+            </h3>
+            <p className="text-white/50 leading-relaxed">
+              When an autonomous agent maps compound multi-step execution flows—such as parsing a 500-page complex document against active supply chain parameters—attention metrics scale exponentially.
+            </p>
+            <blockquote
+              className="border-l-2 pl-4 italic text-sm my-4"
+              style={{ borderColor: ROSE, color: 'rgba(255,255,255,0.45)' }}
             >
-              {intg}
-            </motion.div>
-          ))}
-          <div className="glass-card rounded-xl px-5 py-3 text-sm font-medium text-cedar-red cursor-default">
-            +188 more →
+              "CedarLogics scales dynamically across Amazon EC2 P4 and next-gen P5 node topologies leveraging native H100 Tensor Core architectural profiles."
+            </blockquote>
+            <p className="text-white/50 leading-relaxed">
+              The hardware-native Transformer Engine combined with ultra-dense HBM3 memory pools lets our pipelines run complex agent models without triggering Out-Of-Memory exceptions.
+            </p>
           </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ---- Console Pricing ----
-const consolePlans = [
-  {
-    name: 'Growth', price: '299', unit: 'mo',
-    desc: 'For small teams just getting started with AI automation.',
-    features: ['5 AI Agents', '50 Workflows', '500K API calls/mo', '10GB storage', 'Community support'],
-    accent: '#FFB8E0', popular: false,
-  },
-  {
-    name: 'Scale', price: '899', unit: 'mo',
-    desc: 'For growing companies that need advanced AI capabilities.',
-    features: ['Unlimited Agents', 'Unlimited Workflows', '5M API calls/mo', '100GB storage', 'Priority support', 'SSO + RBAC', 'Custom models'],
-    accent: '#EC7FA9', popular: true,
-  },
-  {
-    name: 'Enterprise', price: 'Custom', unit: '',
-    desc: 'For large organizations with dedicated compliance and SLA requirements.',
-    features: ['Everything in Scale', 'Dedicated infrastructure', 'Custom SLA', 'SOC 2 compliance', 'HIPAA BAA', 'Dedicated CSM'],
-    accent: '#EC7FA9', popular: false,
-  },
-];
-
-function ConsolePricing() {
-  return (
-    <section className="py-28 relative">
-      <div className="absolute inset-0 grid-dot-bg opacity-15" />
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <div className="section-label mb-4 justify-center">
-            <div className="w-4 h-px bg-cedar-red" />Console Pricing<div className="w-4 h-px bg-cedar-red" />
-          </div>
-          <h2 className="section-heading text-4xl sm:text-5xl text-cedar-frost mb-4">
-            Simple, Predictable <span className="text-gradient-red">Pricing</span>
-          </h2>
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {consolePlans.map((plan, i) => (
+          <div className="space-y-4">
             <motion.div
-              key={plan.name}
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              whileHover={{ y: -4 }}
+              className="p-6 rounded-2xl flex justify-between items-center transition-all"
+              style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}
+            >
+              <div>
+                <h4 className="text-lg font-bold text-white">Amazon EC2 P4 Instances</h4>
+                <p className="text-xs mt-1" style={{ color: 'rgba(255,255,255,0.45)' }}>NVIDIA A100 Tensor Core Platform (80GB)</p>
+              </div>
+              <span
+                className="px-3 py-1 text-xs rounded-md font-mono flex-shrink-0 ml-4"
+                style={{ background: `${MAROON}40`, color: '#FFB8E0', border: `1px solid ${MAROON}` }}
+              >
+                Model Fine-Tuning
+              </span>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              whileHover={{ y: -4 }}
+              className="p-6 rounded-2xl flex justify-between items-center transition-all"
+              style={{ background: 'rgba(255,255,255,0.03)', border: `1px solid ${ROSE}50`, boxShadow: `0 0 20px ${ROSE}15` }}
+            >
+              <div>
+                <h4 className="text-lg font-bold" style={{ color: '#FFB8E0' }}>Amazon EC2 P5 Instances</h4>
+                <p className="text-xs mt-1" style={{ color: 'rgba(255,255,255,0.45)' }}>NVIDIA H100 GPU Production Optimization Tier</p>
+              </div>
+              <span
+                className="px-3 py-1 text-xs rounded-md font-mono flex-shrink-0 ml-4"
+                style={{ background: `${ROSE}20`, color: 'white', border: `1px solid ${ROSE}` }}
+              >
+                Active Deploy Target
+              </span>
+            </motion.div>
+          </div>
+        </motion.section>
+
+        {/* SECTION 5: ADVANCED ROADMAP */}
+        <motion.section
+          ref={section5Ref}
+          initial={{ opacity: 0, y: 40 }}
+          animate={section5InView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+          className="space-y-12"
+        >
+          <div className="text-center space-y-4">
+            <SectionLabel number="04" text="Development Pipeline" />
+            <SectionHeading>
+              Advanced Technology <GradientText>Roadmap</GradientText>
+            </SectionHeading>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 relative">
+            {/* Structural connecting line */}
+            <div
+              className="hidden md:block absolute top-1/2 left-4 right-4 h-[1px] -z-10"
+              style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent)' }}
+            />
+            <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
+              transition={{ duration: 0.5 }}
               whileHover={{ y: -6 }}
-              className="glass-card rounded-3xl p-8 relative transition-all duration-300"
-              style={plan.popular ? { border: '1px solid rgba(236,127,169,0.3)', background: 'rgba(236,127,169,0.02)' } : {}}
+              className="p-8 rounded-2xl space-y-4 relative transition-all"
+              style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}
             >
-              {plan.popular && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-bold text-white"
-                  style={{ background: 'linear-gradient(135deg, #EC7FA9, #EC7FA9)' }}>
-                  Most Popular
-                </div>
-              )}
-              <div className="mb-6">
-                <div className="inline-block px-3 py-1 rounded-lg text-xs font-semibold mb-3"
-                  style={{ background: `${plan.accent}15`, color: plan.accent }}>
-                  {plan.name}
-                </div>
-                <div className="flex items-baseline gap-1 mb-2">
-                  {plan.price === 'Custom'
-                    ? <span className="font-display font-bold text-3xl text-cedar-frost">Custom</span>
-                    : <><span className="text-cedar-frost/50">$</span><span className="font-display font-bold text-3xl text-cedar-frost">{plan.price}</span><span className="text-cedar-frost/40 text-sm">/{plan.unit}</span></>}
-                </div>
-                <p className="text-sm text-cedar-frost/50">{plan.desc}</p>
+              <div className="absolute top-4 right-6 text-[10px] font-bold tracking-widest font-mono" style={{ color: BLUSH }}>Q3 TARGET</div>
+              <div className="p-3 rounded-xl w-fit" style={{ background: `${BLUSH}15`, color: BLUSH }}>
+                <Icon path="M13 10V3L4 14h7v7l9-11h-7z" />
               </div>
-              <ul className="space-y-3 mb-8">
-                {plan.features.map((f) => (
-                  <li key={f} className="flex items-center gap-3 text-sm">
-                    <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0"
-                      style={{ background: `${plan.accent}20` }}>
-                      <Check size={11} style={{ color: plan.accent }} />
-                    </div>
-                    <span className="text-cedar-frost/70">{f}</span>
-                  </li>
-                ))}
-              </ul>
-              <button className={`w-full py-3 rounded-xl text-sm font-semibold ${plan.popular ? 'btn-primary' : 'btn-secondary'}`}>
-                {plan.price === 'Custom' ? 'Contact Sales' : 'Start Free Trial'}
-              </button>
+              <h3 className="font-display font-bold text-xl text-white">TensorRT-LLM Integration</h3>
+              <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.45)' }}>
+                Migrating orchestration layouts directly to TensorRT-LLM models to take full advantage of native In-Flight Batching metrics and custom KV-caching variables. Directly minimizes computational times, accelerating model interaction feedback loops.
+              </p>
             </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ---- Console FAQ ----
-const consoleFaqs = [
-  { q: 'Is there a free trial?', a: 'Yes — all Growth and Scale plans include a 14-day free trial with full feature access and no credit card required.' },
-  { q: 'What AI models does Console support?', a: 'Console supports OpenAI GPT-4o, Claude 3.5, Gemini Pro, and any OpenAI-compatible model including self-hosted open source models via Ollama or vLLM.' },
-  { q: 'Can I bring my own infrastructure?', a: 'Enterprise plans support BYOC (Bring Your Own Cloud) deployments to AWS, GCP, or Azure, so data never leaves your VPC.' },
-  { q: 'How does billing work for API calls?', a: 'Each plan includes a monthly allocation of API calls. Overages are charged at a flat per-call rate with no surprise billing — you set hard limits and alerts.' },
-];
-
-function ConsoleFAQ() {
-  const [open, setOpen] = useState<number | null>(null);
-  return (
-    <section className="py-20 relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-      <motion.div
-        initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-        className="text-center mb-12"
-      >
-        <h2 className="section-heading text-3xl sm:text-4xl text-cedar-frost mb-4">
-          Platform <span className="text-gradient-red">FAQ</span>
-        </h2>
-      </motion.div>
-      <div className="space-y-3">
-        {consoleFaqs.map((f, i) => (
-          <div key={i} className="glass-card rounded-2xl overflow-hidden">
-            <button className="w-full flex items-center justify-between p-5 text-left gap-4"
-              onClick={() => setOpen(open === i ? null : i)}>
-              <span className="font-medium text-cedar-frost text-sm">{f.q}</span>
-              <motion.div animate={{ rotate: open === i ? 180 : 0 }} transition={{ duration: 0.2 }}>
-                <ChevronDown size={16} className="text-cedar-frost/40 flex-shrink-0" />
-              </motion.div>
-            </button>
-            <AnimatePresence>
-              {open === i && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                  className="overflow-hidden"
-                >
-                  <div className="px-5 pb-5">
-                    <div className="h-px bg-cedar-red/5 mb-3" />
-                    <p className="text-sm text-cedar-frost/55">{f.a}</p>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              whileHover={{ y: -6 }}
+              className="p-8 rounded-2xl space-y-4 relative transition-all"
+              style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}
+            >
+              <div className="absolute top-4 right-6 text-[10px] font-bold tracking-widest font-mono" style={{ color: ROSE }}>Q4 TARGET</div>
+              <div className="p-3 rounded-xl w-fit" style={{ background: `${ROSE}15`, color: ROSE }}>
+                <Icon path="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+              </div>
+              <h3 className="font-display font-bold text-xl text-white">NVIDIA NIM Blueprint Containerization</h3>
+              <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.45)' }}>
+                Packaging our custom fine-tuned modular infrastructure frameworks (Finance, Human Resources, Logistics) into secure NIM configurations. Standardizes seamless target on-premise execution models for high-scale validation frameworks.
+              </p>
+            </motion.div>
           </div>
-        ))}
-      </div>
-    </section>
-  );
-}
+        </motion.section>
 
-// ---- Demo CTA ----
-function DemoCTA() {
-  const [submitted, setSubmitted] = useState(false);
-  const [email, setEmail] = useState('');
-
-  return (
-    <section id="demo" className="py-28 relative overflow-hidden">
-      <div className="hidden sm:block absolute inset-0"
-        style={{ background: 'radial-gradient(ellipse 80% 60% at 50% 50%, rgba(236,127,169,0.08) 0%, transparent 70%)' }} />
-      <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+        {/* SECTION 6: CTA */}
+        <motion.section
+          ref={section6Ref}
+          initial={{ opacity: 0, y: 40 }}
+          animate={section6InView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+          className="rounded-3xl p-8 md:p-16 text-center relative overflow-hidden"
+          style={{ background: `linear-gradient(135deg, ${MAROON}30, rgba(255,255,255,0.03))`, border: '1px solid rgba(255,255,255,0.08)' }}
         >
-          <div className="section-label justify-center mb-6">
-            <div className="w-4 h-px bg-cedar-red" />Get Access<div className="w-4 h-px bg-cedar-red" />
-          </div>
-          <h2 className="section-heading text-4xl sm:text-5xl text-cedar-frost mb-6">
-            See Console in Action
-          </h2>
-          <p className="text-xl text-cedar-frost/50 mb-10">
-            Book a personalized 30-minute demo with our engineering team. 
-            We'll walk through your exact use case, not a scripted pitch.
-          </p>
-
-          {submitted ? (
-            <div className="glass-card rounded-2xl p-8 text-center">
-              <div className="w-16 h-16 rounded-full bg-cedar-red/20 flex items-center justify-center mx-auto mb-4">
-                <Check size={28} className="text-cedar-red" />
-              </div>
-              <h3 className="font-display font-semibold text-cedar-frost text-xl mb-2">Demo Requested!</h3>
-              <p className="text-cedar-frost/50">We'll reach out within one business day to schedule your session.</p>
-            </div>
-          ) : (
-            <form onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }}
-              className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-              <input
-                required
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Work email address"
-                className="flex-1 px-5 py-4 rounded-2xl bg-cedar-red/5 border border-cedar-red/15 text-cedar-frost placeholder-cedar-frost/30 focus:outline-none focus:border-cedar-red/50 transition-colors text-sm"
-              />
-              <button type="submit" className="btn-primary px-8 py-4 rounded-2xl text-base whitespace-nowrap">
-                Book Demo <ArrowRight size={16} />
+          <div
+            className="absolute -bottom-20 -left-20 w-80 h-80 rounded-full pointer-events-none"
+            style={{ background: `radial-gradient(circle, ${ROSE}18 0%, transparent 65%)`, filter: 'blur(60px)' }}
+          />
+          <div className="max-w-3xl mx-auto space-y-8 relative z-10">
+            <h2 className="font-orbitron text-3xl md:text-5xl font-extrabold tracking-tight text-white">
+              Ready to Accelerate Your Enterprise <GradientText>Workflow DAGs?</GradientText>
+            </h2>
+            <p className="text-base md:text-lg leading-relaxed" style={{ color: 'rgba(255,255,255,0.5)' }}>
+              Unlock true algorithmic optimization across your custom software infrastructure. Deploy high-throughput multi-agent execution clusters securely backed by hardware-accelerated NVIDIA primitives.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <button
+                onClick={() => {
+                  navigate('/');
+                  setTimeout(() => {
+                    const el = document.getElementById('contact');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  }, 400);
+                }}
+                className="relative inline-flex items-center gap-3 px-8 py-4 rounded-full font-semibold text-sm text-white transition-all duration-300 hover:translate-y-[-1px]"
+                style={{ background: `linear-gradient(135deg, ${ROSE}, ${MAROON})`, boxShadow: '0 4px 24px rgba(255,45,135,0.3)' }}
+              >
+                Contact Us
+                <span className="w-7 h-7 rounded-full flex items-center justify-center bg-white/20">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+                </span>
               </button>
-            </form>
-          )}
-
-          <div className="flex items-center justify-center gap-6 mt-8 flex-wrap">
-            {['No commitment required', '30-min tailored session', 'Free 14-day trial'].map((t) => (
-              <div key={t} className="flex items-center gap-2 text-sm text-cedar-frost/40">
-                <Check size={12} className="text-cedar-red" />{t}
-              </div>
-            ))}
+            </div>
           </div>
-        </motion.div>
-      </div>
-    </section>
+        </motion.section>
+      </main>
+    </div>
   );
-}
+};
 
-// ---- Main Export ----
-export default function ConsolePage() {
-  return (
-    <main>
-      <ConsoleHero />
-      <CoreFeatures />
-      <ArchitectureSection />
-      <UseCases />
-      <IntegrationsSection />
-      <ConsolePricing />
-      <ConsoleFAQ />
-      <DemoCTA />
-    </main>
-  );
-}
+export default CedarLogicsProductPage;

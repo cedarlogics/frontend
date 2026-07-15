@@ -183,20 +183,20 @@ export default function TestimonialsSection() {
 
         <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-6">
           {/* Client log list */}
-          <div className="flex lg:flex-col gap-2 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0 scrollbar-none">
+          <div className="flex flex-col gap-2 overflow-visible pb-2 lg:pb-0">
             {testimonials.map((item, i) => (
               <button
                 key={item.name}
                 onClick={() => setCurrent(i)}
-                className={`group relative flex-shrink-0 lg:w-full text-left px-4 py-3 rounded-xl border transition-all duration-300 ${
+                className={`group relative w-full text-left px-4 py-3 rounded-xl border transition-all duration-300 ${
                   i === current
                     ? 'border-cedar-red/40 bg-cedar-red/[0.06]'
                     : 'border-cedar-frost/10 hover:border-cedar-frost/25 hover:bg-cedar-frost/[0.03]'
                 }`}
               >
-                <div className="flex items-center gap-2 min-w-[180px] lg:min-w-0">
+                <div className="flex items-center gap-3">
                   <img src={item.avatarIcon} alt={item.name} className="w-5 h-5 object-contain flex-shrink-0" />
-                  <div className="min-w-0">
+                  <div className="min-w-0 flex-1">
                     <div
                       className={`text-sm font-semibold truncate transition-colors ${
                         i === current ? 'text-cedar-frost' : 'text-cedar-frost/60'
@@ -210,7 +210,7 @@ export default function TestimonialsSection() {
                 {i === current && (
                   <motion.div
                     layoutId="active-rail"
-                    className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-6 rounded-full bg-cedar-red hidden lg:block"
+                    className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-6 rounded-full bg-cedar-red"
                   />
                 )}
               </button>

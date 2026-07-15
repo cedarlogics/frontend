@@ -176,9 +176,7 @@ export default function Navbar() {
               <div className="flex items-center justify-between p-6 border-b" style={{ borderColor: 'rgba(122,18,71,0.1)' }}>
                 <div className="flex items-center gap-2">
                   <img src={logo} alt="CedarLogics" className="w-14 h-14 rounded-lg object-contain" />
-                  <span className="font-orbitron font-bold" style={{ color: '#8E1155' }}>
-                    Cedar<span style={{ color: '#FF2D87' }}>Logics</span>
-                  </span>
+                  
                 </div>
                 <button
                   onClick={() => setMobileOpen(false)}

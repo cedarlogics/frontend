@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Facebook, Twitter, Youtube, ArrowUp, Mail, MapPin, Phone } from 'lucide-react';
 import logo from '../assets/Logo.png';
 
@@ -15,6 +15,7 @@ const footerLinks = {
     { label: 'About', href: '/#about' },
     { label: 'Features', href: '/#features' },
     { label: 'Services', href: '/#services' },
+    { label: 'Pricing', href: '/#pricing' },
   ],
   Resources: [
     { label: 'Blog', href: '/#blog' },
@@ -58,7 +59,31 @@ const traceNodes = [
 const tracePath = 'M90,66 C220,18 300,18 430,26 C560,34 640,82 770,64 C900,46 990,10 1110,30';
 
 export default function Footer() {
+  const navigate = useNavigate();
+  const location = useLocation();
   const scrollTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  const handleNavClick = (href: string) => {
+    if (href === '/') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    if (href.startsWith('/#')) {
+      const id = href.replace('/#', '');
+      if (location.pathname !== '/') {
+        navigate('/');
+        setTimeout(() => {
+          const el = document.getElementById(id);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+        return;
+      }
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      navigate(href);
+    }
+  };
 
   return (
     <footer className="relative overflow-hidden">
@@ -169,6 +194,10 @@ export default function Footer() {
                     <li key={link.label}>
                       <Link
                         to={link.href}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleNavClick(link.href);
+                        }}
                         className="text-sm transition-colors duration-200 relative group"
                         style={{ color: 'rgba(26,16,36,0.5)' }}
                         onMouseEnter={e => e.currentTarget.style.color = 'rgba(26,16,36,0.9)'}
@@ -232,13 +261,27 @@ export default function Footer() {
           </div>
 
           <div className="flex items-center gap-6">
-            <Link to="/privacy" className="text-xs transition-colors" style={{ color: 'rgba(26,16,36,0.4)' }}
+            <Link
+              to="/privacy"
+              onClick={(e) => {
+                e.preventDefault();
+                handleNavClick('/privacy');
+              }}
+              className="text-xs transition-colors"
+              style={{ color: 'rgba(26,16,36,0.4)' }}
               onMouseEnter={e => e.currentTarget.style.color = 'rgba(26,16,36,0.7)'}
               onMouseLeave={e => e.currentTarget.style.color = 'rgba(26,16,36,0.4)'}
             >
               Privacy
             </Link>
-            <Link to="/terms" className="text-xs transition-colors" style={{ color: 'rgba(26,16,36,0.4)' }}
+            <Link
+              to="/terms"
+              onClick={(e) => {
+                e.preventDefault();
+                handleNavClick('/terms');
+              }}
+              className="text-xs transition-colors"
+              style={{ color: 'rgba(26,16,36,0.4)' }}
               onMouseEnter={e => e.currentTarget.style.color = 'rgba(26,16,36,0.7)'}
               onMouseLeave={e => e.currentTarget.style.color = 'rgba(26,16,36,0.4)'}
             >

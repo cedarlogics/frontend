@@ -12,7 +12,8 @@ const WINE = '#1A0510';
 const plans = [
   {
     name: 'Starter',
-    price: 'Custom',
+    price: '40',
+    annualPrice: '480',
     period: 'month',
     annualPeriod: 'year, billed annually',
     description: 'For teams exploring workflow automation and AI agent capabilities.',
@@ -30,7 +31,8 @@ const plans = [
   },
   {
     name: 'Professional',
-    price: 'Custom',
+    price: '80',
+    annualPrice: '960',
     period: 'month',
     annualPeriod: 'year, billed annually',
     description: 'For scaling organizations running production automation at volume.',
@@ -47,13 +49,13 @@ const plans = [
     cta: 'Enroll Now',
     popular: true,
     accent: ROSE,
-    amount: 'Custom',
   },
   {
     name: 'Enterprise',
-    price: 'Custom',
+    price: '120',
+    annualPrice: '1440',
     period: 'engagement',
-    annualPeriod: 'engagement',
+    annualPeriod: 'year, billed annually',
     description: 'For large enterprises requiring dedicated infrastructure and compliance.',
     features: [
       'Dedicated automation infrastructure',
@@ -213,14 +215,8 @@ export default function PricingSection() {
                   {plan.name}
                 </div>
                 <div className="flex items-baseline gap-1 mb-2">
-                  {plan.price === 'Custom' ? (
-                    <span className="font-display font-bold text-4xl text-white">Custom</span>
-                  ) : (
-                    <>
-                      <span className="text-lg text-white/50">$</span>
-                      <span className="font-display font-bold text-4xl text-white">{plan.price}</span>
-                    </>
-                  )}
+                  <span className="text-lg text-white/50">$</span>
+                  <span className="font-display font-bold text-4xl text-white">{annual ? plan.annualPrice : plan.price}</span>
                 </div>
                 <div className="text-xs text-white/30 mb-3">
                   per {annual ? plan.annualPeriod : plan.period}
@@ -245,7 +241,7 @@ export default function PricingSection() {
               <button
                 onClick={() => {
                   if (plan.name === 'Professional') {
-                    setSelectedPlan({ name: plan.name, amount: plan.amount || '99' });
+                    setSelectedPlan({ name: plan.name, amount: annual ? plan.annualPrice : plan.price });
                     setPaypalOpen(true);
                   } else if (plan.name === 'Starter') {
                     navigate('/console');
@@ -279,7 +275,7 @@ export default function PricingSection() {
         isOpen={paypalOpen}
         onClose={() => setPaypalOpen(false)}
         planName={selectedPlan?.name ?? ''}
-        amount={selectedPlan?.amount ?? '99'}
+        amount={selectedPlan?.amount ?? '80'}
       />
     </section>
   );
